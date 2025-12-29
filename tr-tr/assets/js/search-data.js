@@ -90,15 +90,22 @@ ninja.data = [{
               handler: () => {
                 window.location.href = "/tr-tr/blog/";
               },
-            },{id: "dropdown-bookshelf",
-              title: "bookshelf",
+            },{id: "dropdown-publications",
+              title: "Publications",
               description: "",
               section: "Outras opções",
               handler: () => {
-                window.location.href = "/tr-tr/books/";
+                window.location.href = "/tr-tr/publications/";
+              },
+            },{id: "dropdown-projects",
+              title: "Projects",
+              description: "",
+              section: "Outras opções",
+              handler: () => {
+                window.location.href = "/tr-tr/projects/";
               },
             },{id: "dropdown-blog",
-              title: "blog",
+              title: "Blog",
               description: "",
               section: "Outras opções",
               handler: () => {
