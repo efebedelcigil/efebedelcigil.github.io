@@ -80,11 +80,11 @@ Por que escrever um blog? Leia [o post da Rachel Thomas](https://medium.com/@rac
 
 ## Instalação e Implantação
 
-Para detalhes de instalação e implantação, consulte [INSTALL.md](INSTALL.pt-br.md).
+Para detalhes de instalação e implantação, consulte [INSTALL.md](INSTALL.tr-tr.md).
 
 ## Personalizando
 
-Para detalhes de personalização, consulte [CUSTOMIZE.md](CUSTOMIZE.pt-br.md).
+Para detalhes de personalização, consulte [CUSTOMIZE.md](CUSTOMIZE.tr-tr.md).
 
 ## Recursos
 
@@ -107,9 +107,9 @@ Ao utilizar três ou mais idiomas, um menu dropdown será criado com todas as l�
 
 ![Alternar idioma entre 3 ou mais](readme_preview/multi-language-3-or-more.png)
 
-Note que, ao longo dos arquivos [README.md](README.pt-br.md) e [CUSTOMIZE.md](CUSTOMIZE.pt-br.md), o idioma padrão é o inglês (LANG = en-us).
+Note que, ao longo dos arquivos [README.md](README.tr-tr.md) e [CUSTOMIZE.md](CUSTOMIZE.tr-tr.md), o idioma padrão é o inglês (LANG = en-us).
 Você deve ter um arquivo ou caminho equivalente para cada idioma definido no [\_config.yml](_config.yml).
-Por exemplo, se você definiu `languages: ["en-us", "pt-br"]`, deverá ter 2 versões do arquivo `_data/LANG/cv.yml`: [\_data/en-us/cv.yml](_data/en-us/cv.yml) e [\_data/pt-br/cv.yml](_data/pt-br/cv.yml).
+Por exemplo, se você definiu `languages: ["en-us", "tr-tr"]`, deverá ter 2 versões do arquivo `_data/LANG/cv.yml`: [\_data/en-us/cv.yml](_data/en-us/cv.yml) e [\_data/tr-tr/cv.yml](_data/tr-tr/cv.yml).
 
 ---
 

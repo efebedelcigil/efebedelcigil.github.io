@@ -117,7 +117,7 @@ Por exemplo, quando você abre o repositório com o Visual Studio Code (VSCode),
 
 Para um tutorial prático de como rodar o multi-language-al-folio localmente sem usar o Docker, confira [este blog interessante](https://george-gca.github.io/blog/2022/running-local-al-folio/) de um dos membros da comunidade!
 
-Assumindo que você tenha [Ruby](https://www.ruby-lang.org/pt/downloads/) e [Bundler](https://bundler.io/) instalados no seu sistema (_dica: para facilitar o gerenciamento de gems do Ruby, considere usar [rbenv](https://github.com/rbenv/rbenv)_), e também [Python](https://www.python.org/) e [pip](https://pypi.org/project/pip/) (_dica: para facilitar o gerenciamento de pacotes Python, considere usar um ambiente virtual, como [venv](https://docs.python.org/pt-br/3/library/venv.html) ou [conda](https://docs.conda.io/en/latest/)_).
+Assumindo que você tenha [Ruby](https://www.ruby-lang.org/pt/downloads/) e [Bundler](https://bundler.io/) instalados no seu sistema (_dica: para facilitar o gerenciamento de gems do Ruby, considere usar [rbenv](https://github.com/rbenv/rbenv)_), e também [Python](https://www.python.org/) e [pip](https://pypi.org/project/pip/) (_dica: para facilitar o gerenciamento de pacotes Python, considere usar um ambiente virtual, como [venv](https://docs.python.org/tr-tr/3/library/venv.html) ou [conda](https://docs.conda.io/en/latest/)_).
 
 ```bash
 $ bundle install

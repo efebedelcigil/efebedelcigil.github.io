@@ -22,7 +22,7 @@
 [![GitHub stars](https://img.shields.io/github/stars/george-gca/multi-language-al-folio)](https://github.com/george-gca/multi-language-al-folio)
 [![GitHub forks](https://img.shields.io/github/forks/george-gca/multi-language-al-folio)](https://github.com/george-gca/multi-language-al-folio/fork)
 
-[![pt-br](https://img.shields.io/badge/leia--me-pt--br-green.svg)](README.pt-br.md)
+[![tr-tr](https://img.shields.io/badge/leia--me-pt--br-green.svg)](README.tr-tr.md)
 
 </div>
 
@@ -291,7 +291,7 @@ When using three or more, it will be created a dropdown menu with all the availa
 
 ![Switch language between 3 or more](readme_preview/multi-language-3-or-more.png)
 
-Note that throughout the [README.md](README.md) and [CUSTOMIZE.md](CUSTOMIZE.md) files, the default language is English (LANG = en-us). You must have an equivalent file or path for each language you have defined in [\_config.yml](_config.yml). For example, if you have defined `languages: ["en-us", "pt-br"]`, you must have 2 versions of the file `_data/LANG/cv.yml`: [\_data/en-us/cv.yml](_data/en-us/cv.yml) and [\_data/pt-br/cv.yml](_data/pt-br/cv.yml).
+Note that throughout the [README.md](README.md) and [CUSTOMIZE.md](CUSTOMIZE.md) files, the default language is English (LANG = en-us). You must have an equivalent file or path for each language you have defined in [\_config.yml](_config.yml). For example, if you have defined `languages: ["en-us", "tr-tr"]`, you must have 2 versions of the file `_data/LANG/cv.yml`: [\_data/en-us/cv.yml](_data/en-us/cv.yml) and [\_data/tr-tr/cv.yml](_data/tr-tr/cv.yml).
 
 ---
 
