@@ -32,56 +32,70 @@ ninja.data = [{
           description: "Kategorilere göre akademik çalışmalar ve yayınlar.",
           section: "Menu de navegação",
           handler: () => {
-            window.location.href = "/tr-tr/publications/";
+            window.location.href = "/tr-tr/tr-tr/publications/";
           },
         },{id: "nav-projeler",
           title: "projeler",
           description: "Gömülü sistemler, robotik ve güç elektroniği üzerine geliştirdiğim projeler.",
           section: "Menu de navegação",
           handler: () => {
-            window.location.href = "/tr-tr/projects/";
+            window.location.href = "/tr-tr/tr-tr/projects/";
           },
         },{id: "nav-depolar",
           title: "depolar",
           description: "GitHub profilimdeki açık kaynaklı çalışmalar ve kod depoları.",
           section: "Menu de navegação",
           handler: () => {
-            window.location.href = "/tr-tr/repositories/";
+            window.location.href = "/tr-tr/tr-tr/repositories/";
           },
         },{id: "nav-özgeçmiş",
           title: "özgeçmiş",
           description: "Akademik ve profesyonel yetkinliklerimin detaylı dökümü. PDF sürümünü yukarıdaki butondan indirebilirsiniz.",
           section: "Menu de navegação",
           handler: () => {
-            window.location.href = "/tr-tr/cv/";
+            window.location.href = "/tr-tr/tr-tr/cv/";
           },
-        },{id: "nav-ensino",
-          title: "ensino",
-          description: "Materiais de cursos que você ministrou. Substitua esse texto com sua descrição.",
+        },{id: "nav-eğitmenlik",
+          title: "eğitmenlik",
+          description: "Verdiğim teknik eğitimler, atölye çalışmaları ve mentorluk faaliyetleri.",
           section: "Menu de navegação",
           handler: () => {
-            window.location.href = "/tr-tr/teaching/";
+            window.location.href = "/tr-tr/tr-tr/teaching/";
           },
         },{id: "nav-ekip",
           title: "ekip",
           description: "Proje ortakları ve çalışma arkadaşlarım.",
           section: "Menu de navegação",
           handler: () => {
-            window.location.href = "/tr-tr/people/";
+            window.location.href = "/tr-tr/tr-tr/people/";
           },
         },{id: "dropdown-yayınlar",
               title: "yayınlar",
               description: "",
               section: "Outras opções",
               handler: () => {
-                window.location.href = "/tr-tr/publications/";
+                window.location.href = "/tr-tr/tr-tr/publications/";
               },
             },{id: "dropdown-projeler",
               title: "projeler",
               description: "",
               section: "Outras opções",
               handler: () => {
-                window.location.href = "/tr-tr/projects/";
+                window.location.href = "/tr-tr/tr-tr/projects/";
+              },
+            },{id: "dropdown-blog",
+              title: "blog",
+              description: "",
+              section: "Outras opções",
+              handler: () => {
+                window.location.href = "/tr-tr/blog/";
+              },
+            },{id: "dropdown-bookshelf",
+              title: "bookshelf",
+              description: "",
+              section: "Outras opções",
+              handler: () => {
+                window.location.href = "/tr-tr/books/";
               },
             },{id: "dropdown-blog",
               title: "blog",

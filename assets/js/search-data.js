@@ -69,7 +69,28 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/people/";
           },
-        },{id: "dropdown-bookshelf",
+        },{id: "dropdown-yayınlar",
+              title: "yayınlar",
+              description: "",
+              section: "Dropdown",
+              handler: () => {
+                window.location.href = "/tr-tr/publications/";
+              },
+            },{id: "dropdown-projeler",
+              title: "projeler",
+              description: "",
+              section: "Dropdown",
+              handler: () => {
+                window.location.href = "/tr-tr/projects/";
+              },
+            },{id: "dropdown-blog",
+              title: "blog",
+              description: "",
+              section: "Dropdown",
+              handler: () => {
+                window.location.href = "/blog/";
+              },
+            },{id: "dropdown-bookshelf",
               title: "bookshelf",
               description: "",
               section: "Dropdown",
