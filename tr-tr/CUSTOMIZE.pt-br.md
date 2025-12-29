@@ -2,7 +2,7 @@
 
 Aqui forneceremos algumas dicas sobre como personalizar o site. Uma coisa importante a observar é que **TODAS** as alterações que você fizer devem ser realizadas na branch **main** do seu repositório. A branch `gh-pages` é automaticamente sobrescrita sempre que você modifica a branch main.
 
-Note que, ao longo dos arquivos [README.md](README.pt-br.md) e [CUSTOMIZE.md](CUSTOMIZE.pt-br.md), o idioma padrão é o inglês (LANG = en-us). Você deve ter um arquivo ou caminho equivalente para cada idioma definido em [\_config.yml](_config.yml). Por exemplo, se você definiu `languages: ["en-us", "pt-br"]`, deverá haver 2 versões do arquivo `_data/LANG/cv.yml`: [\_data/en-us/cv.yml](_data/en-us/cv.yml) e [\_data/pt-br/cv.yml](_data/pt-br/cv.yml).
+Note que, ao longo dos arquivos [README.md](README.tr-tr.md) e [CUSTOMIZE.md](CUSTOMIZE.tr-tr.md), o idioma padrão é o inglês (LANG = en-us). Você deve ter um arquivo ou caminho equivalente para cada idioma definido em [\_config.yml](_config.yml). Por exemplo, se você definiu `languages: ["en-us", "tr-tr"]`, deverá haver 2 versões do arquivo `_data/LANG/cv.yml`: [\_data/en-us/cv.yml](_data/en-us/cv.yml) e [\_data/tr-tr/cv.yml](_data/tr-tr/cv.yml).
 
 ## Estrutura do Projeto
 
@@ -47,9 +47,9 @@ O projeto está estruturado da seguinte forma, com foco nos principais component
 
 ## Configuração
 
-O arquivo de configuração [\_config.yml](_config.yml) contém as principais configurações do site. A maioria das opções é autoexplicativa e também tentamos adicionar o máximo de comentários possível. Se você tiver alguma dúvida, verifique se ela já não foi respondida nas [Perguntas Frequentes](FAQ.pt-br.md).
+O arquivo de configuração [\_config.yml](_config.yml) contém as principais configurações do site. A maioria das opções é autoexplicativa e também tentamos adicionar o máximo de comentários possível. Se você tiver alguma dúvida, verifique se ela já não foi respondida nas [Perguntas Frequentes](FAQ.tr-tr.md).
 
-> Note que as configurações `url` e `baseurl` são utilizadas para gerar os links do site, conforme explicado nas [instruções de instalação](INSTALL.pt-br.md).
+> Note que as configurações `url` e `baseurl` são utilizadas para gerar os links do site, conforme explicado nas [instruções de instalação](INSTALL.tr-tr.md).
 
 Todas as alterações feitas neste arquivo só são visíveis após você reconstruir o site. Isso significa que você precisará executar novamente `bundle exec jekyll serve` se estiver rodando o site localmente ou enviar (push) suas alterações para o GitHub se estiver utilizando o GitHub Pages. Todas as outras alterações são visíveis imediatamente, bastando atualizar a página.
 
