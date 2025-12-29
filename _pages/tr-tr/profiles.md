@@ -11,8 +11,8 @@ profiles:
   # Eğer birden fazla profil eklemek istersen aşağıdaki bloğu kopyala
   # ve her biri için _pages/ içinde yeni bir içerik dosyası oluştur.
   - align: right
-    image: prof_pic.jpg
-    content: about_einstein.md # Buraya arkadaşının markdown dosyasını referans verebilirsin
+    image:
+    content: # Buraya arkadaşının markdown dosyasını referans verebilirsin
     image_circular: false
     more_info: >
       <p>Proje Görevi</p>
