@@ -14,43 +14,43 @@ const ninja = document.querySelector('ninja-keys');
 
 // add the home and posts menu items
 ninja.data = [{
-    id: "nav-sobre",
-    title: "sobre",
+    id: "nav-",
+    title: "",
     section: "Menu de navegação",
     handler: () => {
       window.location.href = "/tr-tr/";
     },
   },{id: "nav-blog",
           title: "blog",
-          description: "um tema simples para acadêmicos",
+          description: "Kontrol sistemleri, robotik ve gömülü sistemler üzerine teknik yazılar.",
           section: "Menu de navegação",
           handler: () => {
             window.location.href = "/tr-tr/blog/";
           },
-        },{id: "nav-publicações",
-          title: "publicações",
-          description: "publicações por categoria em ordem cronológica reversa. gerado pelo jekyll-scholar.",
+        },{id: "nav-yayınlar",
+          title: "yayınlar",
+          description: "Kategorilere göre akademik çalışmalar ve yayınlar.",
           section: "Menu de navegação",
           handler: () => {
             window.location.href = "/tr-tr/publications/";
           },
-        },{id: "nav-projetos",
-          title: "projetos",
-          description: "Uma crescente coleção de seus projetos interessantes.",
+        },{id: "nav-projeler",
+          title: "projeler",
+          description: "Gömülü sistemler, robotik ve güç elektroniği üzerine geliştirdiğim projeler.",
           section: "Menu de navegação",
           handler: () => {
             window.location.href = "/tr-tr/projects/";
           },
-        },{id: "nav-repositórios",
-          title: "repositórios",
-          description: "Edite o `_data/repositories.yml` e mude as listas `github_users` e `github_repos` para incluir seu próprio perfil do GitHub e repositórios.",
+        },{id: "nav-depolar",
+          title: "depolar",
+          description: "GitHub profilimdeki açık kaynaklı çalışmalar ve kod depoları.",
           section: "Menu de navegação",
           handler: () => {
             window.location.href = "/tr-tr/repositories/";
           },
-        },{id: "nav-cv",
-          title: "cv",
-          description: "Esta é uma descrição da página. Você pode modificá-la em &#39;_pages/cv.md&#39;. Também pode alterar ou remover o botão no topo de download de pdf.",
+        },{id: "nav-özgeçmiş",
+          title: "özgeçmiş",
+          description: "Akademik ve profesyonel yetkinliklerimin detaylı dökümü. PDF sürümünü yukarıdaki butondan indirebilirsiniz.",
           section: "Menu de navegação",
           handler: () => {
             window.location.href = "/tr-tr/cv/";
@@ -62,22 +62,22 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/tr-tr/teaching/";
           },
-        },{id: "nav-membros",
-          title: "membros",
-          description: "membros do grupo de pesquisa ou laboratório",
+        },{id: "nav-ekip",
+          title: "ekip",
+          description: "Proje ortakları ve çalışma arkadaşlarım.",
           section: "Menu de navegação",
           handler: () => {
             window.location.href = "/tr-tr/people/";
           },
-        },{id: "dropdown-publicações",
-              title: "publicações",
+        },{id: "dropdown-yayınlar",
+              title: "yayınlar",
               description: "",
               section: "Outras opções",
               handler: () => {
                 window.location.href = "/tr-tr/publications/";
               },
-            },{id: "dropdown-projetos",
-              title: "projetos",
+            },{id: "dropdown-projeler",
+              title: "projeler",
               description: "",
               section: "Outras opções",
               handler: () => {
