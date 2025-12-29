@@ -6,7 +6,7 @@ subtitle: Ege Üniversitesi EEM 3. Sınıf Öğrencisi. <br>Kontrol Sistemleri, 
 
 profile:
   align: right
-  image: efe.jpg
+  image: efe.png
   image_circular: false
   address: >
     <p>Elektrik-Elektronik Mühendisliği</p>

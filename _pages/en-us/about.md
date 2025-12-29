@@ -6,16 +6,16 @@ subtitle: 3rd-year EEE Student @ Ege University. <br>Passionate about Control Sy
 
 profile:
   align: right
-  image: efe.jpg
-  image_circular: false # Fotoğrafın yuvarlak olsun istersen true yap
+  image: efe.png
+  image_circular: false
   address: >
     <p>Electrical & Electronics Engineering</p>
     <p>Ege University</p>
     <p>Izmir, Turkey</p>
 
-news: true  # Haberler/Duyurular görünsün
-selected_papers: false # Henüz makalen yoksa false kalsın
-social: true  # Alt kısımdaki LinkedIn/GitHub ikonları görünsün
+news: true
+selected_papers: false
+social: true
 lang: en-us
 ---
 
