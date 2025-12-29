@@ -2,11 +2,12 @@
 # Site settings
 # -----------------------------------------------------------------------------
 
-title: blank # the website title (if blank, full name will be used instead)
+title: Efe Varol Bedelcigil # the website title (if blank, full name will be used instead)
 first_name: Efe
 middle_name: Varol
 last_name: Bedelcigil
-keywords: jekyll, jekyll-theme, academic-website, portfolio-website # add your own keywords or leave empty
+# Mevcut satırı şununla değiştir:
+keywords: control systems, robotics, embedded systems, stm32, fpga, defense industry, engineer, portfolio, efe, varol, bedelcigil
 icon: ⚡ # the emoji used as the favicon (alternatively, provide image name in /assets/img/)
 
 url: https://efebedelcigil.github.io # the base hostname & protocol for your site
