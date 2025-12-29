@@ -162,7 +162,7 @@ kramdown:
       start_line: 1
 
 # Includes & excludes
-include: ["_pages", "_scripts", "tr-tr"]
+include: ["_pages", "_scripts", "tr-tr", "en-us"]
 exclude:
   - bin/
   - CONTRIBUTING.md
