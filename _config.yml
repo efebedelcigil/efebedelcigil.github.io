@@ -220,6 +220,13 @@ defaults:
     values:
       sitemap: false
 
+defaults:
+  - scope:
+      path: "tr-tr"
+    values:
+      lang: tr-tr
+      layout: page
+
 sass:
   sourcemap: never
   style: compressed
@@ -345,7 +352,7 @@ external_links:
 
 languages: ["en-us", "tr-tr"]
 default_lang: "en-us"
-exclude_from_localization: ["assets"]
+exclude_from_localization: ["assets", "css", "js"]
 lang_from_path: true
 country_flag: false # set true for allowing flag symbol in language toggle
 parallel_localization: false
