@@ -1,7 +1,7 @@
 ---
 page_id: blog
 layout: default
-permalink: /blog/
+permalink: /tr-tr/blog/
 title: blog
 blog_name: Mühendislik Notları
 description: Kontrol sistemleri, robotik ve gömülü sistemler üzerine teknik yazılar.

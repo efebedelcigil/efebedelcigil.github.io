@@ -1,7 +1,7 @@
 ---
 page_id: profiles
 layout: profiles
-permalink: /people/
+permalink: /tr-tr/people/
 title: ekip
 description: Proje ortakları ve çalışma arkadaşlarım.
 nav: true

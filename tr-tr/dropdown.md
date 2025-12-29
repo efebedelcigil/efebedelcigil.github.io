@@ -7,11 +7,11 @@ nav_order: 8
 dropdown: true
 children:
   - title: yayınlar
-    permalink: /publications/
+    permalink: /tr-tr/publications/
   - title: divider
   - title: projeler
-    permalink: /projects/
+    permalink: /tr-tr/projects/
   - title: divider
   - title: blog
-    permalink: /blog/
+    permalink: /tr-tr/blog/
 ---

@@ -2,7 +2,7 @@
 page_id: news
 layout: page
 title: duyurular
-permalink: /news/
+permalink: /tr-tr/news/
 ---
 
 {% include news.liquid %}

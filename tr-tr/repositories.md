@@ -1,7 +1,7 @@
 ---
 page_id: repositories
 layout: page
-permalink: /repositories/
+permalink: /tr-tr/repositories/
 title: depolar
 description: GitHub profilimdeki açık kaynaklı çalışmalar ve kod depoları.
 nav: true

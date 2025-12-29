@@ -1,7 +1,7 @@
 ---
 page_id: publications
 layout: page
-permalink: /publications/
+permalink: /tr-tr/publications/
 title: yayınlar
 description: Kategorilere göre akademik çalışmalar ve yayınlar.
 nav: true

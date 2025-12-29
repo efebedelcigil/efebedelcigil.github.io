@@ -1,7 +1,7 @@
 ---
 page_id: cv
 layout: cv
-permalink: /cv/
+permalink: /tr-tr/cv/
 title: özgeçmiş
 nav: true
 nav_order: 5

@@ -2,7 +2,7 @@
 page_id: projects
 layout: page
 title: projeler
-permalink: /projects/
+permalink: /tr-tr/projects/
 description: Gömülü sistemler, robotik ve güç elektroniği üzerine geliştirdiğim projeler.
 nav: true
 nav_order: 3
