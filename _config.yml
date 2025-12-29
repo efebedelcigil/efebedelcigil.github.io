@@ -219,8 +219,6 @@ defaults:
       path: "assets"
     values:
       sitemap: false
-
-defaults:
   - scope:
       path: "tr-tr"
     values:
