@@ -2,28 +2,19 @@
 page_id: profiles
 layout: profiles
 permalink: /people/
-title: membros
-description: membros do grupo de pesquisa ou laboratório
+title: ekip
+description: Proje ortakları ve çalışma arkadaşlarım.
 nav: true
 nav_order: 7
 
 profiles:
-  # if you want to include more than one profile, just replicate the following block
-  # and create one content file for each profile inside _pages/
+  # Eğer birden fazla profil eklemek istersen aşağıdaki bloğu kopyala
+  # ve her biri için _pages/ içinde yeni bir içerik dosyası oluştur.
   - align: right
     image: prof_pic.jpg
-    content: about_einstein.md
-    image_circular: false # crops the image to make it circular
+    content: about_einstein.md # Buraya arkadaşının markdown dosyasını referans verebilirsin
+    image_circular: false
     more_info: >
-      <p>555 seu telefone do trabalho</p>
-      <p>123 seu endereço</p>
-      <p>Sua cidade, estado 12345</p>
-  - align: left
-    image: prof_pic.jpg
-    content: about_einstein.md
-    image_circular: false # crops the image to make it circular
-    more_info: >
-      <p>555 seu telefone do trabalho</p>
-      <p>123 seu endereço</p>
-      <p>Sua cidade, estado 12345</p>
+      <p>Proje Görevi</p>
+      <p>İletişim Bilgisi</p>
 ---

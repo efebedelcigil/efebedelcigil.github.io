@@ -2,11 +2,11 @@
 page_id: cv
 layout: cv
 permalink: /cv/
-title: cv
+title: özgeçmiş
 nav: true
 nav_order: 5
-cv_pdf: example_pdf.pdf
-description: Esta é uma descrição da página. Você pode modificá-la em '_pages/cv.md'. Também pode alterar ou remover o botão no topo de download de pdf.
+cv_pdf: assets/pdf/cv_tr.pdf
+description: Akademik ve profesyonel yetkinliklerimin detaylı dökümü. PDF sürümünü yukarıdaki butondan indirebilirsiniz.
 toc:
   sidebar: left
 ---

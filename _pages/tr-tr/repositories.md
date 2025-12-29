@@ -2,15 +2,15 @@
 page_id: repositories
 layout: page
 permalink: /repositories/
-title: repositórios
-description: Edite o `_data/repositories.yml` e mude as listas `github_users` e `github_repos` para incluir seu próprio perfil do GitHub e repositórios.
+title: depolar
+description: GitHub profilimdeki açık kaynaklı çalışmalar ve kod depoları.
 nav: true
 nav_order: 4
 ---
 
 {% if site.data.repositories.github_users %}
 
-## Usuários do GitHub
+## GitHub Profili
 
 <div class="repositories d-flex flex-wrap flex-md-row flex-column justify-content-between align-items-center">
   {% for user in site.data.repositories.github_users %}
@@ -38,7 +38,7 @@ nav_order: 4
 
 {% if site.data.repositories.github_repos %}
 
-## Repositórios do GitHub
+## GitHub Depoları
 
 <div class="repositories d-flex flex-wrap flex-md-row flex-column justify-content-between align-items-center">
   {% for repo in site.data.repositories.github_repos %}
