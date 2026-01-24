@@ -5,11 +5,9 @@ sidebar_tr:
         url: "/tr/"
       - title: "Projeler"
         url: "/tr/projects/"
-      - title: "CV (Özgeçmiş)"
-        url: "/assets/pdf/cv-tr.pdf" # PDF'i sonra ekleyeceğiz
   - title: "Dil / Language"
     children:
-      - title: "🇬🇧 English"
+      - title: "English"
         url: "/en/"
 
 sidebar_en:
@@ -19,9 +17,7 @@ sidebar_en:
         url: "/en/"
       - title: "Projects"
         url: "/en/projects/"
-      - title: "Resume (CV)"
-        url: "/assets/pdf/cv-en.pdf"
   - title: "Language / Dil"
     children:
-      - title: "🇹🇷 Türkçe"
+      - title: "Türkçe"
         url: "/tr/"
