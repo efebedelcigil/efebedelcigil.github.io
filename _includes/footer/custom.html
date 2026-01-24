@@ -1,6 +1,7 @@
 <script>
 document.addEventListener("DOMContentLoaded", function() {
-  // Dış Linkleri Yeni Sekmede Açma (Standart)
+
+  // 1. PDF ve Dış Linkleri Yeni Sekmede Açma (Standart)
   var links = document.links;
   for (var i = 0; i < links.length; i++) {
     if (links[i].hostname != window.location.hostname) {
@@ -10,44 +11,36 @@ document.addEventListener("DOMContentLoaded", function() {
       links[i].target = '_blank';
     }
   }
-});
 
-// DİL DEĞİŞTİRME INTERCEPTOR (Hash Yöntemi)
-window.addEventListener('click', function(e) {
+  // 2. LİNK REWRITER (Linkleri Önceden Güncelleme)
+  // Tıklama beklemiyoruz, butonun adresini direkt değiştiriyoruz.
   
-  var link = e.target.closest('a');
-  if (!link) return;
-
-  var href = link.getAttribute('href'); 
-  var currentPath = window.location.pathname;
-
-  // 1. İNGİLİZCEYE GEÇİŞ (#lang-en tıklandıysa)
-  if (href === '#lang-en') {
-    e.preventDefault(); // Sayfanın zıplamasını engelle
+  var currentPath = window.location.pathname; // Örn: /tr/projects/
+  
+  // A) TÜRKÇE SAYFADAYIZ -> İNGİLİZCE BUTONUNU BUL VE GÜNCELLE
+  if (currentPath.indexOf('/tr/') !== -1) {
+    // Hedefi tam olarak "/en/" olan linki bul
+    // (CSS Selector: a[href="/en/"])
+    var enBtn = document.querySelector('a[href="/en/"]');
     
-    // Eğer şu an TR içindeysek değiştir
-    if (currentPath.indexOf('/tr/') !== -1) {
+    if (enBtn) {
+      // Mevcut yolun başındaki "/tr/" kısmını "/en/" yap
       var newPath = currentPath.replace('/tr/', '/en/');
-      window.location.href = newPath;
-    } else {
-      // Zaten TR değilse (belki kök dizindeyizdir), direkt EN anasayfaya at
-      window.location.href = '/en/';
+      // Butonun hedefini güncelle
+      enBtn.setAttribute('href', newPath);
     }
   }
 
-  // 2. TÜRKÇEYE GEÇİŞ (#lang-tr tıklandıysa)
-  else if (href === '#lang-tr') {
-    e.preventDefault();
+  // B) İNGİLİZCE SAYFADAYIZ -> TÜRKÇE BUTONUNU BUL VE GÜNCELLE
+  else if (currentPath.indexOf('/en/') !== -1) {
+    // Hedefi tam olarak "/tr/" olan linki bul
+    var trBtn = document.querySelector('a[href="/tr/"]');
     
-    // Eğer şu an EN içindeysek değiştir
-    if (currentPath.indexOf('/en/') !== -1) {
+    if (trBtn) {
       var newPath = currentPath.replace('/en/', '/tr/');
-      window.location.href = newPath;
-    } else {
-      // Zaten EN değilse, direkt TR anasayfaya at
-      window.location.href = '/tr/';
+      trBtn.setAttribute('href', newPath);
     }
   }
 
-}, true); 
+});
 </script>

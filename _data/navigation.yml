@@ -10,7 +10,7 @@ sidebar_tr:
   - title: "Dil / Language"
     children:
       - title: "English (İngilizce)"
-        url: "#lang-en"
+        url: "en/"
 
 sidebar_en:
   - title: "Menu"
@@ -24,4 +24,4 @@ sidebar_en:
   - title: "Language / Dil"
     children:
       - title: "Türkçe (Turkish)"
-        url: "#lang-tr"
+        url: "/tr/"
