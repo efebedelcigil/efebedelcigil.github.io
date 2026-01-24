@@ -1,0 +1,26 @@
+sidebar_tr:
+  - title: "Menü"
+    children:
+      - title: "Hakkımda"
+        url: "/tr/"
+      - title: "Projeler"
+        url: "/tr/projects/"
+      - title: "CV (Özgeçmiş)"
+        url: "/assets/pdf/cv-tr.pdf" # PDF'i sonra ekleyeceğiz
+  - title: "Dil / Language"
+    children:
+      - title: "🇬🇧 English"
+        url: "/en/"
+
+sidebar_en:
+  - title: "Menu"
+    children:
+      - title: "About"
+      - title: "Projects"
+        url: "/en/projects/"
+      - title: "Resume (CV)"
+        url: "/assets/pdf/cv-en.pdf"
+  - title: "Language / Dil"
+    children:
+      - title: "🇹🇷 Türkçe"
+        url: "/tr/"
