@@ -11,6 +11,19 @@ author:
   avatar: "/assets/images/profile.jpg"
   bio: "Ege Üniversitesi Elektrik-Elektronik Mühendisliği 3. Sınıf Öğrencisi."
   location: "İzmir, Türkiye"
+  links:
+    - label: "Email"
+      icon: "fas fa-fw fa-envelope-square"
+      url: "mailto:seninmailin@gmail.com"
+    - label: "LinkedIn"
+      icon: "fab fa-fw fa-linkedin"
+      url: "https://www.linkedin.com/in/kullaniciadi"
+    - label: "GitHub"
+      icon: "fab fa-fw fa-github"
+      url: "https://github.com/kullaniciadi"
+    - label: "CV İndir (TR)"
+      icon: "fas fa-fw fa-file-pdf"
+      url: "/assets/pdf/cv-tr.pdf"
 
 plugins:
   - jekyll-feed
