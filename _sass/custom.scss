@@ -1,9 +1,9 @@
 /* ==========================================================================
-   _sass/custom.scss - Efe V.B. Özel Stilleri (Final + Düzeltmeler)
+   _sass/custom.scss - Efe V.B. Final Style (Slide Switch + Fixes)
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
-   1. ROBUST GRID SYSTEM (Yetenekler/Projeler Kart Yapısı)
+   1. ROBUST GRID SYSTEM (Kart Yapısı)
    -------------------------------------------------------------------------- */
 .robust-grid-container {
   display: grid;
@@ -12,14 +12,12 @@
   margin-top: 30px;
   margin-bottom: 30px;
 
-  /* Kartların Dış Yapısı */
   .feature__item {
     margin: 0 !important;
     padding: 0 !important;
     max-width: 100% !important;
     flex: none !important;
 
-    /* Kartın İç Yapısı */
     .archive__item {
       height: 100%;
       border: 1px solid #e1e4e8;
@@ -35,48 +33,26 @@
         box-shadow: 0 10px 20px rgba(0,0,0,0.1);
       }
     }
-
-    /* İkon Alanı */
-    .archive__item-teaser {
-      text-align: center;
-      margin-bottom: 15px;
-      i { color: #0056b3; }
-    }
-
-    /* Başlık Alanı */
-    .archive__item-title {
-      text-align: center;
-      font-size: 1.1em;
-      margin-bottom: 15px;
-      width: 100%;
-    }
-    
-    /* İçerik Gövdesi */
-    .archive__item-body {
-      width: 100%;
-      text-align: center;
-    }
+    .archive__item-teaser { margin-bottom: 15px; i { color: #0056b3; } }
+    .archive__item-title { text-align: center; font-size: 1.1em; margin-bottom: 15px; width: 100%; }
+    .archive__item-body { width: 100%; text-align: center; }
   }
 }
 
 /* --------------------------------------------------------------------------
-   2. SKILL TAGS (Yetenek Etiketleri)
+   2. YAN MENÜ (SIDEBAR) - KAYMA SORUNU ÇÖZÜMÜ
    -------------------------------------------------------------------------- */
-.skill-tag {
-  display: inline-block;
-  background-color: #f8f9fa;
-  color: #333;
-  padding: 4px 10px;
-  border-radius: 20px;
-  font-size: 0.85em;
-  font-weight: 500;
-  margin: 3px;
-  border: 1px solid #e9ecef;
-  transition: all 0.3s ease;
+.sidebar {
+    /* KRİTİK DÜZELTME: */
+    /* Light mode'da şeffaf sınır koyuyoruz ki Dark mode'a geçince genişlik değişmesin */
+    border: 1px solid transparent; 
+    border-radius: 4px;
+    padding: 1em;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 /* --------------------------------------------------------------------------
-   3. STICKY NAVBAR (Yapışkan Menü)
+   3. STICKY NAVBAR
    -------------------------------------------------------------------------- */
 .masthead {
   position: -webkit-sticky;
@@ -89,176 +65,119 @@
 }
 
 /* --------------------------------------------------------------------------
-   4. DARK MODE BUTON STİLİ (Search Butonuyla Uyumlu)
+   4. SLIDE SWITCH (Görseldeki Tasarım)
    -------------------------------------------------------------------------- */
 #theme-toggle {
-  background-color: transparent;
-  border: 0;
-  border-radius: 4px;
-  color: inherit;
+  position: relative;
+  width: 60px;          /* Genişlik */
+  height: 30px;         /* Yükseklik */
+  background: #87CEEB;  /* Gündüz Mavisi (Varsayılan) */
+  border-radius: 30px;  /* Hap şekli */
+  border: none;
   cursor: pointer;
-  width: 2rem;
-  height: 2rem;
-  margin-right: 0.5rem;
+  margin-right: 15px;   /* Search butonuyla mesafe */
   outline: none;
-  font-size: 1rem;
-  display: inline-flex;
+  transition: background 0.5s ease;
+  overflow: hidden;     /* Taşmaları gizle */
+  padding: 0;
+  display: flex;
   align-items: center;
-  justify-content: center;
-  transition: background-color 0.2s;
+}
 
-  &:hover {
-    background-color: rgba(0, 0, 0, 0.05);
-  }
+/* Yuvarlak Hareketli Parça (Thumb) */
+#theme-toggle::after {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #FFD700; /* Güneş Sarısı */
+  transition: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55); /* Yaylanma efekti */
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+/* Dark Mode Aktifken Switch Hali */
+body.dark-mode #theme-toggle {
+  background: #2C3E50; /* Gece Mavisi */
+}
+
+body.dark-mode #theme-toggle::after {
+  left: 33px; /* Sağa kaydır */
+  background: transparent; /* Hilal yapmak için rengi kapatıyoruz */
+  
+  /* CSS İle Hilal Ay Çizimi (Box Shadow Tekniği) */
+  box-shadow: 6px -3px 0 2px #ffffff; 
+  /* Bu gölge, şeffaf yuvarlağın sağ üstüne beyaz bir hilal düşürür */
+}
+
+/* Butonun üzerine gelince (Hover) */
+#theme-toggle:hover {
+  opacity: 0.9;
 }
 
 /* --------------------------------------------------------------------------
-   5. SUPER DARK MODE (Gelişmiş Karanlık Tema)
+   5. SUPER DARK MODE (Renk Paleti)
    -------------------------------------------------------------------------- */
-
-/* == A) Değişkenler ve Ana Yapı == */
 body.dark-mode {
-  --dm-bg: #121212;         /* Ana Arka Plan */
-  --dm-surface: #1e1e1e;    /* Kartlar, Menü, Sidebar */
-  --dm-border: #333333;     /* Çizgiler */
-  --dm-text-main: #e0e0e0;  /* Ana Metin */
-  --dm-text-muted: #a0a0a0; /* Yan Metin */
-  --dm-accent: #64b5f6;     /* Linkler */
-  --dm-tag-bg: #2d2d2d;     /* Etiket Arka Planı */
+  --dm-bg: #121212;
+  --dm-surface: #1e1e1e;
+  --dm-border: #333333;
+  --dm-text-main: #e0e0e0;
+  --dm-text-muted: #a0a0a0;
+  --dm-accent: #64b5f6;
+  --dm-tag-bg: #2d2d2d;
 
   background-color: var(--dm-bg) !important;
   color: var(--dm-text-main) !important;
 
-  /* == B) Genel Elemanlar == */
-  a {
-    color: var(--dm-accent);
-    &:hover { color: #fff; }
-  }
+  a { color: var(--dm-accent); &:hover { color: #fff; } }
+  h1, h2, h3, h4, h5, h6 { color: #fff !important; }
 
-  h1, h2, h3, h4, h5, h6 {
-    color: #fff !important;
-  }
-
-  /* == C) Navbar (Masthead - Genel Ayar) == */
+  /* Navbar */
   .masthead {
     background-color: var(--dm-surface) !important;
     border-bottom-color: var(--dm-border) !important;
   }
-  
-  /* Buton Hover Efekti (Dark Mode için) */
-  #theme-toggle:hover, .search__toggle:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-  }
+  .masthead__menu-item a { color: var(--dm-text-main) !important; &:hover { color: var(--dm-accent) !important; } }
 
-  /* == D) Sidebar (Sol Profil) == */
+  /* Sidebar (Artık kaymayacak) */
   .sidebar {
     background-color: var(--dm-surface) !important;
-    border: 1px solid var(--dm-border);
-    border-radius: 4px;
-    padding: 1em;
+    border-color: var(--dm-border) !important; /* Rengi burada veriyoruz */
   }
-  .author__name, .author__bio {
-    color: var(--dm-text-main) !important;
-  }
+  .author__name, .author__bio { color: var(--dm-text-main) !important; }
 
-  /* == E) Grid Kartları ve Proje Teaserları == */
-  /* Kartların genel yapısı */
-  .archive__item-teaser, 
-  .robust-grid-container .feature__item .archive__item {
+  /* Kartlar */
+  .archive__item-teaser, .robust-grid-container .feature__item .archive__item {
     background-color: var(--dm-surface) !important;
     border-color: var(--dm-border) !important;
-    box-shadow: none !important;
   }
-  /* Kart içindeki başlıklar */
-  .archive__item-title a {
-    color: var(--dm-text-main) !important;
-  }
-  .archive__item-excerpt {
-    color: var(--dm-text-muted) !important;
-  }
+  .archive__item-title a { color: var(--dm-text-main) !important; }
+  .archive__item-excerpt { color: var(--dm-text-muted) !important; }
 
-  /* == F) Yetenek Etiketleri (Skill Tags) == */
-  .skill-tag {
-    background-color: var(--dm-tag-bg) !important;
-    color: var(--dm-text-main) !important;
-    border-color: var(--dm-border) !important;
-  }
+  /* Etiketler, Tablolar, Kodlar */
+  .skill-tag { background-color: var(--dm-tag-bg) !important; color: var(--dm-text-main) !important; border-color: var(--dm-border) !important; }
+  table { background-color: var(--dm-surface); color: var(--dm-text-main); }
+  div.highlighter-rouge, figure.highlight { background-color: #2d2d2d !important; }
+  code, kbd, pre, samp { background-color: #2d2d2d; color: #f8f8f2; border: none; }
 
-  /* == G) Tablolar ve Kod Blokları == */
-  table {
-    background-color: var(--dm-surface);
-    color: var(--dm-text-main);
-  }
-  /* Kod blokları zaten koyu ama etrafındaki çerçeveyi uyumlu yapalım */
-  div.highlighter-rouge, figure.highlight {
-    background-color: #2d2d2d !important; 
-  }
-  code, kbd, pre, samp {
-    background-color: #2d2d2d;
-    color: #f8f8f2;
-    border: none;
-  }
-
-  /* == H) Footer == */
-  .page__footer {
-    background-color: #000000 !important;
-    color: var(--dm-text-muted) !important;
-    border-top: 1px solid var(--dm-border);
-  }
-  .page__footer a {
-    color: var(--dm-text-main) !important;
-  }
-
-  /* == I) Arama Ekranı (Search Overlay) == */
-  .search-content {
-    background-color: var(--dm-bg) !important;
-  }
-  .search-content input {
-    background-color: var(--dm-surface) !important;
-    color: #fff !important;
-    border-color: var(--dm-border) !important;
-  }
-  .search-result__title a {
-     color: var(--dm-accent) !important;
-  }
+  /* Footer & Search */
+  .page__footer { background-color: #000000 !important; color: var(--dm-text-muted) !important; border-top: 1px solid var(--dm-border); }
+  .page__footer a { color: var(--dm-text-main) !important; }
+  .search-content { background-color: var(--dm-bg) !important; }
+  .search-content input { background-color: var(--dm-surface) !important; color: #fff !important; border-color: var(--dm-border) !important; }
+  .search-result__title a { color: var(--dm-accent) !important; }
 }
 
-/* ==========================================================================
-   6. DÜZELTMELER VE CİLALAR (EKLENEN KISIM)
-   ========================================================================== */
-
-/* A) Navbar (Masthead) Dark Mode Zorlaması (Beyaz kalmasını engeller) */
-body.dark-mode .masthead {
-  background-color: #1e1e1e !important; /* Kesin siyah/gri */
-  border-bottom-color: #333 !important;
-}
-
-/* Navbar linkleri dark mode'da beyaz olsun */
-body.dark-mode .masthead__menu-item a {
-  color: #e0e0e0 !important;
-}
-body.dark-mode .masthead__menu-item a:hover {
-  color: #64b5f6 !important; /* Mavi vurgu */
-}
-
-/* B) Güneş İkonu Düzeltmesi (Sarı ve Parlak) */
-body.dark-mode #theme-toggle i {
-  color: #fdd835 !important; /* Güneş Sarısı */
-  filter: drop-shadow(0 0 2px rgba(253, 216, 53, 0.5)); /* Hafif parlama */
-  transform: scale(1.1); /* Biraz büyüt */
-}
-
-/* C) Arama Highlight (Vurgulama) Stili ve Animasyonu */
+/* 6. Highlight Animasyonu */
 mark.highlighted-term {
-  background-color: #ffff00 !important; /* Fosforlu Sarı */
-  color: #000000 !important; /* Siyah Yazı */
-  padding: 0.1em 0.3em;
-  border-radius: 3px;
+  background-color: #ffff00 !important; color: #000000 !important;
+  padding: 0.1em 0.3em; border-radius: 3px;
   box-shadow: 0 0 10px rgba(255, 255, 0, 0.7);
-  animation: pulseHighlight 2s infinite; /* Nabız Animasyonu */
+  animation: pulseHighlight 2s infinite;
 }
-
-/* Nabız Animasyonu Tanımı */
 @keyframes pulseHighlight {
   0% { box-shadow: 0 0 0 0 rgba(255, 255, 0, 0.7); }
   70% { box-shadow: 0 0 0 10px rgba(255, 255, 0, 0); }

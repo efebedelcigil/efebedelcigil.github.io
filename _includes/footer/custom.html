@@ -103,38 +103,24 @@ document.addEventListener("DOMContentLoaded", function() {
 <script>
 document.addEventListener("DOMContentLoaded", function() {
   
-  // HTML'de (masthead.html) zaten var olan butonu seçiyoruz
   var toggleBtn = document.getElementById('theme-toggle');
-  var icon = toggleBtn ? toggleBtn.querySelector('i') : null;
   var body = document.body;
   
   // A) Tercihi Hatırla
   var currentTheme = localStorage.getItem('theme');
   if (currentTheme === 'dark') {
     body.classList.add('dark-mode');
-    if(icon) {
-      icon.classList.remove('fa-moon'); // Ayı kaldır
-      icon.classList.add('fa-sun');     // Güneşi koy
-    }
   }
 
-  // B) Tıklama Olayı
+  // B) Tıklama Olayı (Sadece Class Ekle/Çıkar)
   if (toggleBtn) {
     toggleBtn.addEventListener('click', function() {
       body.classList.toggle('dark-mode');
       
       if (body.classList.contains('dark-mode')) {
         localStorage.setItem('theme', 'dark');
-        if(icon) {
-          icon.classList.remove('fa-moon');
-          icon.classList.add('fa-sun');
-        }
       } else {
         localStorage.setItem('theme', 'light');
-        if(icon) {
-          icon.classList.remove('fa-sun');
-          icon.classList.add('fa-moon');
-        }
       }
     });
   }
