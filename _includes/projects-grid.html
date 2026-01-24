@@ -1,0 +1,47 @@
+<div class="feature__wrapper">
+  {% for project in site.data.projects %}
+  
+    {% if page.lang == 'tr' %}
+      {% assign desc = project.description.tr %}
+    {% else %}
+      {% assign desc = project.description.en %}
+    {% endif %}
+
+    <div class="feature__item--left">
+      <div class="archive__item">
+        
+        {% if project.image_path %}
+          <div class="archive__item-teaser">
+            <img src="{{ project.image_path }}" alt="{{ project.title }}" style="width: 100%; height: auto; border-radius: 5px;">
+          </div>
+        {% endif %}
+
+        <div class="archive__item-body">
+          <h2 class="archive__item-title">{{ project.title }}</h2>
+          
+          <div style="margin-bottom: 10px;">
+            {% for tag in project.tags %}
+              <span style="font-size: 0.75em; background: #eee; padding: 2px 6px; border-radius: 4px; color: #555; margin-right: 4px;">#{{ tag }}</span>
+            {% endfor %}
+          </div>
+
+          <div class="archive__item-excerpt">
+            <p>{{ desc }}</p>
+          </div>
+
+          {% if project.url %}
+            <p><a href="{{ project.url }}" class="btn {{ project.btn_class }}">{{ project.btn_label }}</a></p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+</div>
+
+<style>
+.feature__wrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Yan yana dizer */
+  gap: 30px;
+}
+</style>

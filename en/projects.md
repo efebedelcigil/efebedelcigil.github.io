@@ -3,13 +3,9 @@ title: "Projects"
 permalink: /en/projects/
 layout: single
 author_profile: true
+classes: wide
 ---
 
-Here are selected projects I've worked on during my engineering studies.
+Selected projects I've worked on during my engineering studies and IEEE activities.
 
-## 🚁 Embedded Systems
-
-### 1. STM32 Flight Controller
-Custom drone flight control system design.
-* **Tech:** C/C++, STM32, PCB Design
-* [View on GitHub >](#){: .btn .btn--info}
+{% include projects-grid.html %}

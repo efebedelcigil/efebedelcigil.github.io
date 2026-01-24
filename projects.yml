@@ -1,0 +1,32 @@
+# _data/projects.yml
+# Burası tek merkezdir. Linki değiştirirsen her yerde değişir.
+
+- title: "STM32 Flight Controller"
+  image_path: "/assets/images/drone.jpg" # Yoksa gri kutu çıkar
+  url: "https://github.com/efebedelcigil/stm32-drone"
+  btn_label: "GitHub"
+  btn_class: "btn--info"
+  tags: ["C++", "STM32", "KiCad", "PID Control"]
+  description:
+    tr: "Özelleştirilmiş PCB tasarımı ve sensör füzyonu algoritmaları içeren uçuş kontrol sistemi."
+    en: "Custom flight controller PCB design with sensor fusion algorithms and PID control."
+
+- title: "IEEE V2X Battery Charger"
+  image_path: "/assets/images/charger.jpg"
+  url: "#"
+  btn_label: "Detaylar / Details"
+  btn_class: "btn--warning"
+  tags: ["MATLAB", "Simulink", "Power Electronics"]
+  description:
+    tr: "Elektrikli araçlar için şebekeden araca (V2X) enerji aktarımı sağlayan çift yönlü şarj devresi."
+    en: "Bidirectional battery charger design for Vehicle-to-Grid (V2X) energy transfer systems."
+
+- title: "DC-DC Converter Workshop"
+  image_path: "/assets/images/workshop.jpg"
+  url: "https://linkedin.com/in/..."
+  btn_label: "Sertifika / Certificate"
+  btn_class: "btn--success"
+  tags: ["Education", "NotebookLM", "Mentorship"]
+  description:
+    tr: "Üniversite öğrencilerine yönelik, simülasyon destekli güç elektroniği eğitimi."
+    en: "Simulation-supported power electronics workshop for university students."
