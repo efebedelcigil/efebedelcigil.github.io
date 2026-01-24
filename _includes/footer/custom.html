@@ -1,7 +1,7 @@
 <script>
 document.addEventListener("DOMContentLoaded", function() {
-  
-  // 1. GÖREV: Dış Linkleri Yeni Sekmede Açma
+
+  // 1. GÖREV: Dış Linkleri Yeni Sekmede Açma (Bu zaten çalışıyordu)
   var links = document.links;
   for (var i = 0; i < links.length; i++) {
     if (links[i].hostname != window.location.hostname) {
@@ -12,30 +12,36 @@ document.addEventListener("DOMContentLoaded", function() {
     }
   }
 
-  // 2. GÖREV: Akıllı Dil Değiştirici (Context-Aware Switcher)
-  // Şu anki sayfanın adresini al (Örn: /tr/cv/ veya /en/projects/)
-  var currentPath = window.location.pathname;
-  
-  // Menüdeki tüm linkleri tara
-  var navLinks = document.querySelectorAll('.nav__list-item a');
+  // 2. GÖREV: AKILLI DİL DEĞİŞTİRİCİ (INTERCEPTOR V2.0)
+  // Linkleri önceden değiştirmek yerine, tıklama anında yakalıyoruz.
+  document.body.addEventListener('click', function(e) {
+    
+    // Tıklanan öğe bir link mi (veya linkin içindeki bir ikon mu)?
+    var link = e.target.closest('a');
+    if (!link) return; // Link değilse işlem yapma
 
-  navLinks.forEach(function(link) {
-    var href = link.getAttribute('href');
+    var href = link.getAttribute('href'); // Linkin hedefi ne?
+    var currentPath = window.location.pathname; // Şu an neredeyiz?
 
-    // Senaryo A: Kullanıcı TR sayfasında, "English" butonunu arıyor
-    // (Link hedefi "/en/" olan butonu bul ve güncelle)
-    if (href === '/en/' && currentPath.includes('/tr/')) {
-      var newPath = currentPath.replace('/tr/', '/en/');
-      link.setAttribute('href', newPath);
+    // SENARYO A: TR sayfasındayız, "English" (/en/) butonuna tıklandı
+    if (href === '/en/' && currentPath.indexOf('/tr/') !== -1) {
+      // Sadece anasayfadaysak (/tr/) karışma, ama alt sayfadaysak (/tr/projects/) müdahale et
+      if (currentPath.length > 4) { 
+        e.preventDefault(); // Standart gitmeyi durdur
+        var newPath = currentPath.replace('/tr/', '/en/');
+        window.location.href = newPath; // Yeni adrese manuel gönder
+      }
     }
 
-    // Senaryo B: Kullanıcı EN sayfasında, "Türkçe" butonunu arıyor
-    // (Link hedefi "/tr/" olan butonu bul ve güncelle)
-    else if (href === '/tr/' && currentPath.includes('/en/')) {
-      var newPath = currentPath.replace('/en/', '/tr/');
-      link.setAttribute('href', newPath);
+    // SENARYO B: EN sayfasındayız, "Türkçe" (/tr/) butonuna tıklandı
+    else if (href === '/tr/' && currentPath.indexOf('/en/') !== -1) {
+      if (currentPath.length > 4) {
+        e.preventDefault(); // Standart gitmeyi durdur
+        var newPath = currentPath.replace('/en/', '/tr/');
+        window.location.href = newPath; // Yeni adrese manuel gönder
+      }
     }
+
   });
-
 });
 </script>
