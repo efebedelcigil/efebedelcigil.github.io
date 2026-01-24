@@ -26,10 +26,10 @@ document.addEventListener("DOMContentLoaded", function() {
   try {
     siteMap = JSON.parse(rawData);
   } catch (e) {
-    // Sessizce geç (Production'da konsolu kirletmeye gerek yok)
+    // Sessizce geç
   }
 
-  // --- Normalizasyon (URL Temizleme) ---
+  // --- Normalizasyon ---
   function normalize(path) {
     if (!path) return "";
     try {
@@ -86,7 +86,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
   }
 
-  // --- Dış Linkler ve PDF Ayarları ---
+  // --- Dış Linkler ve PDF ---
   var links = document.links;
   for (var k = 0; k < links.length; k++) {
     if (links[k].hostname != window.location.hostname) {
@@ -97,5 +97,84 @@ document.addEventListener("DOMContentLoaded", function() {
     }
   }
 
+});
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  
+  // HTML'de (masthead.html) zaten var olan butonu seçiyoruz
+  var toggleBtn = document.getElementById('theme-toggle');
+  var icon = toggleBtn ? toggleBtn.querySelector('i') : null;
+  var body = document.body;
+  
+  // A) Tercihi Hatırla
+  var currentTheme = localStorage.getItem('theme');
+  if (currentTheme === 'dark') {
+    body.classList.add('dark-mode');
+    if(icon) {
+      icon.classList.remove('fa-moon'); // Ayı kaldır
+      icon.classList.add('fa-sun');     // Güneşi koy
+    }
+  }
+
+  // B) Tıklama Olayı
+  if (toggleBtn) {
+    toggleBtn.addEventListener('click', function() {
+      body.classList.toggle('dark-mode');
+      
+      if (body.classList.contains('dark-mode')) {
+        localStorage.setItem('theme', 'dark');
+        if(icon) {
+          icon.classList.remove('fa-moon');
+          icon.classList.add('fa-sun');
+        }
+      } else {
+        localStorage.setItem('theme', 'light');
+        if(icon) {
+          icon.classList.remove('fa-sun');
+          icon.classList.add('fa-moon');
+        }
+      }
+    });
+  }
+});
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  var urlParams = new URLSearchParams(window.location.search);
+  var query = urlParams.get('q') || urlParams.get('highlight');
+
+  if (query && query.length > 2) {
+    var cleanQuery = query.replace(/[^\w\s]/gi, ''); // Güvenlik temizliği
+    
+    var context = document.querySelector('.page__content') || document.body;
+    
+    // Basit Highlight Fonksiyonu
+    function highlightText(element, text) {
+      if (element.hasChildNodes()) {
+        element.childNodes.forEach(function(node) {
+          highlightText(node, text);
+        });
+      } else if (element.nodeType === 3) { // Text node
+        var val = element.nodeValue;
+        var regex = new RegExp("(" + text + ")", "gi");
+        if (val.match(regex)) {
+          var span = document.createElement("span");
+          // Sarı vurgu stili
+          span.innerHTML = val.replace(regex, '<mark style="background:yellow; color:black; border-radius:3px; padding:0 2px;">$1</mark>');
+          element.parentNode.replaceChild(span, element);
+          
+          if (!window.scrolledToHighlight) {
+            span.scrollIntoView({behavior: "smooth", block: "center"});
+            window.scrolledToHighlight = true;
+          }
+        }
+      }
+    }
+    
+    highlightText(context, cleanQuery);
+  }
 });
 </script>

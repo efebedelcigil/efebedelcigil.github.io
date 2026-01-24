@@ -87,3 +87,53 @@
     display: none !important; /* ...Drive linklerini gizle */
   }
 }
+
+/* --- STICKY NAVBAR (Yapışkan Menü) --- */
+.masthead {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  z-index: 9999; /* Her şeyin üstünde kalsın */
+  background-color: #fff; /* Arka plan şeffaf olmasın */
+  border-bottom: 1px solid #eee; /* Altına ince çizgi */
+  transition: all 0.3s ease-in-out;
+}
+
+/* Dark Mode uyumu için */
+body.dark-mode .masthead {
+  background-color: #1e1e1e; /* Koyu renk */
+  border-bottom: 1px solid #333;
+}
+
+/* --- DARK MODE (Renk Paleti) --- */
+
+/* Varsayılan (Light) */
+:root {
+  --bg-color: #ffffff;
+  --text-color: #333333;
+  --link-color: #007acc; /* Senin mavi tonun */
+  --sidebar-bg: #f5f5f5;
+  --card-bg: #ffffff;
+  --border-color: #e0e0e0;
+}
+
+/* Koyu Mod (Dark) */
+body.dark-mode {
+  --bg-color: #121212;
+  --text-color: #e0e0e0;
+  --link-color: #4db8ff;
+  --sidebar-bg: #1e1e1e;
+  --card-bg: #1e1e1e;
+  --border-color: #333333;
+
+  background-color: var(--bg-color) !important;
+  color: var(--text-color) !important;
+}
+
+/* Mevcut tema sınıflarını override et (Minimal Mistakes için) */
+body.dark-mode .page__content { color: var(--text-color); }
+body.dark-mode .sidebar { background-color: var(--sidebar-bg); }
+body.dark-mode .archive__item-teaser { background-color: var(--card-bg); }
+body.dark-mode h1, body.dark-mode h2, body.dark-mode h3 { color: #fff; }
+body.dark-mode a { color: var(--link-color); }
+body.dark-mode .masthead { background-color: var(--sidebar-bg); }

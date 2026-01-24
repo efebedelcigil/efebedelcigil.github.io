@@ -1,13 +1,11 @@
-title: Efe Varol Bedelcigil
+title: EVB
+title_seperator: " | "
 name: Efe Varol Bedelcigil
 description: "Elektrik-Elektronik Mühendisliği Öğrencisi"
 url: "https://efebedelcigil.github.io"
 baseurl: ""
 remote_theme: mmistakes/minimal-mistakes
 minimal_mistakes_skin: "default"
-
-# DİKKAT: Buradaki eski author bloğunu SİLDİK. 
-# Artık veriyi _data/authors.yml'dan ve aşağıdaki defaults'tan çekecek.
 
 plugins:
   - jekyll-feed
@@ -38,7 +36,7 @@ defaults:
       sidebar:
         nav: "sidebar_tr"
       language: "tr"
-      author: "efe_tr" # <-- Türkçe profil (authors.yml'dan gelir)
+      author: "efe_tr"
 
   # EN Klasörü Ayarları
   - scope:
@@ -51,4 +49,9 @@ defaults:
       sidebar:
         nav: "sidebar_en"
       language: "en"
-      author: "efe_en" # <-- İngilizce profil (authors.yml'dan gelir)
+      author: "efe_en"
+      
+search: true
+search_provider: lunr
+lunr:
+  search_within_pages: true
