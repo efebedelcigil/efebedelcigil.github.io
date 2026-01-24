@@ -9,7 +9,7 @@ toc_icon: "file-alt"
 ---
 
 <div style="text-align: center; margin-bottom: 2rem;">
-  <a href="https://drive.google.com/file/d/1HfZ32vMzXdrcsmfgcmDTPrTfmM4su3IX/view?usp=sharing" class="btn btn--success btn--large">
+  <a href="https://drive.google.com/file/d/1wCTw0azxwId-kzBdHv2tG7ZkstrnXRFW/view?usp=sharing" class="btn btn--success btn--large">
   <i class="fas fa-file-pdf"></i> PDF Olarak İncele/İndir
 </a>
 </div>
