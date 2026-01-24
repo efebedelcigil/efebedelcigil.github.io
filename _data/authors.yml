@@ -1,8 +1,10 @@
-# Türkçe Profil
+# _data/authors.yml
+
+# Türkçe Profil (efe_tr)
 efe_tr:
   name: "Efe Varol Bedelcigil"
   avatar: "/assets/images/profile.jpg"
-  bio: "Ege Üniversitesi EEM 3. Sınıf Öğrencisi."
+  bio: "Ege Üniversitesi Elektrik-Elektronik Mühendisliği Öğrencisi"
   location: "İzmir, Türkiye"
   links:
     - label: "Email / İletişim"
@@ -10,30 +12,30 @@ efe_tr:
       url: "/tr/contact/"
     - label: "LinkedIn"
       icon: "fab fa-fw fa-linkedin"
-      url: "https://www.linkedin.com/in/..."
+      url: "https://www.linkedin.com/in/efevarolbedelcigil"
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
       url: "https://github.com/efebedelcigil"
-    - label: "CV İndir (TR)"
+    - label: "CV İncele / İndir (PDF)"
       icon: "fas fa-fw fa-file-pdf"
-      url: "/assets/pdf/cv-tr.pdf"
+      url: "https://drive.google.com/file/d/1HfZ32vMzXdrcsmfgcmDTPrTfmM4su3IX/view?usp=sharing"
 
-# İngilizce Profil
+# İngilizce Profil (efe_en)
 efe_en:
   name: "Efe Varol Bedelcigil"
   avatar: "/assets/images/profile.jpg"
-  bio: "Ege Univ. EEE Student & IEEE Chair."
+  bio: "Electrical & Electronics Engineering Student at Ege University"
   location: "Izmir, Turkey"
   links:
     - label: "Contact Me"
       icon: "fas fa-fw fa-envelope"
-      url: "/en/contact/"  # <-- İŞTE BURASI DİNAMİK OLDU
+      url: "/en/contact/"
     - label: "LinkedIn"
       icon: "fab fa-fw fa-linkedin"
-      url: "https://www.linkedin.com/in/..."
+      url: "https://www.linkedin.com/in/efevarolbedelcigil"
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
       url: "https://github.com/efebedelcigil"
-    - label: "Download CV (EN)"
+    - label: "View / Download CV (PDF)"
       icon: "fas fa-fw fa-file-pdf"
-      url: "/assets/pdf/cv-en.pdf"
+      url: "https://drive.google.com/file/d/1P20Ni544yW1lxc5FQGxbP42w82eBpjj_/view?usp=sharing"

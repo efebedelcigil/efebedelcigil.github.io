@@ -10,9 +10,9 @@ toc_icon: "file-alt"
 ---
 
 <div style="text-align: center; margin-bottom: 2rem;">
-  <a href="/assets/pdf/cv-en.pdf" class="btn btn--success btn--large">
-    <i class="fas fa-file-pdf"></i> Download PDF
-  </a>
+  <a href="https://drive.google.com/file/d/SENIN_TR_DOSYA_ID/view?usp=sharing" class="btn btn--success btn--large">
+  <i class="fas fa-file-pdf"></i> View/Download as PDF
+</a>
 </div>
 
 ## 🎓 Education

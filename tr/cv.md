@@ -9,9 +9,9 @@ toc_icon: "file-alt"
 ---
 
 <div style="text-align: center; margin-bottom: 2rem;">
-  <a href="/assets/pdf/cv-tr.pdf" class="btn btn--success btn--large">
-    <i class="fas fa-file-pdf"></i> PDF Olarak İndir
-  </a>
+  <a href="https://drive.google.com/file/d/1HfZ32vMzXdrcsmfgcmDTPrTfmM4su3IX/view?usp=sharing" class="btn btn--success btn--large">
+  <i class="fas fa-file-pdf"></i> PDF Olarak İncele/İndir
+</a>
 </div>
 
 ## 🎓 Eğitim
