@@ -5,6 +5,8 @@ sidebar_tr:
         url: "/tr/"
       - title: "Projeler"
         url: "/tr/projects/"
+      - title: "CV İncele / İndir"
+        url: "https://drive.google.com/file/d/1wCTw0azxwId-kzBdHv2tG7ZkstrnXRFW/view?usp=sharing"
   - title: "Dil / Language"
     children:
       - title: "English"
@@ -17,6 +19,8 @@ sidebar_en:
         url: "/en/"
       - title: "Projects"
         url: "/en/projects/"
+      - title: "Resume (CV)"
+        url: "https://drive.google.com/file/d/1Wy0sy28dYieRoaNImNh9VekWScxi2R7t/view?usp=drive_link"
   - title: "Language / Dil"
     children:
       - title: "Türkçe"

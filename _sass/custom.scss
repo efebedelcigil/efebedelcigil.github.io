@@ -79,3 +79,11 @@
         border-color: #454d55;
     }
 }
+
+/* Ekran genişliği "Large" (Masaüstü) olduğunda çalışır */
+@media (min-width: 64em) {
+  /* Sidebar'daki Navigasyon menüsünün içinde... */
+  .sidebar__nav .nav__list-item a[href*="drive.google.com"] {
+    display: none !important; /* ...Drive linklerini gizle */
+  }
+}
