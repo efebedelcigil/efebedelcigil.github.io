@@ -1,52 +1,78 @@
 <script>
+// 1. ADIM: SİTE HARİTASI (Veritabanı)
+// Bu kısım Jekyll tarafından doldurulur ve sabittir. Cache'lense bile sorun olmaz.
+var siteMap = [
+  {% for p in site.pages %}
+    {% if p.lang_ref %}
+      { 
+        url: "{{ p.url | relative_url }}", 
+        id: "{{ p.lang_ref }}", 
+        lang: "{{ p.lang }}" 
+      },
+    {% endif %}
+  {% endfor %}
+];
+
 document.addEventListener("DOMContentLoaded", function() {
 
-  // 1. STANDART İŞLER (PDF vs.)
-  var links = document.links;
-  for (var i = 0; i < links.length; i++) {
-    if (links[i].hostname != window.location.hostname) {
-      links[i].target = '_blank';
-      links[i].rel = 'noopener noreferrer';
-    } else if (links[i].href.endsWith(".pdf")) {
-      links[i].target = '_blank';
+  // --- Yardımcı Fonksiyon: Link Temizleme ---
+  // "/tr/projects/" ile "/tr/projects" aynısıdır. Sondaki slash'ı sileriz.
+  function cleanUrl(url) {
+    if (!url) return "";
+    // BaseURL varsa onu temizle, yoksa direkt slash temizle
+    return url.replace(window.location.origin, "").replace(/\/$/, ""); 
+  }
+
+  // 2. ADIM: BEN KİMİM? (Current Page Detection)
+  var currentPath = cleanUrl(window.location.pathname);
+  
+  // Haritadan şu anki URL'e sahip sayfayı bul
+  var myPage = null;
+  for (var i = 0; i < siteMap.length; i++) {
+    if (cleanUrl(siteMap[i].url) === currentPath) {
+      myPage = siteMap[i];
+      break;
     }
   }
 
-  // 2. KESİN ÇÖZÜM: GLOBAL VERİ KULLANARAK LİNK DEĞİŞTİRME
-  
-  // Eğer sayfada lang_ref tanımlıysa (Head kısmından veri geldiyse)
-  if (window.currentPage && window.currentPage.id) {
-    
-    var targetUrl = "";
-    
-    // Listeyi tara, benim ID'me sahip ama DİLİ farklı olanı bul
-    for (var i = 0; i < window.sitePages.length; i++) {
-      var p = window.sitePages[i];
-      if (p.id === window.currentPage.id && p.lang !== window.currentPage.lang) {
-        targetUrl = p.url;
-        break; // Buldum, döngüden çık
+  // 3. ADIM: KARDEŞİMİ BUL VE BUTONU GÜNCELLE
+  if (myPage) {
+    // Aynı ID'ye sahip ama dili farklı olan sayfayı bul
+    var partnerPage = null;
+    for (var j = 0; j < siteMap.length; j++) {
+      if (siteMap[j].id === myPage.id && siteMap[j].lang !== myPage.lang) {
+        partnerPage = siteMap[j];
+        break;
       }
     }
 
-    // Hedef link bulunduysa butonları güncelle
-    if (targetUrl !== "") {
+    // Eğer kardeş sayfa bulunduysa butona yapıştır
+    if (partnerPage) {
+      var targetUrl = partnerPage.url;
       
-      // TR sayfasındaysak -> İngilizce butonunu (href="/en/") güncelle
-      if (window.currentPage.lang === 'tr') {
-        var enBtn = document.querySelector('a[href="/en/"]');
-        // Slash olup olmamasına takılmaması için alternatif seçici:
-        if (!enBtn) enBtn = document.querySelector('a[href="en/"]');
-        
+      // Türkçe Sayfadaysak -> İngilizce Butonunu Bul
+      if (myPage.lang === 'tr') {
+        // Hem "/en/" hem "en/" ihtimallerini dene
+        var enBtn = document.querySelector('a[href="/en/"]') || document.querySelector('a[href="en/"]');
         if (enBtn) enBtn.setAttribute('href', targetUrl);
-      } 
+      }
       
-      // EN sayfasındaysak -> Türkçe butonunu (href="/tr/") güncelle
-      else if (window.currentPage.lang === 'en') {
-        var trBtn = document.querySelector('a[href="/tr/"]');
-        if (!trBtn) trBtn = document.querySelector('a[href="tr/"]');
-        
+      // İngilizce Sayfadaysak -> Türkçe Butonunu Bul
+      else if (myPage.lang === 'en') {
+        var trBtn = document.querySelector('a[href="/tr/"]') || document.querySelector('a[href="tr/"]');
         if (trBtn) trBtn.setAttribute('href', targetUrl);
       }
+    }
+  }
+
+  // --- EKSTRA: Dış Linkleri Yeni Sekmede Açma ---
+  var links = document.links;
+  for (var k = 0; k < links.length; k++) {
+    if (links[k].hostname != window.location.hostname) {
+      links[k].target = '_blank';
+      links[k].rel = 'noopener noreferrer';
+    } else if (links[k].href.endsWith(".pdf")) {
+      links[k].target = '_blank';
     }
   }
 
