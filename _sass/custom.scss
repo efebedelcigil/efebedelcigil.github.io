@@ -1,6 +1,10 @@
-/* _sass/custom.scss - Düzeltilmiş Versiyon */
+/* ==========================================================================
+   _sass/custom.scss - Efe V.B. Özel Stilleri (Final)
+   ========================================================================== */
 
-/* Kapsayıcı: Izgara Sistemi */
+/* --------------------------------------------------------------------------
+   1. ROBUST GRID SYSTEM (Yetenekler/Projeler Kart Yapısı)
+   -------------------------------------------------------------------------- */
 .robust-grid-container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -10,130 +14,214 @@
 
   /* Kartların Dış Yapısı */
   .feature__item {
-      margin: 0 !important;
-      padding: 0 !important;
-      max-width: 100% !important;
-      flex: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    max-width: 100% !important;
+    flex: none !important;
 
-      /* Kartın İç Yapısı */
-      .archive__item {
-         height: 100%;
-         border: 1px solid #e1e4e8;
-         border-radius: 8px;
-         padding: 20px;
-         background: #fff;
-         transition: box-shadow 0.3s ease;
-         display: flex; /* İçeriği dikey hizalamak için */
-         flex-direction: column;
-         align-items: center; /* Ortala */
+    /* Kartın İç Yapısı */
+    .archive__item {
+      height: 100%;
+      border: 1px solid #e1e4e8;
+      border-radius: 8px;
+      padding: 20px;
+      background: #fff;
+      transition: box-shadow 0.3s ease, background-color 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
 
-         @media (prefers-color-scheme: dark) {
-             background: #252a34;
-             border-color: #3d4148;
-         }
-
-         &:hover {
-             box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-         }
+      &:hover {
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
       }
-
-      /* İkon Alanı */
-      .archive__item-teaser {
-          text-align: center;
-          margin-bottom: 15px;
-          i { color: #0056b3; }
-      }
-
-      /* Başlık Alanı - Copilot burayı işaret etmişti */
-      .archive__item-title {
-          text-align: center;
-          font-size: 1.1em;
-          margin-bottom: 15px;
-          width: 100%;
-      }
-      
-      /* İçerik Gövdesi */
-      .archive__item-body {
-          width: 100%;
-          text-align: center;
-      }
-
-  } /* .feature__item Kapanışı (Eksik olan buydu) */
-} /* .robust-grid-container Kapanışı */
-
-/* Etiket Stilleri */
-.skill-tag {
-    display: inline-block;
-    background-color: #f8f9fa;
-    color: #333;
-    padding: 4px 10px;
-    border-radius: 20px;
-    font-size: 0.85em;
-    font-weight: 500;
-    margin: 3px;
-    border: 1px solid #e9ecef;
-
-    @media (prefers-color-scheme: dark) {
-        background-color: #343a40;
-        color: #e1e4e8;
-        border-color: #454d55;
     }
-}
 
-/* Ekran genişliği "Large" (Masaüstü) olduğunda çalışır */
-@media (min-width: 64em) {
-  /* Sidebar'daki Navigasyon menüsünün içinde... */
-  .sidebar__nav .nav__list-item a[href*="drive.google.com"] {
-    display: none !important; /* ...Drive linklerini gizle */
+    /* İkon Alanı */
+    .archive__item-teaser {
+      text-align: center;
+      margin-bottom: 15px;
+      i { color: #0056b3; }
+    }
+
+    /* Başlık Alanı */
+    .archive__item-title {
+      text-align: center;
+      font-size: 1.1em;
+      margin-bottom: 15px;
+      width: 100%;
+    }
+    
+    /* İçerik Gövdesi */
+    .archive__item-body {
+      width: 100%;
+      text-align: center;
+    }
   }
 }
 
-/* --- STICKY NAVBAR (Yapışkan Menü) --- */
+/* --------------------------------------------------------------------------
+   2. SKILL TAGS (Yetenek Etiketleri)
+   -------------------------------------------------------------------------- */
+.skill-tag {
+  display: inline-block;
+  background-color: #f8f9fa;
+  color: #333;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.85em;
+  font-weight: 500;
+  margin: 3px;
+  border: 1px solid #e9ecef;
+  transition: all 0.3s ease;
+}
+
+/* --------------------------------------------------------------------------
+   3. STICKY NAVBAR (Yapışkan Menü)
+   -------------------------------------------------------------------------- */
 .masthead {
   position: -webkit-sticky;
   position: sticky;
   top: 0;
-  z-index: 9999; /* Her şeyin üstünde kalsın */
-  background-color: #fff; /* Arka plan şeffaf olmasın */
-  border-bottom: 1px solid #eee; /* Altına ince çizgi */
+  z-index: 9999;
+  background-color: #fff;
+  border-bottom: 1px solid #eee;
   transition: all 0.3s ease-in-out;
 }
 
-/* Dark Mode uyumu için */
-body.dark-mode .masthead {
-  background-color: #1e1e1e; /* Koyu renk */
-  border-bottom: 1px solid #333;
+/* --------------------------------------------------------------------------
+   4. DARK MODE BUTON STİLİ (Search Butonuyla Uyumlu)
+   -------------------------------------------------------------------------- */
+#theme-toggle {
+  background-color: transparent;
+  border: 0;
+  border-radius: 4px;
+  color: inherit;
+  cursor: pointer;
+  width: 2rem;
+  height: 2rem;
+  margin-right: 0.5rem;
+  outline: none;
+  font-size: 1rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+  }
 }
 
-/* --- DARK MODE (Renk Paleti) --- */
+/* --------------------------------------------------------------------------
+   5. SUPER DARK MODE (Gelişmiş Karanlık Tema)
+   -------------------------------------------------------------------------- */
 
-/* Varsayılan (Light) */
-:root {
-  --bg-color: #ffffff;
-  --text-color: #333333;
-  --link-color: #007acc; /* Senin mavi tonun */
-  --sidebar-bg: #f5f5f5;
-  --card-bg: #ffffff;
-  --border-color: #e0e0e0;
-}
-
-/* Koyu Mod (Dark) */
+/* == A) Değişkenler ve Ana Yapı == */
 body.dark-mode {
-  --bg-color: #121212;
-  --text-color: #e0e0e0;
-  --link-color: #4db8ff;
-  --sidebar-bg: #1e1e1e;
-  --card-bg: #1e1e1e;
-  --border-color: #333333;
+  --dm-bg: #121212;         /* Ana Arka Plan */
+  --dm-surface: #1e1e1e;    /* Kartlar, Menü, Sidebar */
+  --dm-border: #333333;     /* Çizgiler */
+  --dm-text-main: #e0e0e0;  /* Ana Metin */
+  --dm-text-muted: #a0a0a0; /* Yan Metin */
+  --dm-accent: #64b5f6;     /* Linkler */
+  --dm-tag-bg: #2d2d2d;     /* Etiket Arka Planı */
 
-  background-color: var(--bg-color) !important;
-  color: var(--text-color) !important;
+  background-color: var(--dm-bg) !important;
+  color: var(--dm-text-main) !important;
+
+  /* == B) Genel Elemanlar == */
+  a {
+    color: var(--dm-accent);
+    &:hover { color: #fff; }
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    color: #fff !important;
+  }
+
+  /* == C) Navbar (Masthead) == */
+  .masthead {
+    background-color: var(--dm-surface) !important;
+    border-bottom-color: var(--dm-border) !important;
+  }
+  .masthead__menu-item a {
+    color: var(--dm-text-main) !important;
+    &:hover { color: var(--dm-accent) !important; }
+  }
+  /* Buton Hover Efekti (Dark Mode için) */
+  #theme-toggle:hover, .search__toggle:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+
+  /* == D) Sidebar (Sol Profil) == */
+  .sidebar {
+    background-color: var(--dm-surface) !important;
+    border: 1px solid var(--dm-border);
+    border-radius: 4px;
+    padding: 1em;
+  }
+  .author__name, .author__bio {
+    color: var(--dm-text-main) !important;
+  }
+
+  /* == E) Grid Kartları ve Proje Teaserları == */
+  /* Kartların genel yapısı */
+  .archive__item-teaser, 
+  .robust-grid-container .feature__item .archive__item {
+    background-color: var(--dm-surface) !important;
+    border-color: var(--dm-border) !important;
+    box-shadow: none !important;
+  }
+  /* Kart içindeki başlıklar */
+  .archive__item-title a {
+    color: var(--dm-text-main) !important;
+  }
+  .archive__item-excerpt {
+    color: var(--dm-text-muted) !important;
+  }
+
+  /* == F) Yetenek Etiketleri (Skill Tags) == */
+  .skill-tag {
+    background-color: var(--dm-tag-bg) !important;
+    color: var(--dm-text-main) !important;
+    border-color: var(--dm-border) !important;
+  }
+
+  /* == G) Tablolar ve Kod Blokları == */
+  table {
+    background-color: var(--dm-surface);
+    color: var(--dm-text-main);
+  }
+  /* Kod blokları zaten koyu ama etrafındaki çerçeveyi uyumlu yapalım */
+  div.highlighter-rouge, figure.highlight {
+    background-color: #2d2d2d !important; 
+  }
+  code, kbd, pre, samp {
+    background-color: #2d2d2d;
+    color: #f8f8f2;
+    border: none;
+  }
+
+  /* == H) Footer == */
+  .page__footer {
+    background-color: #000000 !important;
+    color: var(--dm-text-muted) !important;
+    border-top: 1px solid var(--dm-border);
+  }
+  .page__footer a {
+    color: var(--dm-text-main) !important;
+  }
+
+  /* == I) Arama Ekranı (Search Overlay) == */
+  .search-content {
+    background-color: var(--dm-bg) !important;
+  }
+  .search-content input {
+    background-color: var(--dm-surface) !important;
+    color: #fff !important;
+    border-color: var(--dm-border) !important;
+  }
+  .search-result__title a {
+     color: var(--dm-accent) !important;
+  }
 }
-
-/* Mevcut tema sınıflarını override et (Minimal Mistakes için) */
-body.dark-mode .page__content { color: var(--text-color); }
-body.dark-mode .sidebar { background-color: var(--sidebar-bg); }
-body.dark-mode .archive__item-teaser { background-color: var(--card-bg); }
-body.dark-mode h1, body.dark-mode h2, body.dark-mode h3 { color: #fff; }
-body.dark-mode a { color: var(--link-color); }
-body.dark-mode .masthead { background-color: var(--sidebar-bg); }
