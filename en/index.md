@@ -1,5 +1,5 @@
 ---
-title: "Hello, I'm Efe"
+title: "Hello, I'm Efe Varol Bedelcigil"
 permalink: /en/
 excerpt: "Electrical & Electronics Engineering Student | IEEE Ege SB Chair"
 layout: single
