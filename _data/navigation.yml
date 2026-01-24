@@ -16,6 +16,7 @@ sidebar_en:
   - title: "Menu"
     children:
       - title: "About"
+        url: "/en/"
       - title: "Projects"
         url: "/en/projects/"
       - title: "Resume (CV)"
