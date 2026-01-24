@@ -16,9 +16,6 @@ efe_tr:
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
       url: "https://github.com/efebedelcigil"
-    - label: "CV İncele/İndir"
-      icon: "fas fa-fw fa-file-pdf"
-      url: "https://drive.google.com/file/d/1wCTw0azxwId-kzBdHv2tG7ZkstrnXRFW/view?usp=sharing"
 
 # İngilizce Profil (efe_en)
 efe_en:
@@ -36,6 +33,3 @@ efe_en:
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
       url: "https://github.com/efebedelcigil"
-    - label: "View/Download CV"
-      icon: "fas fa-fw fa-file-pdf"
-      url: "https://drive.google.com/file/d/1Wy0sy28dYieRoaNImNh9VekWScxi2R7t/view?usp=drive_link"
