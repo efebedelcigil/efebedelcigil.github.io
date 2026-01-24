@@ -1,7 +1,6 @@
 <script>
 document.addEventListener("DOMContentLoaded", function() {
-
-  // 1. Linkleri Yeni Sekmede Açma
+  // Dış Linkleri Yeni Sekmede Açma (Standart)
   var links = document.links;
   for (var i = 0; i < links.length; i++) {
     if (links[i].hostname != window.location.hostname) {
@@ -13,43 +12,42 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 });
 
-// 2. AKILLI DİL DEĞİŞTİRİCİ (Capture Phase Modu)
-// 'true' parametresi ile olayı en tepede yakalıyoruz.
+// DİL DEĞİŞTİRME INTERCEPTOR (Hash Yöntemi)
 window.addEventListener('click', function(e) {
   
   var link = e.target.closest('a');
   if (!link) return;
 
-  // Linkin tam adresi (örn: https://site.com/en/) ve sayfa yolu
   var href = link.getAttribute('href'); 
   var currentPath = window.location.pathname;
 
-  // Güvenlik kontrolü: href boşsa çık
-  if (!href) return;
-
-  // SENARYO A: TR sayfasındayız -> İngilizce butonuna basıldı
-  // Hem "/en/" hem de "/en" ihtimallerini kontrol ediyoruz
-  if ((href === '/en/' || href === '/en') && currentPath.indexOf('/tr/') !== -1) {
+  // 1. İNGİLİZCEYE GEÇİŞ (#lang-en tıklandıysa)
+  if (href === '#lang-en') {
+    e.preventDefault(); // Sayfanın zıplamasını engelle
     
-    // Eğer sadece anasayfada değilsek (/tr/ ise değiştirme, /tr/projects/ ise değiştir)
-    if (currentPath.length > 4) {
-      e.preventDefault();
-      e.stopPropagation(); // Diğer scriptleri sustur
+    // Eğer şu an TR içindeysek değiştir
+    if (currentPath.indexOf('/tr/') !== -1) {
       var newPath = currentPath.replace('/tr/', '/en/');
       window.location.href = newPath;
+    } else {
+      // Zaten TR değilse (belki kök dizindeyizdir), direkt EN anasayfaya at
+      window.location.href = '/en/';
     }
   }
 
-  // SENARYO B: EN sayfasındayız -> Türkçe butonuna basıldı
-  else if ((href === '/tr/' || href === '/tr') && currentPath.indexOf('/en/') !== -1) {
+  // 2. TÜRKÇEYE GEÇİŞ (#lang-tr tıklandıysa)
+  else if (href === '#lang-tr') {
+    e.preventDefault();
     
-    if (currentPath.length > 4) {
-      e.preventDefault();
-      e.stopPropagation(); // Diğer scriptleri sustur
+    // Eğer şu an EN içindeysek değiştir
+    if (currentPath.indexOf('/en/') !== -1) {
       var newPath = currentPath.replace('/en/', '/tr/');
       window.location.href = newPath;
+    } else {
+      // Zaten EN değilse, direkt TR anasayfaya at
+      window.location.href = '/tr/';
     }
   }
 
-}, true); // <--- İŞTE SİHİRLİ ANAHTAR (Capture Mode)
+}, true); 
 </script>
