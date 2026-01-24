@@ -1,6 +1,6 @@
 ---
 title: "Projeler"
-permalink: /tr/projects/
+permalink: /tr/projeler/
 lang_ref: projects_page
 layout: single
 author_profile: true
