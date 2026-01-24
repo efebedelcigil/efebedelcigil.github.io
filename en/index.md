@@ -1,6 +1,7 @@
 ---
 title: "Hello, I'm Efe Varol Bedelcigil"
 permalink: /en/
+lang_ref: home_page
 excerpt: "Electrical & Electronics Engineering Student"
 layout: single
 author_profile: true

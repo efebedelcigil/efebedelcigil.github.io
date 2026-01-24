@@ -1,6 +1,7 @@
 ---
 title: "Resume / CV"
-permalink: /en/cv/
+permalink: /en/resume/
+lang_ref: cv_page
 layout: single
 author_profile: true
 author: efe_en

@@ -1,6 +1,7 @@
 ---
 title: "Projeler"
 permalink: /tr/projects/
+lang_ref: projects_page
 layout: single
 author_profile: true
 classes: wide

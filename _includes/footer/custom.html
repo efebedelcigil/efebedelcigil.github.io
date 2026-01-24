@@ -1,7 +1,17 @@
+{% assign translated_url = "" %}
+
+{% if page.lang_ref %}
+  {% for p in site.pages %}
+    {% if p.lang_ref == page.lang_ref and p.lang != page.lang %}
+      {% assign translated_url = p.url | relative_url %}
+    {% endif %}
+  {% endfor %}
+{% endif %}
+
 <script>
 document.addEventListener("DOMContentLoaded", function() {
 
-  // 1. PDF ve Dış Linkleri Yeni Sekmede Açma (Standart)
+  // --- PDF ve Dış Link Ayarları (Standart) ---
   var links = document.links;
   for (var i = 0; i < links.length; i++) {
     if (links[i].hostname != window.location.hostname) {
@@ -12,33 +22,44 @@ document.addEventListener("DOMContentLoaded", function() {
     }
   }
 
-  // 2. LİNK REWRITER (Linkleri Önceden Güncelleme)
-  // Tıklama beklemiyoruz, butonun adresini direkt değiştiriyoruz.
+  // --- HİBRİT LİNK REWRITER ---
   
-  var currentPath = window.location.pathname; // Örn: /tr/projects/
-  
-  // A) TÜRKÇE SAYFADAYIZ -> İNGİLİZCE BUTONUNU BUL VE GÜNCELLE
-  if (currentPath.indexOf('/tr/') !== -1) {
-    // Hedefi tam olarak "/en/" olan linki bul
-    // (CSS Selector: a[href="/en/"])
-    var enBtn = document.querySelector('a[href="/en/"]');
-    
-    if (enBtn) {
-      // Mevcut yolun başındaki "/tr/" kısmını "/en/" yap
-      var newPath = currentPath.replace('/tr/', '/en/');
-      // Butonun hedefini güncelle
-      enBtn.setAttribute('href', newPath);
-    }
-  }
+  // Liquid tarafından bulunan URL'i JS değişkenine aktar
+  var smartUrl = "{{ translated_url }}"; 
+  var currentLang = "{{ page.lang }}"; // 'tr' veya 'en'
 
-  // B) İNGİLİZCE SAYFADAYIZ -> TÜRKÇE BUTONUNU BUL VE GÜNCELLE
-  else if (currentPath.indexOf('/en/') !== -1) {
-    // Hedefi tam olarak "/tr/" olan linki bul
-    var trBtn = document.querySelector('a[href="/tr/"]');
+  // Eğer Liquid bir eşleşme bulduysa (lang_ref çalıştıysa)
+  if (smartUrl !== "") {
     
-    if (trBtn) {
-      var newPath = currentPath.replace('/en/', '/tr/');
-      trBtn.setAttribute('href', newPath);
+    // TR sayfasındaysak -> İngilizce butonunu bu özel linke ayarla
+    if (currentLang === 'tr') {
+      var enBtn = document.querySelector('a[href="/en/"]');
+      if (enBtn) enBtn.setAttribute('href', smartUrl);
+    } 
+    // EN sayfasındaysak -> Türkçe butonunu bu özel linke ayarla
+    else if (currentLang === 'en') {
+      var trBtn = document.querySelector('a[href="/tr/"]');
+      if (trBtn) trBtn.setAttribute('href', smartUrl);
+    }
+  
+  } else {
+    // EŞLEŞME YOKSA: Eski "Ayna Kuralı"nı (Fallback) uygula
+    // (Böylece lang_ref yazmayı unutsan bile sistem çökmez, tahmin etmeye çalışır)
+    
+    var currentPath = window.location.pathname;
+    
+    if (currentLang === 'tr') {
+      var enBtn = document.querySelector('a[href="/en/"]');
+      if (enBtn) {
+        var newPath = currentPath.replace('/tr/', '/en/');
+        enBtn.setAttribute('href', newPath);
+      }
+    } else {
+      var trBtn = document.querySelector('a[href="/tr/"]');
+      if (trBtn) {
+        var newPath = currentPath.replace('/en/', '/tr/');
+        trBtn.setAttribute('href', newPath);
+      }
     }
   }
 

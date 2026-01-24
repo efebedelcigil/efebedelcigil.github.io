@@ -1,12 +1,13 @@
 ---
 title: "Contact"
 permalink: /en/contact/
+lang_ref: contact_page
 layout: single
 author_profile: true
 author: efe_en
 ---
 
-Feel free to contact me for collaborations or questions.
+Feel free to contact me for collaborations, business inquiries or questions.
 
 <form action="https://formspree.io/f/xlgjvlev" method="POST">
   <label>

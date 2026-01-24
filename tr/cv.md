@@ -1,6 +1,7 @@
 ---
 title: "Özgeçmiş"
-permalink: /tr/cv/
+permalink: /tr/ozgecmis/
+lang_ref: cv_page
 layout: single
 author_profile: true
 toc: true # İçindekiler tablosunu otomatik oluşturur

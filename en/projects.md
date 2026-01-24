@@ -1,6 +1,7 @@
 ---
 title: "Projects"
 permalink: /en/projects/
+lang_ref: projects_page
 layout: single
 author_profile: true
 classes: wide

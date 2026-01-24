@@ -1,11 +1,12 @@
 ---
 title: "İletişim"
-permalink: /tr/contact/
+permalink: /tr/iletisim/
+lang_ref: contact_page
 layout: single
 author_profile: true
 ---
 
-Projelerim hakkında konuşmak veya iş birliği yapmak için aşağıdaki formu kullanabilirsiniz.
+Projelerim veya iş hakkında konuşmak veya iş birliği yapmak için aşağıdaki formu kullanabilirsiniz.
 
 <form action="https://formspree.io/f/xlgjvlev" method="POST">
   <label>
