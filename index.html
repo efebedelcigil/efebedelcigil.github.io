@@ -1,5 +1,30 @@
+---
+layout: null
+---
 <!DOCTYPE html>
-<meta charset="utf-8">
-<title>Redirecting...</title>
-<meta http-equiv="refresh" content="0; url=/tr/">
-<h1>Yönlendiriliyor...</h1>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Redirecting...</title>
+  <script>
+    // Kullanıcının tarayıcı dilini al
+    var userLang = navigator.language || navigator.userLanguage; 
+    
+    // Dil kodunun ilk 2 harfini al (tr-TR -> tr)
+    userLang = userLang.substring(0, 2);
+
+    if (userLang === 'tr') {
+      // Türkçe ise Türkçe anasayfaya
+      window.location.replace('/tr/');
+    } else {
+      // Değilse İngilizce anasayfaya
+      window.location.replace('/en/');
+    }
+  </script>
+  
+  <meta http-equiv="refresh" content="0; url=/en/">
+</head>
+<body>
+  <p>Redirecting to your language preference...</p>
+</body>
+</html>
