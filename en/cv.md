@@ -1,0 +1,59 @@
+---
+title: "Resume / CV"
+permalink: /en/cv/
+layout: single
+author_profile: true
+toc: true
+toc_label: "Contents"
+toc_icon: "file-alt"
+---
+
+<div style="text-align: center; margin-bottom: 2rem;">
+  <a href="/assets/pdf/cv-en.pdf" class="btn btn--success btn--large">
+    <i class="fas fa-file-pdf"></i> Download PDF
+  </a>
+</div>
+
+## 🎓 Education
+
+**Ege University** | *Izmir, Turkey*
+* **Major:** Electrical & Electronics Engineering (B.Sc.)
+* **Date:** 2023 - 2027 (Expected)
+* **Details:** 3rd Year Student. Focus on Control Systems & Robotics.
+
+---
+
+## 💼 Experience & Leadership
+
+**IEEE Ege University Student Branch** | *Chair of the Board*
+* *July 2025 - Present*
+* Leading a student branch with 1000+ members.
+* Coordinating technical projects (UAV, V2X) and managing sponsorship relations.
+
+---
+
+## 🛠️ Technical Skills
+
+<div class="grid__wrapper">
+  {% for category in site.data.skills %}
+  <div class="feature__item">
+    <div class="archive__item">
+      <div class="archive__item-teaser">
+        <i class="{{ category[1].icon }} fa-3x" style="color: #52adc8;"></i>
+      </div>
+      <div class="archive__item-body">
+        <h3 class="archive__item-title">{{ category[1].title }}</h3>
+        <ul style="list-style: none; padding: 0;">
+          {% for item in category[1].items %}
+            <li style="margin-bottom: 5px;">
+              <span style="background-color: #f2f3f4; padding: 2px 8px; border-radius: 4px; font-size: 0.9em; display: inline-block; border: 1px solid #e1e4e8;">
+                {{ item }}
+              </span>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>

@@ -1,0 +1,35 @@
+programming:
+  title: "Yazılım Dilleri"
+  icon: "fas fa-code"
+  items:
+    - Python (Pandas, NumPy)
+    - C / C++
+    - MATLAB
+    - LaTeX
+
+embedded:
+  title: "Gömülü Sistemler & Donanım"
+  icon: "fas fa-microchip"
+  items:
+    - STM32 / ARM Cortex
+    - Arduino / Espressif
+    - KiCad (PCB Tasarımı)
+    - I2C / SPI / UART / CAN
+    - Osiloskop & Lojik Analizör
+
+tools:
+  title: "Araçlar & Yazılımlar"
+  icon: "fas fa-tools"
+  items:
+    - Git / GitHub
+    - MATLAB / Simulink
+    - Proteus / Multisim
+    - 3D Yazıcı (Ender 3 v2)
+    - VS Code
+
+languages:
+  title: "Yabancı Diller"
+  icon: "fas fa-language"
+  items:
+    - Türkçe (Ana Dil)
+    - İngilizce (B2 - Teknik Yetkinlik)
