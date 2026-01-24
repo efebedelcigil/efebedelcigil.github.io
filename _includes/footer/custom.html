@@ -1,6 +1,5 @@
 <script>
-// 1. ADIM: SİTE HARİTASI (Veritabanı)
-// Bu kısım Jekyll tarafından doldurulur ve sabittir. Cache'lense bile sorun olmaz.
+// 1. SİTE HARİTASI (Veritabanı)
 var siteMap = [
   {% for p in site.pages %}
     {% if p.lang_ref %}
@@ -15,29 +14,52 @@ var siteMap = [
 
 document.addEventListener("DOMContentLoaded", function() {
 
-  // --- Yardımcı Fonksiyon: Link Temizleme ---
-  // "/tr/projects/" ile "/tr/projects" aynısıdır. Sondaki slash'ı sileriz.
-  function cleanUrl(url) {
-    if (!url) return "";
-    // BaseURL varsa onu temizle, yoksa direkt slash temizle
-    return url.replace(window.location.origin, "").replace(/\/$/, ""); 
+  // --- NORMALİZASYON FONKSİYONU ---
+  // Linkleri karşılaştırılabilir hale getirir (Tıraşlama)
+  function normalize(path) {
+    if (!path) return "";
+    
+    // 1. Domain'i (http://...) sil, sadece /tr/... kalsın
+    var clean = path.replace(window.location.origin, "");
+    
+    // 2. Eğer varsa 'baseurl' kısmını sil (Gerekirse burayı açarız)
+    // clean = clean.replace("/repo-adi", ""); 
+
+    // 3. Varsa 'index.html' kısmını sil
+    clean = clean.replace("index.html", "");
+
+    // 4. En sondaki slash'ı sil (En önemli kısım!)
+    if (clean.endsWith("/")) {
+      clean = clean.slice(0, -1);
+    }
+
+    return clean;
   }
 
-  // 2. ADIM: BEN KİMİM? (Current Page Detection)
-  var currentPath = cleanUrl(window.location.pathname);
+  // --- EŞLEŞTİRME MOTORU ---
   
-  // Haritadan şu anki URL'e sahip sayfayı bul
+  var currentRaw = window.location.pathname;
+  var currentNorm = normalize(currentRaw);
+
+  console.log("DEBUG: Şu anki Sayfa (Ham):", currentRaw);
+  console.log("DEBUG: Şu anki Sayfa (Normalize):", currentNorm);
+
+  // Haritadan beni bul
   var myPage = null;
   for (var i = 0; i < siteMap.length; i++) {
-    if (cleanUrl(siteMap[i].url) === currentPath) {
+    var mapUrlNorm = normalize(siteMap[i].url);
+    
+    // Konsola listedeki her sayfayı yazmıyoruz, kirlilik olmasın.
+    // Sadece tam eşleşme arıyoruz.
+    if (mapUrlNorm === currentNorm) {
       myPage = siteMap[i];
+      console.log("BAŞARILI: Sayfa Eşleşti! -> ID:", myPage.id);
       break;
     }
   }
 
-  // 3. ADIM: KARDEŞİMİ BUL VE BUTONU GÜNCELLE
+  // Eğer beni bulduysa, kardeşimi ara
   if (myPage) {
-    // Aynı ID'ye sahip ama dili farklı olan sayfayı bul
     var partnerPage = null;
     for (var j = 0; j < siteMap.length; j++) {
       if (siteMap[j].id === myPage.id && siteMap[j].lang !== myPage.lang) {
@@ -46,26 +68,44 @@ document.addEventListener("DOMContentLoaded", function() {
       }
     }
 
-    // Eğer kardeş sayfa bulunduysa butona yapıştır
+    // Kardeş bulunduysa butonu güncelle
     if (partnerPage) {
       var targetUrl = partnerPage.url;
-      
-      // Türkçe Sayfadaysak -> İngilizce Butonunu Bul
+      console.log("HEDEF BULUNDU: Yönlendirilecek Link ->", targetUrl);
+
+      // TR Sayfasındaysak -> İngilizce Butonunu Bul
       if (myPage.lang === 'tr') {
-        // Hem "/en/" hem "en/" ihtimallerini dene
-        var enBtn = document.querySelector('a[href="/en/"]') || document.querySelector('a[href="en/"]');
-        if (enBtn) enBtn.setAttribute('href', targetUrl);
-      }
+        // Seçicileri çeşitlendirelim ki kaçırmasın
+        var enBtn = document.querySelector('a[href="/en/"]') || 
+                    document.querySelector('a[href="en/"]') ||
+                    document.querySelector('a[href="/en"]'); // Slashsız ihtimal
+        
+        if (enBtn) {
+          enBtn.setAttribute('href', targetUrl);
+          enBtn.style.fontWeight = "bold"; // Çalıştığını belli etmek için kalın yapalım (Test)
+        }
+      } 
       
-      // İngilizce Sayfadaysak -> Türkçe Butonunu Bul
+      // EN Sayfasındaysak -> Türkçe Butonunu Bul
       else if (myPage.lang === 'en') {
-        var trBtn = document.querySelector('a[href="/tr/"]') || document.querySelector('a[href="tr/"]');
-        if (trBtn) trBtn.setAttribute('href', targetUrl);
+        var trBtn = document.querySelector('a[href="/tr/"]') || 
+                    document.querySelector('a[href="tr/"]') ||
+                    document.querySelector('a[href="/tr"]');
+
+        if (trBtn) {
+          trBtn.setAttribute('href', targetUrl);
+          trBtn.style.fontWeight = "bold"; // Çalıştığını belli etmek için kalın yapalım
+        }
       }
+    } else {
+      console.warn("UYARI: Bu sayfanın 'lang_ref' eşi (kardeşi) bulunamadı.");
     }
+  } else {
+    console.warn("HATA: Şu anki sayfa siteMap içinde bulunamadı. URL veya Normalize sorunu var.");
+    console.log("SiteMap Listesi (Kontrol İçin):", siteMap);
   }
 
-  // --- EKSTRA: Dış Linkleri Yeni Sekmede Açma ---
+  // --- Dış Linkler (Standart) ---
   var links = document.links;
   for (var k = 0; k < links.length; k++) {
     if (links[k].hostname != window.location.hostname) {
