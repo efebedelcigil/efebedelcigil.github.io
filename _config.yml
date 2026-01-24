@@ -43,19 +43,24 @@ footer:
       icon: "fas fa-fw fa-envelope"
 
 defaults:
+  # TR Klasörü Ayarları
   - scope:
       path: "tr"
     values:
-      language: "tr"
       layout: "single"
       author_profile: true
       sidebar:
         nav: "sidebar_tr"
+      language: "tr"
+      author: "efe_tr" # <-- Türkçe sayfalarda bu profili kullan
+
+  # EN Klasörü Ayarları
   - scope:
       path: "en"
     values:
-      language: "en"
       layout: "single"
       author_profile: true
       sidebar:
         nav: "sidebar_en"
+      language: "en"
+      author: "efe_en" # <-- İngilizce sayfalarda bu profili kullan
