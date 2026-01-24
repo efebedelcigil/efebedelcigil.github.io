@@ -1,29 +1,13 @@
 title: Efe Varol Bedelcigil
 name: Efe Varol Bedelcigil
-description: "Elektrik-Elektronik Mühendisi Adayı"
+description: "Elektrik-Elektronik Mühendisliği Öğrencisi"
 url: "https://efebedelcigil.github.io"
 baseurl: ""
 remote_theme: mmistakes/minimal-mistakes
 minimal_mistakes_skin: "default"
 
-author:
-  name: "Efe Varol Bedelcigil"
-  avatar: "/assets/images/profile.jpg"
-  bio: "Ege Üniversitesi Elektrik-Elektronik Mühendisliği Öğrencisi"
-  location: "İzmir, Türkiye"
-  links:
-    - label: "E-mail"
-      icon: "fas fa-fw fa-envelope"
-      url: "/tr/contact/"
-    - label: "LinkedIn"
-      icon: "fab fa-fw fa-linkedin"
-      url: "https://www.linkedin.com/in/efevarolbedelcigil"
-    - label: "GitHub"
-      icon: "fab fa-fw fa-github"
-      url: "https://github.com/efebedelcigil"
-    - label: "CV İndir (TR)"
-      icon: "fas fa-fw fa-file-pdf"
-      url: "/assets/pdf/cv-tr.pdf"
+# DİKKAT: Buradaki eski author bloğunu SİLDİK. 
+# Artık veriyi _data/authors.yml'dan ve aşağıdaki defaults'tan çekecek.
 
 plugins:
   - jekyll-feed
@@ -33,7 +17,7 @@ plugins:
 footer:
   links:
     - label: "LinkedIn"
-      url: "https://linkedin.com/in/kullaniciadi"
+      url: "https://linkedin.com/in/efevarolbedelcigil"
       icon: "fab fa-fw fa-linkedin"
     - label: "GitHub"
       url: "https://github.com/efebedelcigil"
@@ -52,7 +36,7 @@ defaults:
       sidebar:
         nav: "sidebar_tr"
       language: "tr"
-      author: "efe_tr" # <-- Türkçe sayfalarda bu profili kullan
+      author: "efe_tr" # <-- Türkçe profil (authors.yml'dan gelir)
 
   # EN Klasörü Ayarları
   - scope:
@@ -63,4 +47,4 @@ defaults:
       sidebar:
         nav: "sidebar_en"
       language: "en"
-      author: "efe_en" # <-- İngilizce sayfalarda bu profili kullan
+      author: "efe_en" # <-- İngilizce profil (authors.yml'dan gelir)
