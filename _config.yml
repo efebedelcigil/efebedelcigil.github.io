@@ -30,7 +30,9 @@ defaults:
   # TR Klasörü Ayarları
   - scope:
       path: "tr"
+      type: "pages"
     values:
+      lang: "tr"
       layout: "single"
       author_profile: true
       sidebar:
@@ -41,7 +43,9 @@ defaults:
   # EN Klasörü Ayarları
   - scope:
       path: "en"
+      type: "pages"
     values:
+      lang: "en"
       layout: "single"
       author_profile: true
       sidebar:
