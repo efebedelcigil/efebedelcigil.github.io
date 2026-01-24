@@ -1,7 +1,6 @@
 <script id="sitemap-data" type="application/json">
 [
   {%- assign valid_pages = "" | split: "" -%}
-  
   {%- for p in site.pages -%}
     {%- if p.lang_ref -%}
       {%- capture json_item -%}
@@ -14,7 +13,6 @@
       {%- assign valid_pages = valid_pages | push: json_item -%}
     {%- endif -%}
   {%- endfor -%}
-  
   {{ valid_pages | join: "," }}
 ]
 </script>
@@ -22,18 +20,16 @@
 <script>
 document.addEventListener("DOMContentLoaded", function() {
 
-  // --- Veriyi Oku ve Çöz ---
+  // --- Veriyi Oku ---
   var rawData = document.getElementById('sitemap-data').textContent;
   var siteMap = [];
   try {
     siteMap = JSON.parse(rawData);
-    console.log("DEBUG: SiteMap başarıyla yüklendi. Toplam sayfa:", siteMap.length);
   } catch (e) {
-    console.error("JSON Hatası Devam Ediyor:", e);
-    console.log("Hatalı Veri:", rawData); // Hatayı görmek için veriyi bas
+    // Sessizce geç (Production'da konsolu kirletmeye gerek yok)
   }
 
-  // --- Normalizasyon (Tıraşlama) ---
+  // --- Normalizasyon (URL Temizleme) ---
   function normalize(path) {
     if (!path) return "";
     try {
@@ -50,20 +46,19 @@ document.addEventListener("DOMContentLoaded", function() {
     return path;
   }
 
-  // --- EŞLEŞTİRME ---
+  // --- Dil Değiştirme Mantığı ---
   var currentPath = normalize(window.location.pathname);
-  console.log("DEBUG: Şu anki Sayfa (Normalize):", currentPath);
-
   var myPage = null;
-  // SiteMap içindeki URL'leri de normalize ederek ara
+
+  // Şu anki sayfayı bul
   for (var i = 0; i < siteMap.length; i++) {
     if (normalize(siteMap[i].url) === currentPath) {
       myPage = siteMap[i];
-      console.log("DEBUG: Eşleşme Bulundu! ID:", myPage.id, "| Dil:", myPage.lang);
       break;
     }
   }
 
+  // Kardeş sayfayı bul ve butonu güncelle
   if (myPage) {
     var partnerPage = null;
     for (var j = 0; j < siteMap.length; j++) {
@@ -74,40 +69,24 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     if (partnerPage) {
-      console.log("DEBUG: Hedef Link ->", partnerPage.url);
       var targetUrl = partnerPage.url;
       
-      // Butonları Bul ve Değiştir
-      var selectors = [
-        'a[href="/en/"]', 'a[href="en/"]', 'a[href="/en"]',
-        'a[href="/tr/"]', 'a[href="tr/"]', 'a[href="/tr"]'
-      ];
-      
-      // Hangi dildeysek tersini arayacağız ama burada genel bir tarama yapıp
-      // doğru butonu bulmak daha garanti.
       if (myPage.lang === 'tr') {
-        // İngilizce butonlarını dene
         var enBtn = document.querySelector('a[href="/en/"]') || 
                     document.querySelector('a[href="en/"]') || 
                     document.querySelector('a[href="/en"]');
         if (enBtn) enBtn.setAttribute('href', targetUrl);
       } 
       else if (myPage.lang === 'en') {
-        // Türkçe butonlarını dene
         var trBtn = document.querySelector('a[href="/tr/"]') || 
                     document.querySelector('a[href="tr/"]') || 
                     document.querySelector('a[href="/tr"]');
         if (trBtn) trBtn.setAttribute('href', targetUrl);
       }
-
-    } else {
-      console.warn("DEBUG: Sayfa bulundu ama 'kardeş sayfası' (diğer dildeki hali) yok.");
     }
-  } else {
-    console.warn("DEBUG: Eşleşme YOK. Normalize edilen URL listede bulunamadı.");
   }
 
-  // --- Dış Linkler ---
+  // --- Dış Linkler ve PDF Ayarları ---
   var links = document.links;
   for (var k = 0; k < links.length; k++) {
     if (links[k].hostname != window.location.hostname) {
