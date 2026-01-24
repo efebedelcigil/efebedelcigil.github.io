@@ -4,9 +4,9 @@ sidebar_tr:
       - title: "Hakkımda"
         url: "/tr/"
       - title: "Projeler"
-        url: "/tr/projects/"
+        url: "/tr/projeler/"
       - title: "Özgeçmiş (CV)"
-        url: "/tr/cv/"
+        url: "/tr/ozgecmis/"
   - title: "Dil / Language"
     children:
       - title: "English (İngilizce)"
@@ -20,7 +20,7 @@ sidebar_en:
       - title: "Projects"
         url: "/en/projects/"
       - title: "Resume (CV)"
-        url: "/en/cv/"
+        url: "/en/resume/"
   - title: "Language / Dil"
     children:
       - title: "Türkçe (Turkish)"
