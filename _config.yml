@@ -9,12 +9,12 @@ minimal_mistakes_skin: "default"
 author:
   name: "Efe Varol Bedelcigil"
   avatar: "/assets/images/profile.jpg"
-  bio: "Ege Üniversitesi Elektrik-Elektronik Mühendisliği 3. Sınıf Öğrencisi."
+  bio: "Ege Üniversitesi Elektrik-Elektronik Mühendisliği Öğrencisi."
   location: "İzmir, Türkiye"
   links:
-    - label: "Email"
-      icon: "fas fa-fw fa-envelope-square"
-      url: "mailto:efebedelcigil@gmail.com"
+    - label: "E-mail"
+      icon: "fas fa-fw fa-envelope"
+      url: "/tr/contact/"
     - label: "LinkedIn"
       icon: "fab fa-fw fa-linkedin"
       url: "https://www.linkedin.com/in/efevarolbedelcigil"
@@ -29,6 +29,18 @@ plugins:
   - jekyll-feed
   - jekyll-sitemap
   - jekyll-include-cache
+  
+footer:
+  links:
+    - label: "LinkedIn"
+      url: "https://linkedin.com/in/kullaniciadi"
+      icon: "fab fa-fw fa-linkedin"
+    - label: "GitHub"
+      url: "https://github.com/efebedelcigil"
+      icon: "fab fa-fw fa-github"
+    - label: "Email"
+      url: "/tr/contact/"
+      icon: "fas fa-fw fa-envelope"
 
 defaults:
   - scope:
