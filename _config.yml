@@ -8,8 +8,9 @@ minimal_mistakes_skin: "default"
 
 author:
   name: "Efe Varol Bedelcigil"
+  avatar: "/assets/images/profile.jpg"
   bio: "Ege Üniversitesi Elektrik-Elektronik Mühendisliği 3. Sınıf Öğrencisi."
-  location: "Bornova, İzmir"
+  location: "İzmir, Türkiye"
 
 plugins:
   - jekyll-feed
