@@ -10,7 +10,7 @@ toc_icon: "file-alt"
 ---
 
 <div style="text-align: center; margin-bottom: 2rem;">
-  <a href="https://drive.google.com/file/d/SENIN_TR_DOSYA_ID/view?usp=sharing" class="btn btn--success btn--large">
+  <a href="https://drive.google.com/file/d/1P20Ni544yW1lxc5FQGxbP42w82eBpjj_/view?usp=sharing" class="btn btn--success btn--large">
   <i class="fas fa-file-pdf"></i> View/Download as PDF
 </a>
 </div>
