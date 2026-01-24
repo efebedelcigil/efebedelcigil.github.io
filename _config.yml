@@ -14,6 +14,7 @@ author:
 plugins:
   - jekyll-feed
   - jekyll-sitemap
+  - jekyll-include-cache
 
 defaults:
   - scope:
