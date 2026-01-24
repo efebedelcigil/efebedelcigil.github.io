@@ -16,7 +16,7 @@ efe_tr:
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
       url: "https://github.com/efebedelcigil"
-    - label: "CV İncele / İndir (PDF)"
+    - label: "CV İncele/İndir"
       icon: "fas fa-fw fa-file-pdf"
       url: "https://drive.google.com/file/d/1HfZ32vMzXdrcsmfgcmDTPrTfmM4su3IX/view?usp=sharing"
 
@@ -36,6 +36,6 @@ efe_en:
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
       url: "https://github.com/efebedelcigil"
-    - label: "View / Download CV (PDF)"
+    - label: "View/Download CV"
       icon: "fas fa-fw fa-file-pdf"
       url: "https://drive.google.com/file/d/1P20Ni544yW1lxc5FQGxbP42w82eBpjj_/view?usp=sharing"
