@@ -34,24 +34,22 @@ toc_icon: "file-alt"
 
 ## 🛠️ Technical Skills
 
-<div class="grid__wrapper">
+<div class="robust-grid-container">
   {% for category in site.data.skills %}
   <div class="feature__item">
     <div class="archive__item">
       <div class="archive__item-teaser">
-        <i class="{{ category[1].icon }} fa-3x" style="color: #52adc8;"></i>
+        <i class="{{ category[1].icon }} fa-3x"></i>
       </div>
       <div class="archive__item-body">
         <h3 class="archive__item-title">{{ category[1].title }}</h3>
-        <ul style="list-style: none; padding: 0;">
+        <div style="text-align: center;">
           {% for item in category[1].items %}
-            <li style="margin-bottom: 5px;">
-              <span style="background-color: #f2f3f4; padding: 2px 8px; border-radius: 4px; font-size: 0.9em; display: inline-block; border: 1px solid #e1e4e8;">
-                {{ item }}
-              </span>
-            </li>
+            <span class="skill-tag">
+              {{ item }}
+            </span>
           {% endfor %}
-        </ul>
+        </div>
       </div>
     </div>
   </div>

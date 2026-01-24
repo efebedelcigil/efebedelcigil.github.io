@@ -1,0 +1,35 @@
+programming:
+  title: "Programming Languages"
+  icon: "fas fa-code"
+  items:
+    - Python (Pandas, NumPy)
+    - C / C++
+    - MATLAB
+    - LaTeX
+
+embedded:
+  title: "Embedded Systems & Hardware"
+  icon: "fas fa-microchip"
+  items:
+    - STM32 / ARM Cortex
+    - Arduino / Espressif
+    - KiCad (PCB Design)
+    - I2C / SPI / UART / CAN
+    - Oscilloscope & Logic Analyzer
+
+tools:
+  title: "Tools & Software"
+  icon: "fas fa-tools"
+  items:
+    - Git / GitHub
+    - MATLAB / Simulink
+    - Proteus / Multisim
+    - 3D Printer (Ender 3 v2)
+    - VS Code
+
+languages:
+  title: "Languages"
+  icon: "fas fa-language"
+  items:
+    - Turkish (Native)
+    - English (B2 – Technical Proficiency)
