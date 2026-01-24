@@ -3,6 +3,7 @@ title: "Resume / CV"
 permalink: /en/cv/
 layout: single
 author_profile: true
+author: efe_en
 toc: true
 toc_label: "Contents"
 toc_icon: "file-alt"

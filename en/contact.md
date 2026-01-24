@@ -3,6 +3,7 @@ title: "Contact"
 permalink: /en/contact/
 layout: single
 author_profile: true
+author: efe_en
 ---
 
 Feel free to contact me for collaborations or questions.

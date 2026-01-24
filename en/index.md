@@ -1,9 +1,10 @@
 ---
 title: "Hello, I'm Efe Varol Bedelcigil"
 permalink: /en/
-excerpt: "Electrical & Electronics Engineering Student | IEEE Ege SB Chair"
+excerpt: "Electrical & Electronics Engineering Student"
 layout: single
 author_profile: true
+author: efe_en
 ---
 
 Welcome to my personal portfolio website.
