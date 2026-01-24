@@ -1,0 +1,21 @@
+<script>
+  // Sitedeki tüm 'lang_ref' sahibi sayfaların haritasını çıkarıyoruz.
+  // Bu kod sunucu tarafında çalışır ve JS'e bir liste bırakır.
+  window.sitePages = [
+    {% for p in site.pages %}
+      {% if p.lang_ref %}
+        { 
+          id: "{{ p.lang_ref }}", 
+          lang: "{{ p.lang }}", 
+          url: "{{ p.url | relative_url }}" 
+        },
+      {% endif %}
+    {% endfor %}
+  ];
+
+  // Şu anki sayfanın kimliğini de JS'e bildiriyoruz.
+  window.currentPage = {
+    id: "{{ page.lang_ref }}",
+    lang: "{{ page.lang }}"
+  };
+</script>

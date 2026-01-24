@@ -1,17 +1,7 @@
-{% assign translated_url = "" %}
-
-{% if page.lang_ref %}
-  {% for p in site.pages %}
-    {% if p.lang_ref == page.lang_ref and p.lang != page.lang %}
-      {% assign translated_url = p.url | relative_url %}
-    {% endif %}
-  {% endfor %}
-{% endif %}
-
 <script>
 document.addEventListener("DOMContentLoaded", function() {
 
-  // --- PDF ve Dış Link Ayarları (Standart) ---
+  // 1. STANDART İŞLER (PDF vs.)
   var links = document.links;
   for (var i = 0; i < links.length; i++) {
     if (links[i].hostname != window.location.hostname) {
@@ -22,43 +12,40 @@ document.addEventListener("DOMContentLoaded", function() {
     }
   }
 
-  // --- HİBRİT LİNK REWRITER ---
+  // 2. KESİN ÇÖZÜM: GLOBAL VERİ KULLANARAK LİNK DEĞİŞTİRME
   
-  // Liquid tarafından bulunan URL'i JS değişkenine aktar
-  var smartUrl = "{{ translated_url }}"; 
-  var currentLang = "{{ page.lang }}"; // 'tr' veya 'en'
-
-  // Eğer Liquid bir eşleşme bulduysa (lang_ref çalıştıysa)
-  if (smartUrl !== "") {
+  // Eğer sayfada lang_ref tanımlıysa (Head kısmından veri geldiyse)
+  if (window.currentPage && window.currentPage.id) {
     
-    // TR sayfasındaysak -> İngilizce butonunu bu özel linke ayarla
-    if (currentLang === 'tr') {
-      var enBtn = document.querySelector('a[href="/en/"]');
-      if (enBtn) enBtn.setAttribute('href', smartUrl);
-    } 
-    // EN sayfasındaysak -> Türkçe butonunu bu özel linke ayarla
-    else if (currentLang === 'en') {
-      var trBtn = document.querySelector('a[href="/tr/"]');
-      if (trBtn) trBtn.setAttribute('href', smartUrl);
-    }
-  
-  } else {
-    // EŞLEŞME YOKSA: Eski "Ayna Kuralı"nı (Fallback) uygula
-    // (Böylece lang_ref yazmayı unutsan bile sistem çökmez, tahmin etmeye çalışır)
+    var targetUrl = "";
     
-    var currentPath = window.location.pathname;
-    
-    if (currentLang === 'tr') {
-      var enBtn = document.querySelector('a[href="/en/"]');
-      if (enBtn) {
-        var newPath = currentPath.replace('/tr/', '/en/');
-        enBtn.setAttribute('href', newPath);
+    // Listeyi tara, benim ID'me sahip ama DİLİ farklı olanı bul
+    for (var i = 0; i < window.sitePages.length; i++) {
+      var p = window.sitePages[i];
+      if (p.id === window.currentPage.id && p.lang !== window.currentPage.lang) {
+        targetUrl = p.url;
+        break; // Buldum, döngüden çık
       }
-    } else {
-      var trBtn = document.querySelector('a[href="/tr/"]');
-      if (trBtn) {
-        var newPath = currentPath.replace('/en/', '/tr/');
-        trBtn.setAttribute('href', newPath);
+    }
+
+    // Hedef link bulunduysa butonları güncelle
+    if (targetUrl !== "") {
+      
+      // TR sayfasındaysak -> İngilizce butonunu (href="/en/") güncelle
+      if (window.currentPage.lang === 'tr') {
+        var enBtn = document.querySelector('a[href="/en/"]');
+        // Slash olup olmamasına takılmaması için alternatif seçici:
+        if (!enBtn) enBtn = document.querySelector('a[href="en/"]');
+        
+        if (enBtn) enBtn.setAttribute('href', targetUrl);
+      } 
+      
+      // EN sayfasındaysak -> Türkçe butonunu (href="/tr/") güncelle
+      else if (window.currentPage.lang === 'en') {
+        var trBtn = document.querySelector('a[href="/tr/"]');
+        if (!trBtn) trBtn = document.querySelector('a[href="tr/"]');
+        
+        if (trBtn) trBtn.setAttribute('href', targetUrl);
       }
     }
   }
