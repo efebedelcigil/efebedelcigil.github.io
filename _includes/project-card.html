@@ -1,0 +1,26 @@
+<div class="grid__item">
+  <div class="archive__item">
+    
+    {% if project.image_path %}
+      <div class="archive__item-teaser">
+        <img src="{{ project.image_path | relative_url }}" alt="{{ project.title }}" style="width: 100%; border-radius: 5px;">
+      </div>
+    {% endif %}
+
+    <div class="archive__item-body">
+      <h2 class="archive__item-title">{{ project.title }}</h2>
+      
+      <small style="color:red;">{{ project.category }}</small>
+      
+      {% if page.lang == 'tr' %}
+        <p class="archive__item-excerpt">{{ project.description.tr }}</p>
+      {% else %}
+        <p class="archive__item-excerpt">{{ project.description.en }}</p>
+      {% endif %}
+
+      {% if project.url %}
+        <p><a href="{{ project.url }}" class="btn {{ project.btn_class }} btn--small">{{ project.btn_label }}</a></p>
+      {% endif %}
+    </div>
+  </div>
+</div>
