@@ -216,36 +216,43 @@ body.dark-mode {
 }
 
 
-/* --- B) CONTENTS BOX (İÇİNDEKİLER KUTUSU) DÜZELTMESİ --- */
+/* --- B) CONTENTS BOX (İÇİNDEKİLER KUTUSU) FINAL FIX --- */
 
-/* Normal (Light) Modda varsayılan halini korusun ama border ekleyelim */
+/* 1. KUTU YAPISI (Her iki modda da sabit boyut) */
 .toc {
-    border: 1px solid var(--border-color);
-    transition: all 0.3s ease;
+    /* Border her zaman var olsun ki mod değişince zıplamasın */
+    border: 1px solid rgba(0,0,0,0.1); /* Light mode'da çok hafif sınır */
+    background-color: #fff; /* Light mode arka planı */
+    border-radius: 4px;
+    padding: 0.5em 1em; /* İç boşluk sabit */
+    transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* Dark Mode'da Beyaz Kutuyu Yok Et */
+/* 2. BAŞLIK (Alt çizgiyi kaldır) */
+.toc__title {
+    border-bottom: none !important; /* O çizgiyi yok et */
+    margin-bottom: 0.5em;
+    font-size: 0.9em;
+    font-weight: bold;
+    color: #333; /* Light mode rengi */
+}
+
+/* 3. DARK MODE ÖZELLEŞTİRMESİ */
 body.dark-mode .toc {
-    background-color: var(--dm-surface) !important; /* Koyu gri arka plan */
-    border-color: var(--dm-border) !important;     /* Koyu border */
-    box-shadow: none !important; /* Varsa gölgeyi kaldır */
+    background-color: var(--dm-surface) !important; /* Koyu gri */
+    border-color: var(--dm-border) !important;     /* Koyu sınır */
+    box-shadow: none !important;
 }
 
-/* TOC Başlığı (Contents) */
 body.dark-mode .toc__title {
     color: var(--dm-text-main) !important;
-    background-color: var(--dm-surface) !important;
 }
 
-/* TOC Linkleri */
+/* Linkler */
 body.dark-mode .toc__menu a {
-    color: var(--dm-text-muted) !important; /* Biraz daha sönük başlasınlar */
-    border-bottom: none; /* Alt çizgileri kaldıralım, kalabalık yapmasın */
+    color: var(--dm-text-muted) !important;
 }
-
-/* TOC Linki Aktif veya Hover Olduğunda */
 body.dark-mode .toc__menu a:hover,
 body.dark-mode .toc__menu a.is-active {
-    color: var(--dm-accent) !important; /* Mavi vurgu rengi */
-    background-color: rgba(100, 181, 246, 0.1); /* Hafif mavi arka plan */
+    color: var(--dm-accent) !important;
 }
