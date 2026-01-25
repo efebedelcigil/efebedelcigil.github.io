@@ -106,13 +106,20 @@ document.addEventListener("DOMContentLoaded", function() {
   var toggleBtn = document.getElementById('theme-toggle');
   var body = document.body;
   
-  // A) Tercihi Hatırla
+  // A) Kayıtlı Temayı Uygula (Head kısmında da yaptık ama garanti olsun)
   var currentTheme = localStorage.getItem('theme');
   if (currentTheme === 'dark') {
     body.classList.add('dark-mode');
   }
 
-  // B) Tıklama Olayı (Sadece Class Ekle/Çıkar)
+  // B) PRELOAD KALDIRMA (Animasyonları serbest bırak)
+  // Biraz bekletip (100ms) sınıfı siliyoruz ki sayfa oturmuş olsun.
+  setTimeout(function() {
+    document.body.classList.remove('preload');
+    document.documentElement.classList.remove('preload');
+  }, 100);
+
+  // C) Tıklama Olayı
   if (toggleBtn) {
     toggleBtn.addEventListener('click', function() {
       body.classList.toggle('dark-mode');
