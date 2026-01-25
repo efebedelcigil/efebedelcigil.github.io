@@ -202,3 +202,32 @@ mark.highlighted-term {
   70% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(255, 235, 59, 0); } 
   100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 235, 59, 0); } 
 }
+
+/* =========================================
+   8. YAZDIRMA OPTİMİZASYONU (Print CSS)
+   ========================================= */
+@media print {
+  /* Arka planı boşalt, mürekkep tasarrufu */
+  body, html, .page__content, .masthead, .page__footer, .sidebar {
+    background: #fff !important;
+    color: #000 !important;
+  }
+  
+  /* Gereksizleri gizle */
+  #theme-toggle, #reading-progress-bar, #scroll-to-top, .greedy-nav__toggle, .search__toggle {
+    display: none !important;
+  }
+
+  /* Kod blokları okunabilir olsun */
+  div.highlighter-rouge {
+    border: 1px solid #ccc;
+    background: #f5f5f5 !important;
+    color: #000 !important;
+  }
+  
+  /* Linklerin nereye gittiğini parantez içinde göster (Akademik duruş) */
+  a[href^="http"]:after {
+    content: " (" attr(href) ")";
+    font-size: 0.8em;
+  }
+}
