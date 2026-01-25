@@ -1,30 +1,28 @@
 <script>
 document.addEventListener("DOMContentLoaded", function() {
   
-  // A) HTML Elementlerini Enjekte Et (Progress Bar, Scroll Btn, Lightbox)
+  // A) Elementleri Oluştur
   var body = document.body;
   
-  // 1. Progress Bar
   var progressBar = document.createElement('div');
   progressBar.id = 'reading-progress-bar';
   body.appendChild(progressBar);
 
-  // 2. Scroll to Top Button
   var scrollBtn = document.createElement('button');
   scrollBtn.id = 'scroll-to-top';
-  scrollBtn.innerHTML = '⬆'; // İstersen FontAwesome ikonu koy: <i class="fas fa-arrow-up"></i>
+  scrollBtn.innerHTML = '⬆';
   scrollBtn.title = "Yukarı Çık";
   body.appendChild(scrollBtn);
 
-  // 3. Lightbox Overlay
   var lightbox = document.createElement('div');
   lightbox.className = 'lightbox-overlay';
   lightbox.innerHTML = '<img src="" alt="Zoom">';
   body.appendChild(lightbox);
 
-
   // B) Dark Mode & Flicker Fix
   var toggleBtn = document.getElementById('theme-toggle');
+  
+  // Head scripti HTML'e eklemişti, Body'ye de ekleyelim
   if (document.documentElement.classList.contains('dark-mode')) {
     body.classList.add('dark-mode');
   }
@@ -45,16 +43,13 @@ document.addEventListener("DOMContentLoaded", function() {
     document.body.classList.remove('preload');
   }, 200);
 
-
-  // C) SCROLL MANTIĞI (Progress Bar & Scroll Btn)
+  // C) SCROLL MANTIĞI
   window.addEventListener('scroll', function() {
-    // Progress Bar Hesaplaması
     var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
     var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
     var scrolled = (winScroll / height) * 100;
     progressBar.style.width = scrolled + "%";
 
-    // Scroll Buton Görünürlüğü
     if (winScroll > 300) {
       scrollBtn.classList.add('show');
     } else {
@@ -62,21 +57,20 @@ document.addEventListener("DOMContentLoaded", function() {
     }
   });
 
-  // Scroll Buton Tıklama
   scrollBtn.addEventListener('click', function() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
 
-
-  // D) LIGHTBOX MANTIĞI
+  // D) LIGHTBOX
   var images = document.querySelectorAll('.page__content img');
   var lightboxImg = lightbox.querySelector('img');
 
   images.forEach(function(img) {
+    img.style.cursor = 'zoom-in';
     img.addEventListener('click', function() {
       lightboxImg.src = this.src;
       lightbox.classList.add('active');
-      document.body.style.overflow = 'hidden'; // Arka plan kaymasın
+      document.body.style.overflow = 'hidden';
     });
   });
 
@@ -85,40 +79,30 @@ document.addEventListener("DOMContentLoaded", function() {
     document.body.style.overflow = 'auto';
   });
 
-
-  // E) VS CODE STİLİ KOD BLOKLARI VE KOPYALA BUTONU
+  // E) KOD BLOKLARI (VS Code Style)
   var codeBlocks = document.querySelectorAll('div.highlighter-rouge');
-  
   codeBlocks.forEach(function(block) {
-    // Header oluştur
-    var header = document.createElement('div');
-    header.className = 'code-header';
-    
-    // Pencere Kontrolleri (Süs)
-    var controls = document.createElement('div');
-    controls.className = 'code-controls';
-    controls.innerHTML = '<div class="code-dot dot-red"></div><div class="code-dot dot-yellow"></div><div class="code-dot dot-green"></div>';
-    
-    // Kopyala Butonu
-    var copyBtn = document.createElement('button');
-    copyBtn.className = 'copy-btn';
-    copyBtn.innerText = 'Copy';
-    
-    // Header'ı birleştir
-    header.appendChild(controls);
-    header.appendChild(copyBtn);
-    
-    // Bloğun en tepesine ekle
-    block.insertBefore(header, block.firstChild);
+    if (!block.querySelector('.code-header')) {
+        var header = document.createElement('div');
+        header.className = 'code-header';
+        var controls = document.createElement('div');
+        controls.className = 'code-controls';
+        controls.innerHTML = '<div class="code-dot dot-red"></div><div class="code-dot dot-yellow"></div><div class="code-dot dot-green"></div>';
+        var copyBtn = document.createElement('button');
+        copyBtn.className = 'copy-btn';
+        copyBtn.innerText = 'Copy';
+        header.appendChild(controls);
+        header.appendChild(copyBtn);
+        block.insertBefore(header, block.firstChild);
 
-    // Kopyalama İşlevi
-    copyBtn.addEventListener('click', function() {
-      var code = block.querySelector('pre').innerText;
-      navigator.clipboard.writeText(code).then(function() {
-        copyBtn.innerText = 'Copied!';
-        setTimeout(function() { copyBtn.innerText = 'Copy'; }, 2000);
-      });
-    });
+        copyBtn.addEventListener('click', function() {
+          var code = block.querySelector('pre').innerText;
+          navigator.clipboard.writeText(code).then(function() {
+            copyBtn.innerText = 'Copied!';
+            setTimeout(function() { copyBtn.innerText = 'Copy'; }, 2000);
+          });
+        });
+    }
   });
 
 });
@@ -130,11 +114,7 @@ document.addEventListener("DOMContentLoaded", function() {
   {%- for p in site.pages -%}
     {%- if p.lang_ref -%}
       {%- capture json_item -%}
-      {
-        "url": "{{ p.url | relative_url }}",
-        "id": "{{ p.lang_ref }}",
-        "lang": "{{ p.lang }}"
-      }
+      { "url": "{{ p.url | relative_url }}", "id": "{{ p.lang_ref }}", "lang": "{{ p.lang }}" }
       {%- endcapture -%}
       {%- assign valid_pages = valid_pages | push: json_item -%}
     {%- endif -%}
@@ -145,6 +125,8 @@ document.addEventListener("DOMContentLoaded", function() {
 
 <script>
 document.addEventListener("DOMContentLoaded", function() {
+  
+  // --- Dil Değiştirme ---
   var rawDataElement = document.getElementById('sitemap-data');
   var siteMap = [];
   if (rawDataElement) { try { siteMap = JSON.parse(rawDataElement.textContent); } catch (e) {} }
@@ -168,13 +150,14 @@ document.addEventListener("DOMContentLoaded", function() {
       var langBtn = document.querySelector(selector);
       if (langBtn) {
          var href = langBtn.getAttribute('href');
-         if(href === '/en/' || href === '/tr/' || href === 'en/' || href === 'tr/' || href.includes(partnerPage.lang)) {
+         if(href && (href.includes('/en') || href.includes('/tr') || href.includes('en/') || href.includes('tr/'))) {
              langBtn.setAttribute('href', partnerPage.url);
          }
       }
     }
   }
 
+  // --- External Links ---
   var links = document.links;
   for (var k = 0; k < links.length; k++) {
     if (links[k].hostname != window.location.hostname) {
@@ -184,30 +167,62 @@ document.addEventListener("DOMContentLoaded", function() {
     }
   }
   
+  // --- GELİŞMİŞ HIGHLIGHTER (SORUNSUZ) ---
   var urlParams = new URLSearchParams(window.location.search);
   var query = urlParams.get('q') || urlParams.get('highlight');
-  if (query && query.length > 2) {
-    var cleanQuery = query.replace(/[^\w\s]/gi, '');
+
+  if (query && query.length > 1) { // En az 2 harf olsun
+    var cleanQuery = query.replace(/[^\w\sğüşıöçĞÜŞİÖÇ]/gi, ''); // Türkçe karakter desteği
+    console.log("Highlight Aktif! Aranan:", cleanQuery);
+
+    // Sadece içerikte ara (Başlıkları ve menüyü bozma)
     var context = document.querySelector('.page__content') || document.body;
-    function highlightText(element, text) {
-      if (element.hasChildNodes()) {
-        element.childNodes.forEach(function(node) { highlightText(node, text); });
-      } else if (element.nodeType === 3) {
-        var val = element.nodeValue;
-        var regex = new RegExp("(" + text + ")", "gi");
-        if (val.match(regex)) {
-          var span = document.createElement("mark");
-          span.className = "highlighted-term";
-          span.innerHTML = val.replace(regex, '$1');
-          element.parentNode.replaceChild(span, element);
-          if (!window.scrolledToHighlight) {
-            setTimeout(function(){ span.scrollIntoView({behavior: "smooth", block: "center"}); }, 500);
-            window.scrolledToHighlight = true;
-          }
+    
+    // Regex: Kelimeyi bul, büyük küçük harf duyarsız (gi)
+    // Parantez () içine aldık ki split yapınca kaybolmasın
+    var regex = new RegExp("(" + cleanQuery + ")", "gi");
+
+    function highlightRecursive(node) {
+      // Eğer bu bir metin düğümü ise ve aranan kelimeyi içeriyorsa
+      if (node.nodeType === 3) { 
+        var val = node.nodeValue;
+        if (regex.test(val)) {
+          var fragment = document.createDocumentFragment();
+          var parts = val.split(regex); // Metni parçala: ["Merhaba ", "v2x", " projesi"]
+
+          parts.forEach(function(part) {
+            // Eğer parça aranan kelimeye eşitse (büyük/küçük harf farketmeksizin)
+            if (part.toLowerCase() === cleanQuery.toLowerCase()) {
+              var mark = document.createElement("mark");
+              mark.className = "highlighted-term";
+              mark.textContent = part; // Orijinal harf yapısını koru (V2X ise V2X kalsın)
+              fragment.appendChild(mark);
+            } else {
+              fragment.appendChild(document.createTextNode(part));
+            }
+          });
+
+          node.parentNode.replaceChild(fragment, node);
+          return true; // Değişiklik yapıldı
+        }
+      } 
+      // Eğer bu bir element düğümü ise ve script/style değilse içine gir
+      else if (node.nodeType === 1 && node.nodeName !== "SCRIPT" && node.nodeName !== "STYLE" && !node.classList.contains('highlighted-term')) {
+        for (var i = 0; i < node.childNodes.length; i++) {
+          highlightRecursive(node.childNodes[i]);
         }
       }
     }
-    highlightText(context, cleanQuery);
+
+    highlightRecursive(context);
+
+    // İlk bulunan yere kaydır
+    setTimeout(function(){
+      var firstMark = document.querySelector('mark.highlighted-term');
+      if (firstMark) {
+        firstMark.scrollIntoView({behavior: "smooth", block: "center"});
+      }
+    }, 500);
   }
 });
 </script>
