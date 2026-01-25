@@ -1,10 +1,10 @@
 ---
-title: "Özgeçmiş"
+title: "Özgeçmiş / CV"
 permalink: /tr/ozgecmis/
 lang_ref: cv_page
 layout: single
 author_profile: true
-toc: true # İçindekiler tablosunu otomatik oluşturur
+toc: true
 toc_label: "İçerik"
 toc_icon: "file-alt"
 ---
