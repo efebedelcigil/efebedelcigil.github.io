@@ -18,7 +18,7 @@
   "use strict";
 
   const init = () => {
-    console.log("%c⚡ Efe Master Script: Başlatılıyor...", "color: #007acc; font-weight: bold;");
+    console.log("%c⚡ Efe Master Script: Tam Kadro Devrede!", "color: #00ff00; font-weight: bold;");
     
     const html = document.documentElement;
     const body = document.body;
@@ -48,7 +48,7 @@
         });
       };
     }
-    // Preload temizliği
+    // Preload class temizliği (Titreme engellemek için)
     setTimeout(() => { html.classList.remove('preload'); body.classList.remove('preload'); }, 200);
 
     /* --- C. SCROLL MANTIĞI --- */
@@ -68,18 +68,20 @@
     };
     if (scrollBtn) scrollBtn.onclick = () => window.scrollTo({ top: 0, behavior: 'smooth' });
 
-    /* --- D. LIGHTBOX & CODE COPY --- */
+    /* --- D. LIGHTBOX (Resim Büyütme) --- */
     document.querySelectorAll('.page__content img:not(.emoji)').forEach(img => {
       img.style.cursor = 'zoom-in';
       img.onclick = () => { lightbox.querySelector('img').src = img.src; lightbox.classList.add('active'); body.style.overflow = 'hidden'; };
     });
     lightbox.onclick = () => { lightbox.classList.remove('active'); body.style.overflow = 'auto'; };
 
+    /* --- E. KOD BLOKLARI (Copy Button) [Geri Eklendi!] --- */
     document.querySelectorAll('div.highlighter-rouge').forEach(block => {
       if (!block.querySelector('.code-header')) {
         const header = document.createElement('div'); header.className = 'code-header';
         header.innerHTML = `<div class="code-controls"><div class="code-dot dot-red"></div><div class="code-dot dot-yellow"></div><div class="code-dot dot-green"></div></div><button class="copy-btn">Copy</button>`;
         block.insertBefore(header, block.firstChild);
+        
         header.querySelector('.copy-btn').onclick = function() {
           navigator.clipboard.writeText(block.querySelector('pre').innerText).then(() => {
             this.innerText = 'Copied!'; setTimeout(() => this.innerText = 'Copy', 2000);
@@ -88,7 +90,7 @@
       }
     });
 
-    /* --- E. ARAMA MOTORU AYARLARI (Simple-Jekyll-Search) --- */
+    /* --- F. ARAMA MOTORU (Yol Düzeltmesi ile) --- */
     const searchInput = document.querySelector('.search-input');
     if (searchInput) {
       searchInput.setAttribute('placeholder', isEn ? 'Search... (Open: / | Close: ESC)' : 'Ara... (Aç: / | Kapat: ESC)');
@@ -96,9 +98,10 @@
       SimpleJekyllSearch({
         searchInput: searchInput,
         resultsContainer: document.querySelector('.search-results__items'),
-        json: window.location.origin + '/search.json',
+        // KRİTİK DÜZELTME: relative_url filtresi ile tam yol
+        json: '{{ "/search.json" | relative_url }}',
         searchResultTemplate: `
-          <li class="search-result-item" style="list-style:none; padding:10px; border-bottom:1px solid rgba(128,128,128,0.1);">
+          <li class="search-result-item" style="list-style:none; padding:12px; border-bottom:1px solid rgba(128,128,128,0.15);">
             <a href="{url}" class="result-link" style="text-decoration:none; display:block;">
               <strong style="font-size:16px; color:#007acc; display:block; margin-bottom:4px;">{title}</strong>
               <span style="font-size:13px; color:#666; line-height:1.4;">{content}</span>
@@ -109,17 +112,20 @@
         fuzzy: false
       });
 
-      // Manuel Dil Filtresi (CSS ile gizleme)
+      // Dil Filtresi ve Highlight Tetikleyici
       const resultsContainer = document.querySelector('.search-results__items');
       searchInput.addEventListener('keyup', () => {
         setTimeout(() => {
           resultsContainer.querySelectorAll('li a').forEach(link => {
             const url = link.getAttribute('href');
             const parent = link.closest('li');
+            
+            // Dil uyuşmazlığı varsa gizle
             if ((isEn && !url.includes('/en/')) || (!isEn && url.includes('/en/'))) {
               parent.style.display = 'none';
             }
-            // Tıklayınca Hafızaya Yaz (Highlight için)
+            
+            // Tıklayınca Highlight için hafızaya al
             link.addEventListener('click', () => {
               sessionStorage.setItem('search_keyword', searchInput.value.trim());
             });
@@ -128,31 +134,35 @@
       });
     }
 
-    /* --- F. DİL DEĞİŞTİRME & HARİCİ LİNKLER --- */
+    /* --- G. DİL DEĞİŞTİRİCİ & HARİCİ LİNKLER [Geri Eklendi!] --- */
+    // 1. Dil Butonu Güncelleme
     const rawData = document.getElementById('sitemap-data');
     if (rawData) {
-      const siteMap = JSON.parse(rawData.textContent);
-      const normalize = p => p ? p.replace(window.location.origin, "").replace(/(\/index\.html|index\.html|\/)$/, "") || "/" : "";
-      const currentNorm = normalize(window.location.pathname);
-      const myPage = siteMap.find(p => normalize(p.url) === currentNorm);
-      if (myPage) {
-        const partner = siteMap.find(p => p.id === myPage.id && p.lang !== myPage.lang);
-        const langBtn = document.querySelector(isEn ? 'a[href*="/tr/"]' : 'a[href*="/en/"]');
-        if (partner && langBtn) langBtn.setAttribute('href', partner.url);
-      }
+      try {
+        const siteMap = JSON.parse(rawData.textContent);
+        const normalize = p => p ? p.replace(window.location.origin, "").replace(/(\/index\.html|index\.html|\/)$/, "") || "/" : "";
+        const currentNorm = normalize(window.location.pathname);
+        const myPage = siteMap.find(p => normalize(p.url) === currentNorm);
+        
+        if (myPage) {
+          const partner = siteMap.find(p => p.id === myPage.id && p.lang !== myPage.lang);
+          const langBtn = document.querySelector(isEn ? 'a[href*="/tr/"]' : 'a[href*="/en/"]');
+          if (partner && langBtn) langBtn.setAttribute('href', partner.url);
+        }
+      } catch(e) { console.error("Sitemap Parse Hatası", e); }
     }
 
+    // 2. Harici Linkleri Yeni Sekmede Aç
     document.querySelectorAll('a').forEach(link => {
       if (link.hostname !== window.location.hostname || link.href.endsWith('.pdf')) {
         link.target = '_blank'; link.rel = 'noopener noreferrer';
       }
     });
 
-    /* --- G. HIGHLIGHTER (Hem URL Hem Session Storage Destekli) --- */
-    const urlParams = new URLSearchParams(window.location.search);
-    const qUrl = urlParams.get('q');
+    /* --- H. HIGHLIGHTER (Lazer Pointer) --- */
+    const qUrl = new URLSearchParams(window.location.search).get('q');
     const qSession = sessionStorage.getItem('search_keyword');
-    const query = qUrl || qSession; // İkisine de bak
+    const query = qUrl || qSession;
 
     if (query && query.length > 1) {
       const cleanQuery = decodeURIComponent(query).replace(/[^\w\sğüşıöçĞÜŞİÖÇ]/gi, '').trim();
@@ -188,7 +198,7 @@
         const firstMark = document.querySelector('mark.highlighted-term');
         if (firstMark) {
           firstMark.scrollIntoView({ behavior: "smooth", block: "center" });
-          sessionStorage.removeItem('search_keyword'); // Temizlik
+          sessionStorage.removeItem('search_keyword');
         }
       }, 600);
     }
