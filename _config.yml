@@ -52,7 +52,4 @@ defaults:
       author: "efe_en"
 
 search: true
-search_provider: lunr
-lunr:
-  search_within_pages: true
-  search_full_content: true
+search_provider: lunr #to implement search button, we are not using lunr otherwise

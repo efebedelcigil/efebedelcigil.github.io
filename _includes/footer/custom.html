@@ -1,175 +1,9 @@
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-  
-  // A) Elementleri Oluştur (Progress, ScrollBtn, Lightbox)
-  var body = document.body;
-  
-  var progressBar = document.createElement('div');
-  progressBar.id = 'reading-progress-bar';
-  body.appendChild(progressBar);
-
-  var scrollBtn = document.createElement('button');
-  scrollBtn.id = 'scroll-to-top';
-  scrollBtn.innerHTML = '⬆';
-  scrollBtn.title = "Yukarı Çık";
-  body.appendChild(scrollBtn);
-
-  var lightbox = document.createElement('div');
-  lightbox.className = 'lightbox-overlay';
-  lightbox.innerHTML = '<img src="" alt="Zoom">';
-  body.appendChild(lightbox);
-
-  // B) Dark Mode
-  var toggleBtn = document.getElementById('theme-toggle');
-  
-  if (document.documentElement.classList.contains('dark-mode')) {
-    body.classList.add('dark-mode');
-  }
-
-  if (toggleBtn) {
-    toggleBtn.addEventListener('click', function() {
-      requestAnimationFrame(function() {
-        document.documentElement.classList.toggle('dark-mode');
-        document.body.classList.toggle('dark-mode');
-        var isDark = document.documentElement.classList.contains('dark-mode');
-        localStorage.setItem('theme', isDark ? 'dark' : 'light');
-      });
-    });
-  }
-  
-  setTimeout(function() {
-    document.documentElement.classList.remove('preload');
-    document.body.classList.remove('preload');
-  }, 200);
-
-  // C) SCROLL MANTIĞI
-  var ticking = false;
-  window.addEventListener('scroll', function() {
-    if (!ticking) {
-      window.requestAnimationFrame(function() {
-        var winScroll = window.scrollY || document.documentElement.scrollTop;
-        var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-        var scrolled = (winScroll / height) * 100;
-        
-        scrolled = Math.max(0, Math.min(100, scrolled));
-        progressBar.style.width = scrolled + "%";
-
-        if (winScroll > 50) {
-          scrollBtn.classList.add('show');
-        } else {
-          scrollBtn.classList.remove('show');
-        }
-        ticking = false;
-      });
-      ticking = true;
-    }
-  });
-
-  scrollBtn.addEventListener('click', function() {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  });
-
-  // D) LIGHTBOX
-  var images = document.querySelectorAll('.page__content img');
-  var lightboxImg = lightbox.querySelector('img');
-
-  images.forEach(function(img) {
-    if (!img.classList.contains('emoji')) {
-        img.style.cursor = 'zoom-in';
-        img.addEventListener('click', function() {
-          lightboxImg.src = this.src;
-          lightbox.classList.add('active');
-          document.body.style.overflow = 'hidden';
-        });
-    }
-  });
-
-  lightbox.addEventListener('click', function() {
-    lightbox.classList.remove('active');
-    document.body.style.overflow = 'auto';
-  });
-
-  // E) KOD BLOKLARI (VS Code Style & Copy)
-  var codeBlocks = document.querySelectorAll('div.highlighter-rouge');
-  codeBlocks.forEach(function(block) {
-    if (!block.querySelector('.code-header')) {
-        var header = document.createElement('div');
-        header.className = 'code-header';
-        var controls = document.createElement('div');
-        controls.className = 'code-controls';
-        controls.innerHTML = '<div class="code-dot dot-red"></div><div class="code-dot dot-yellow"></div><div class="code-dot dot-green"></div>';
-        var copyBtn = document.createElement('button');
-        copyBtn.className = 'copy-btn';
-        copyBtn.innerText = 'Copy';
-        header.appendChild(controls);
-        header.appendChild(copyBtn);
-        block.insertBefore(header, block.firstChild);
-
-        copyBtn.addEventListener('click', function() {
-          var code = block.querySelector('pre').innerText;
-          navigator.clipboard.writeText(code).then(function() {
-            copyBtn.innerText = 'Copied!';
-            setTimeout(function() { copyBtn.innerText = 'Copy'; }, 2000);
-          });
-        });
-    }
-  });
-  
-  // F) ARAMA KUTUSU PLACEHOLDER (YENİ EKLENEN KISIM)
-  // Kullanıcıya kısayolları öğretmek için
-  var searchInput = document.querySelector('.search-input');
-  if(searchInput) {
-    // URL kontrolü ile dil tespiti
-    var isTr = window.location.pathname.indexOf('/en/') === -1;
-    
-    if(isTr) {
-      searchInput.setAttribute('placeholder', 'Ara... (Aç: / | Kapat: ESC)');
-    } else {
-      searchInput.setAttribute('placeholder', 'Search... (Open: / | Close: ESC)');
-    }
-  }
-
-});
-</script>
-
-<script>
-document.addEventListener('keydown', function(event) {
-  // '/' tuşu ile arama (Eğer zaten yazı yazmıyorsak)
-  if (event.key === '/' && document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') {
-    event.preventDefault(); // '/' karakterinin sayfaya yazılmasını engelle
-    var searchBtn = document.querySelector('.search__toggle');
-    if(searchBtn) searchBtn.click();
-    
-    // Arama kutusuna odaklan (biraz bekleyip, animasyon bitince)
-    setTimeout(function() {
-      var input = document.querySelector('.search-input');
-      if(input) input.focus();
-    }, 100);
-  }
-  
-  // 'ESC' ile her şeyi kapat
-  if (event.key === 'Escape') {
-    // Lightbox kapat
-    var lightbox = document.querySelector('.lightbox-overlay');
-    if(lightbox && lightbox.classList.contains('active')) {
-      lightbox.classList.remove('active');
-      document.body.style.overflow = 'auto';
-    }
-    // Arama kapat
-    var closeSearch = document.querySelector('.search-content__close');
-    if(closeSearch) closeSearch.click();
-  }
-});
-</script>
-
 <script id="sitemap-data" type="application/json">
 [
   {%- assign valid_pages = "" | split: "" -%}
   {%- for p in site.pages -%}
     {%- if p.lang_ref -%}
-      {%- capture json_item -%}
-      { "url": "{{ p.url | relative_url }}", "id": "{{ p.lang_ref }}", "lang": "{{ p.lang }}" }
-      {%- endcapture -%}
+      {%- capture json_item -%}{ "url": "{{ p.url | relative_url }}", "id": "{{ p.lang_ref }}", "lang": "{{ p.lang }}" }{%- endcapture -%}
       {%- assign valid_pages = valid_pages | push: json_item -%}
     {%- endif -%}
   {%- endfor -%}
@@ -177,97 +11,206 @@ document.addEventListener('keydown', function(event) {
 ]
 </script>
 
+<script src="https://unpkg.com/simple-jekyll-search@latest/dest/simple-jekyll-search.min.js"></script>
+
 <script>
-document.addEventListener("DOMContentLoaded", function() {
-  
-  // --- Dil Değiştirme ---
-  var rawDataElement = document.getElementById('sitemap-data');
-  var siteMap = [];
-  if (rawDataElement) { try { siteMap = JSON.parse(rawDataElement.textContent); } catch (e) {} }
+(function() {
+  "use strict";
 
-  function normalize(path) {
-    if (!path) return "";
-    try { if (path.startsWith("http")) path = new URL(path).pathname; } catch(e) {}
-    path = path.replace(window.location.origin, "").replace(/\/index\.html$/, "").replace(/index\.html$/, "");
-    if (path.endsWith("/") && path.length > 1) path = path.slice(0, -1);
-    if (!path.startsWith("/")) path = "/" + path;
-    return path;
-  }
+  const init = () => {
+    console.log("%c⚡ Efe Master Script: Başlatılıyor...", "color: #007acc; font-weight: bold;");
+    
+    const html = document.documentElement;
+    const body = document.body;
+    const isEn = window.location.pathname.includes('/en/');
 
-  var currentPath = normalize(window.location.pathname);
-  var myPage = siteMap.find(function(p) { return normalize(p.url) === currentPath; });
+    /* --- A. ELEMENT ENJEKSİYONU (Progress, Scroll, Lightbox) --- */
+    if (!document.getElementById('reading-progress-bar')) {
+      const pb = document.createElement('div'); pb.id = 'reading-progress-bar';
+      const sb = document.createElement('button'); sb.id = 'scroll-to-top'; sb.innerHTML = '⬆'; sb.title = isEn ? "Scroll to Top" : "Yukarı Çık";
+      const lb = document.createElement('div'); lb.className = 'lightbox-overlay'; lb.innerHTML = '<img src="" alt="Zoom">';
+      [pb, sb, lb].forEach(el => body.appendChild(el));
+    }
 
-  if (myPage) {
-    var partnerPage = siteMap.find(function(p) { return p.id === myPage.id && p.lang !== myPage.lang; });
-    if (partnerPage) {
-      var selector = myPage.lang === 'tr' ? 'a[href*="/en"]' : 'a[href*="/tr"]';
-      var langBtn = document.querySelector(selector);
-      if (langBtn) {
-         var href = langBtn.getAttribute('href');
-         if(href && (href.includes('/en') || href.includes('/tr') || href.includes('en/') || href.includes('tr/'))) {
-             langBtn.setAttribute('href', partnerPage.url);
-         }
+    const scrollBtn = document.getElementById('scroll-to-top');
+    const progressBar = document.getElementById('reading-progress-bar');
+    const lightbox = document.querySelector('.lightbox-overlay');
+
+    /* --- B. DARK MODE --- */
+    if (html.classList.contains('dark-mode')) body.classList.add('dark-mode');
+    const toggleBtn = document.getElementById('theme-toggle');
+    if (toggleBtn) {
+      toggleBtn.onclick = () => {
+        requestAnimationFrame(() => {
+          html.classList.toggle('dark-mode');
+          body.classList.toggle('dark-mode');
+          localStorage.setItem('theme', html.classList.contains('dark-mode') ? 'dark' : 'light');
+        });
+      };
+    }
+    // Preload temizliği
+    setTimeout(() => { html.classList.remove('preload'); body.classList.remove('preload'); }, 200);
+
+    /* --- C. SCROLL MANTIĞI --- */
+    let ticking = false;
+    window.onscroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const winScroll = window.scrollY || html.scrollTop;
+          const height = html.scrollHeight - html.clientHeight;
+          const scrolled = (winScroll / height) * 100;
+          if (progressBar) progressBar.style.width = Math.max(0, Math.min(100, scrolled)) + "%";
+          if (scrollBtn) winScroll > 100 ? scrollBtn.classList.add('show') : scrollBtn.classList.remove('show');
+          ticking = false;
+        });
+        ticking = true;
       }
-    }
-  }
+    };
+    if (scrollBtn) scrollBtn.onclick = () => window.scrollTo({ top: 0, behavior: 'smooth' });
 
-  // --- External Links ---
-  var links = document.links;
-  for (var k = 0; k < links.length; k++) {
-    if (links[k].hostname != window.location.hostname) {
-      links[k].target = '_blank'; links[k].rel = 'noopener noreferrer';
-    } else if (links[k].href.endsWith(".pdf")) {
-      links[k].target = '_blank';
-    }
-  }
-  
-  // --- HIGHLIGHTER: TREEWALKER YÖNTEMİ ---
-  var urlParams = new URLSearchParams(window.location.search);
-  var query = urlParams.get('q') || urlParams.get('highlight');
+    /* --- D. LIGHTBOX & CODE COPY --- */
+    document.querySelectorAll('.page__content img:not(.emoji)').forEach(img => {
+      img.style.cursor = 'zoom-in';
+      img.onclick = () => { lightbox.querySelector('img').src = img.src; lightbox.classList.add('active'); body.style.overflow = 'hidden'; };
+    });
+    lightbox.onclick = () => { lightbox.classList.remove('active'); body.style.overflow = 'auto'; };
 
-  if (query && query.length > 1) {
-    var cleanQuery = query.replace(/[^\w\sğüşıöçĞÜŞİÖÇ]/gi, '');
-    var context = document.querySelector('.page__content') || document.body;
-    var regex = new RegExp(cleanQuery, "gi");
-
-    var walker = document.createTreeWalker(context, NodeFilter.SHOW_TEXT, null, false);
-    var nodeList = [];
-    var node;
-
-    while(node = walker.nextNode()) {
-      if (regex.test(node.nodeValue) && node.parentNode.nodeName !== "SCRIPT" && node.parentNode.nodeName !== "STYLE") {
-        nodeList.push(node);
-      }
-    }
-
-    nodeList.forEach(function(textNode) {
-      var fragment = document.createDocumentFragment();
-      var parts = textNode.nodeValue.split(new RegExp("(" + cleanQuery + ")", "gi"));
-      var changed = false;
-
-      parts.forEach(function(part) {
-        if (part.toLowerCase() === cleanQuery.toLowerCase()) {
-          var mark = document.createElement("mark");
-          mark.className = "highlighted-term";
-          mark.textContent = part;
-          fragment.appendChild(mark);
-          changed = true;
-        } else {
-          fragment.appendChild(document.createTextNode(part));
-        }
-      });
-
-      if (changed) {
-        textNode.parentNode.replaceChild(fragment, textNode);
+    document.querySelectorAll('div.highlighter-rouge').forEach(block => {
+      if (!block.querySelector('.code-header')) {
+        const header = document.createElement('div'); header.className = 'code-header';
+        header.innerHTML = `<div class="code-controls"><div class="code-dot dot-red"></div><div class="code-dot dot-yellow"></div><div class="code-dot dot-green"></div></div><button class="copy-btn">Copy</button>`;
+        block.insertBefore(header, block.firstChild);
+        header.querySelector('.copy-btn').onclick = function() {
+          navigator.clipboard.writeText(block.querySelector('pre').innerText).then(() => {
+            this.innerText = 'Copied!'; setTimeout(() => this.innerText = 'Copy', 2000);
+          });
+        };
       }
     });
 
-    setTimeout(function(){
-      var firstMark = document.querySelector('mark.highlighted-term');
-      if (firstMark) {
-        firstMark.scrollIntoView({behavior: "smooth", block: "center"});
+    /* --- E. ARAMA MOTORU AYARLARI (Simple-Jekyll-Search) --- */
+    const searchInput = document.querySelector('.search-input');
+    if (searchInput) {
+      searchInput.setAttribute('placeholder', isEn ? 'Search... (Open: / | Close: ESC)' : 'Ara... (Aç: / | Kapat: ESC)');
+      
+      SimpleJekyllSearch({
+        searchInput: searchInput,
+        resultsContainer: document.querySelector('.search-results__items'),
+        json: '/search.json',
+        searchResultTemplate: `
+          <li class="search-result-item" style="list-style:none; padding:10px; border-bottom:1px solid rgba(128,128,128,0.1);">
+            <a href="{url}" class="result-link" style="text-decoration:none; display:block;">
+              <strong style="font-size:16px; color:#007acc; display:block; margin-bottom:4px;">{title}</strong>
+              <span style="font-size:13px; color:#666; line-height:1.4;">{content}</span>
+            </a>
+          </li>`,
+        noResultsText: '<li style="padding:15px; color:#666;">Sonuç yok / No results found</li>',
+        limit: 10,
+        fuzzy: false
+      });
+
+      // Manuel Dil Filtresi (CSS ile gizleme)
+      const resultsContainer = document.querySelector('.search-results__items');
+      searchInput.addEventListener('keyup', () => {
+        setTimeout(() => {
+          resultsContainer.querySelectorAll('li a').forEach(link => {
+            const url = link.getAttribute('href');
+            const parent = link.closest('li');
+            if ((isEn && !url.includes('/en/')) || (!isEn && url.includes('/en/'))) {
+              parent.style.display = 'none';
+            }
+            // Tıklayınca Hafızaya Yaz (Highlight için)
+            link.addEventListener('click', () => {
+              sessionStorage.setItem('search_keyword', searchInput.value.trim());
+            });
+          });
+        }, 100);
+      });
+    }
+
+    /* --- F. DİL DEĞİŞTİRME & HARİCİ LİNKLER --- */
+    const rawData = document.getElementById('sitemap-data');
+    if (rawData) {
+      const siteMap = JSON.parse(rawData.textContent);
+      const normalize = p => p ? p.replace(window.location.origin, "").replace(/(\/index\.html|index\.html|\/)$/, "") || "/" : "";
+      const currentNorm = normalize(window.location.pathname);
+      const myPage = siteMap.find(p => normalize(p.url) === currentNorm);
+      if (myPage) {
+        const partner = siteMap.find(p => p.id === myPage.id && p.lang !== myPage.lang);
+        const langBtn = document.querySelector(isEn ? 'a[href*="/tr/"]' : 'a[href*="/en/"]');
+        if (partner && langBtn) langBtn.setAttribute('href', partner.url);
       }
-    }, 500);
-  }
-});
+    }
+
+    document.querySelectorAll('a').forEach(link => {
+      if (link.hostname !== window.location.hostname || link.href.endsWith('.pdf')) {
+        link.target = '_blank'; link.rel = 'noopener noreferrer';
+      }
+    });
+
+    /* --- G. HIGHLIGHTER (Hem URL Hem Session Storage Destekli) --- */
+    const urlParams = new URLSearchParams(window.location.search);
+    const qUrl = urlParams.get('q');
+    const qSession = sessionStorage.getItem('search_keyword');
+    const query = qUrl || qSession; // İkisine de bak
+
+    if (query && query.length > 1) {
+      const cleanQuery = decodeURIComponent(query).replace(/[^\w\sğüşıöçĞÜŞİÖÇ]/gi, '').trim();
+      console.log("🎯 Highlighter Tetiklendi:", cleanQuery);
+
+      const context = document.querySelector('.page__content') || body;
+      const walker = document.createTreeWalker(context, NodeFilter.SHOW_TEXT, null, false);
+      const nodeList = [];
+      let node;
+
+      while (node = walker.nextNode()) {
+        if (node.nodeValue.toLowerCase().includes(cleanQuery.toLowerCase()) && 
+            !['SCRIPT', 'STYLE', 'NOSCRIPT', 'MARK'].includes(node.parentNode.nodeName)) {
+          nodeList.push(node);
+        }
+      }
+
+      nodeList.forEach(textNode => {
+        const regex = new RegExp(`(${cleanQuery})`, "gi");
+        const fragment = document.createDocumentFragment();
+        textNode.nodeValue.split(regex).forEach(part => {
+          if (part.toLowerCase() === cleanQuery.toLowerCase()) {
+            const mark = document.createElement("mark");
+            mark.className = "highlighted-term";
+            mark.textContent = part;
+            fragment.appendChild(mark);
+          } else if (part.length > 0) fragment.appendChild(document.createTextNode(part));
+        });
+        if (textNode.parentNode) textNode.parentNode.replaceChild(fragment, textNode);
+      });
+
+      setTimeout(() => {
+        const firstMark = document.querySelector('mark.highlighted-term');
+        if (firstMark) {
+          firstMark.scrollIntoView({ behavior: "smooth", block: "center" });
+          sessionStorage.removeItem('search_keyword'); // Temizlik
+        }
+      }, 600);
+    }
+  };
+
+  /* --- BAŞLATMA --- */
+  if (document.readyState === 'complete') init();
+  else window.addEventListener('load', init);
+
+  /* --- KLAVYE KISAYOLLARI --- */
+  document.onkeydown = e => {
+    if (e.key === '/' && !['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) {
+      e.preventDefault();
+      document.querySelector('.search__toggle')?.click();
+      setTimeout(() => document.querySelector('.search-input')?.focus(), 150);
+    }
+    if (e.key === 'Escape') {
+      document.querySelector('.lightbox-overlay')?.classList.remove('active');
+      document.querySelector('.search-content__close')?.click();
+      body.style.overflow = 'auto';
+    }
+  };
+
+})();
 </script>
