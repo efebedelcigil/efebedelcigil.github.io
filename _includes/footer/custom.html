@@ -96,7 +96,7 @@
       SimpleJekyllSearch({
         searchInput: searchInput,
         resultsContainer: document.querySelector('.search-results__items'),
-        json: '/search.json',
+        json: window.location.origin + '/search.json',
         searchResultTemplate: `
           <li class="search-result-item" style="list-style:none; padding:10px; border-bottom:1px solid rgba(128,128,128,0.1);">
             <a href="{url}" class="result-link" style="text-decoration:none; display:block;">
