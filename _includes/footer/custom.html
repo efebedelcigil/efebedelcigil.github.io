@@ -1,3 +1,129 @@
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  
+  // A) HTML Elementlerini Enjekte Et (Progress Bar, Scroll Btn, Lightbox)
+  var body = document.body;
+  
+  // 1. Progress Bar
+  var progressBar = document.createElement('div');
+  progressBar.id = 'reading-progress-bar';
+  body.appendChild(progressBar);
+
+  // 2. Scroll to Top Button
+  var scrollBtn = document.createElement('button');
+  scrollBtn.id = 'scroll-to-top';
+  scrollBtn.innerHTML = '⬆'; // İstersen FontAwesome ikonu koy: <i class="fas fa-arrow-up"></i>
+  scrollBtn.title = "Yukarı Çık";
+  body.appendChild(scrollBtn);
+
+  // 3. Lightbox Overlay
+  var lightbox = document.createElement('div');
+  lightbox.className = 'lightbox-overlay';
+  lightbox.innerHTML = '<img src="" alt="Zoom">';
+  body.appendChild(lightbox);
+
+
+  // B) Dark Mode & Flicker Fix
+  var toggleBtn = document.getElementById('theme-toggle');
+  if (document.documentElement.classList.contains('dark-mode')) {
+    body.classList.add('dark-mode');
+  }
+
+  if (toggleBtn) {
+    toggleBtn.addEventListener('click', function() {
+      requestAnimationFrame(function() {
+        document.documentElement.classList.toggle('dark-mode');
+        document.body.classList.toggle('dark-mode');
+        var isDark = document.documentElement.classList.contains('dark-mode');
+        localStorage.setItem('theme', isDark ? 'dark' : 'light');
+      });
+    });
+  }
+  
+  setTimeout(function() {
+    document.documentElement.classList.remove('preload');
+    document.body.classList.remove('preload');
+  }, 200);
+
+
+  // C) SCROLL MANTIĞI (Progress Bar & Scroll Btn)
+  window.addEventListener('scroll', function() {
+    // Progress Bar Hesaplaması
+    var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+    var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    var scrolled = (winScroll / height) * 100;
+    progressBar.style.width = scrolled + "%";
+
+    // Scroll Buton Görünürlüğü
+    if (winScroll > 300) {
+      scrollBtn.classList.add('show');
+    } else {
+      scrollBtn.classList.remove('show');
+    }
+  });
+
+  // Scroll Buton Tıklama
+  scrollBtn.addEventListener('click', function() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+
+  // D) LIGHTBOX MANTIĞI
+  var images = document.querySelectorAll('.page__content img');
+  var lightboxImg = lightbox.querySelector('img');
+
+  images.forEach(function(img) {
+    img.addEventListener('click', function() {
+      lightboxImg.src = this.src;
+      lightbox.classList.add('active');
+      document.body.style.overflow = 'hidden'; // Arka plan kaymasın
+    });
+  });
+
+  lightbox.addEventListener('click', function() {
+    lightbox.classList.remove('active');
+    document.body.style.overflow = 'auto';
+  });
+
+
+  // E) VS CODE STİLİ KOD BLOKLARI VE KOPYALA BUTONU
+  var codeBlocks = document.querySelectorAll('div.highlighter-rouge');
+  
+  codeBlocks.forEach(function(block) {
+    // Header oluştur
+    var header = document.createElement('div');
+    header.className = 'code-header';
+    
+    // Pencere Kontrolleri (Süs)
+    var controls = document.createElement('div');
+    controls.className = 'code-controls';
+    controls.innerHTML = '<div class="code-dot dot-red"></div><div class="code-dot dot-yellow"></div><div class="code-dot dot-green"></div>';
+    
+    // Kopyala Butonu
+    var copyBtn = document.createElement('button');
+    copyBtn.className = 'copy-btn';
+    copyBtn.innerText = 'Copy';
+    
+    // Header'ı birleştir
+    header.appendChild(controls);
+    header.appendChild(copyBtn);
+    
+    // Bloğun en tepesine ekle
+    block.insertBefore(header, block.firstChild);
+
+    // Kopyalama İşlevi
+    copyBtn.addEventListener('click', function() {
+      var code = block.querySelector('pre').innerText;
+      navigator.clipboard.writeText(code).then(function() {
+        copyBtn.innerText = 'Copied!';
+        setTimeout(function() { copyBtn.innerText = 'Copy'; }, 2000);
+      });
+    });
+  });
+
+});
+</script>
+
 <script id="sitemap-data" type="application/json">
 [
   {%- assign valid_pages = "" | split: "" -%}
@@ -19,154 +145,68 @@
 
 <script>
 document.addEventListener("DOMContentLoaded", function() {
-
-  // --- Veriyi Oku ---
-  var rawData = document.getElementById('sitemap-data').textContent;
+  var rawDataElement = document.getElementById('sitemap-data');
   var siteMap = [];
-  try {
-    siteMap = JSON.parse(rawData);
-  } catch (e) {
-    // Sessizce geç
-  }
+  if (rawDataElement) { try { siteMap = JSON.parse(rawDataElement.textContent); } catch (e) {} }
 
-  // --- Normalizasyon ---
   function normalize(path) {
     if (!path) return "";
-    try {
-      if (path.startsWith("http")) path = new URL(path).pathname;
-    } catch(e) {}
-    
-    path = path.replace(window.location.origin, "");
-    path = path.replace("/index.html", "");
-    path = path.replace("index.html", "");
-
+    try { if (path.startsWith("http")) path = new URL(path).pathname; } catch(e) {}
+    path = path.replace(window.location.origin, "").replace(/\/index\.html$/, "").replace(/index\.html$/, "");
     if (path.endsWith("/") && path.length > 1) path = path.slice(0, -1);
     if (!path.startsWith("/")) path = "/" + path;
-
     return path;
   }
 
-  // --- Dil Değiştirme Mantığı ---
   var currentPath = normalize(window.location.pathname);
-  var myPage = null;
+  var myPage = siteMap.find(function(p) { return normalize(p.url) === currentPath; });
 
-  // Şu anki sayfayı bul
-  for (var i = 0; i < siteMap.length; i++) {
-    if (normalize(siteMap[i].url) === currentPath) {
-      myPage = siteMap[i];
-      break;
-    }
-  }
-
-  // Kardeş sayfayı bul ve butonu güncelle
   if (myPage) {
-    var partnerPage = null;
-    for (var j = 0; j < siteMap.length; j++) {
-      if (siteMap[j].id === myPage.id && siteMap[j].lang !== myPage.lang) {
-        partnerPage = siteMap[j];
-        break;
-      }
-    }
-
+    var partnerPage = siteMap.find(function(p) { return p.id === myPage.id && p.lang !== myPage.lang; });
     if (partnerPage) {
-      var targetUrl = partnerPage.url;
-      
-      if (myPage.lang === 'tr') {
-        var enBtn = document.querySelector('a[href="/en/"]') || 
-                    document.querySelector('a[href="en/"]') || 
-                    document.querySelector('a[href="/en"]');
-        if (enBtn) enBtn.setAttribute('href', targetUrl);
-      } 
-      else if (myPage.lang === 'en') {
-        var trBtn = document.querySelector('a[href="/tr/"]') || 
-                    document.querySelector('a[href="tr/"]') || 
-                    document.querySelector('a[href="/tr"]');
-        if (trBtn) trBtn.setAttribute('href', targetUrl);
+      var selector = myPage.lang === 'tr' ? 'a[href*="/en"]' : 'a[href*="/tr"]';
+      var langBtn = document.querySelector(selector);
+      if (langBtn) {
+         var href = langBtn.getAttribute('href');
+         if(href === '/en/' || href === '/tr/' || href === 'en/' || href === 'tr/' || href.includes(partnerPage.lang)) {
+             langBtn.setAttribute('href', partnerPage.url);
+         }
       }
     }
   }
 
-  // --- Dış Linkler ve PDF ---
   var links = document.links;
   for (var k = 0; k < links.length; k++) {
     if (links[k].hostname != window.location.hostname) {
-      links[k].target = '_blank';
-      links[k].rel = 'noopener noreferrer';
+      links[k].target = '_blank'; links[k].rel = 'noopener noreferrer';
     } else if (links[k].href.endsWith(".pdf")) {
       links[k].target = '_blank';
     }
   }
-
-});
-</script>
-
-<script>
-document.addEventListener("DOMContentLoaded", function() {
   
-  var toggleBtn = document.getElementById('theme-toggle');
-  var body = document.body;
-  
-  // A) Kayıtlı Temayı Uygula (Head kısmında da yaptık ama garanti olsun)
-  var currentTheme = localStorage.getItem('theme');
-  if (currentTheme === 'dark') {
-    body.classList.add('dark-mode');
-  }
-
-  // B) PRELOAD KALDIRMA (Animasyonları serbest bırak)
-  // Biraz bekletip (100ms) sınıfı siliyoruz ki sayfa oturmuş olsun.
-  setTimeout(function() {
-    document.body.classList.remove('preload');
-    document.documentElement.classList.remove('preload');
-  }, 100);
-
-  // C) Tıklama Olayı
-  if (toggleBtn) {
-    toggleBtn.addEventListener('click', function() {
-      body.classList.toggle('dark-mode');
-      
-      if (body.classList.contains('dark-mode')) {
-        localStorage.setItem('theme', 'dark');
-      } else {
-        localStorage.setItem('theme', 'light');
-      }
-    });
-  }
-});
-</script>
-
-<script>
-document.addEventListener("DOMContentLoaded", function() {
   var urlParams = new URLSearchParams(window.location.search);
   var query = urlParams.get('q') || urlParams.get('highlight');
-
   if (query && query.length > 2) {
-    var cleanQuery = query.replace(/[^\w\s]/gi, ''); // Güvenlik temizliği
-    
+    var cleanQuery = query.replace(/[^\w\s]/gi, '');
     var context = document.querySelector('.page__content') || document.body;
-    
-    // Basit Highlight Fonksiyonu
     function highlightText(element, text) {
       if (element.hasChildNodes()) {
-        element.childNodes.forEach(function(node) {
-          highlightText(node, text);
-        });
-      } else if (element.nodeType === 3) { // Text node
+        element.childNodes.forEach(function(node) { highlightText(node, text); });
+      } else if (element.nodeType === 3) {
         var val = element.nodeValue;
         var regex = new RegExp("(" + text + ")", "gi");
         if (val.match(regex)) {
-          var span = document.createElement("span");
-          // Sarı vurgu stili
-          span.innerHTML = val.replace(regex, '<mark style="background:yellow; color:black; border-radius:3px; padding:0 2px;">$1</mark>');
+          var span = document.createElement("mark");
+          span.className = "highlighted-term";
+          span.innerHTML = val.replace(regex, '$1');
           element.parentNode.replaceChild(span, element);
-          
           if (!window.scrolledToHighlight) {
-            span.scrollIntoView({behavior: "smooth", block: "center"});
+            setTimeout(function(){ span.scrollIntoView({behavior: "smooth", block: "center"}); }, 500);
             window.scrolledToHighlight = true;
           }
         }
       }
     }
-    
     highlightText(context, cleanQuery);
   }
 });

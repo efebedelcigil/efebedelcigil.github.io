@@ -1,37 +1,127 @@
-/*   0. PRELOADER (Animasyon Zıplamasını Kesin Engelleme)
+/* ==========================================================================
+   _sass/custom.scss - Efe V.B. Ultimate Edition
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   0. PRELOADER & TEMEL AYARLAR
    -------------------------------------------------------------------------- */
-/* HTML veya Body'de preload varsa tüm animasyonları durdur */
-.preload, 
-.preload *, 
-.preload *::before, 
-.preload *::after {
-  transition: none !important;
-  animation: none !important;
+.preload, .preload *, .preload *::before, .preload *::after {
+  transition: none !important; animation: none !important;
+}
+
+html { scroll-behavior: smooth; }
+
+/* --------------------------------------------------------------------------
+   1. OKUMA İLERLEME ÇUBUĞU (Progress Bar)
+   -------------------------------------------------------------------------- */
+#reading-progress-bar {
+  position: fixed; top: 0; left: 0;
+  width: 0%; height: 4px;
+  background: linear-gradient(90deg, #007acc, #64b5f6); /* VS Code Mavisi */
+  z-index: 10000;
+  transition: width 0.1s ease;
+  box-shadow: 0 0 10px rgba(0,122,204, 0.5);
 }
 
 /* --------------------------------------------------------------------------
-   1. ROBUST GRID SYSTEM
+   2. YUKARI ÇIK BUTONU (Scroll to Top)
+   -------------------------------------------------------------------------- */
+#scroll-to-top {
+  position: fixed; bottom: 30px; right: 30px;
+  width: 45px; height: 45px;
+  background-color: var(--link-color);
+  color: #fff; border: none; border-radius: 50%;
+  cursor: pointer; opacity: 0; visibility: hidden;
+  transition: all 0.3s ease; z-index: 999;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.2em; box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+#scroll-to-top.show { opacity: 1; visibility: visible; bottom: 30px; }
+#scroll-to-top:hover { transform: translateY(-5px); box-shadow: 0 6px 15px rgba(0,0,0,0.3); }
+
+/* --------------------------------------------------------------------------
+   3. RESİM LIGHTBOX (Büyütme Efekti)
+   -------------------------------------------------------------------------- */
+.lightbox-overlay {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.85); z-index: 10001;
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; visibility: hidden; transition: all 0.3s ease;
+  backdrop-filter: blur(5px);
+}
+.lightbox-overlay.active { opacity: 1; visibility: visible; }
+.lightbox-overlay img {
+  max-width: 90%; max-height: 90%;
+  border-radius: 5px; box-shadow: 0 0 20px rgba(0,0,0,0.5);
+  transform: scale(0.9); transition: transform 0.3s ease;
+}
+.lightbox-overlay.active img { transform: scale(1); }
+/* İçerikteki resimlere tıklanabilirlik hissi ver */
+.page__content img { cursor: zoom-in; transition: transform 0.2s; }
+.page__content img:hover { transform: scale(1.01); }
+
+/* --------------------------------------------------------------------------
+   4. VS CODE TARZI KOD BLOKLARI & COPY BUTONU
+   -------------------------------------------------------------------------- */
+/* Kod Bloğu Konteynerı */
+div.highlighter-rouge {
+  background-color: #1e1e1e !important; /* VS Code Dark Arkaplan */
+  border-radius: 8px;
+  margin: 1.5em 0;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  overflow: hidden; /* Köşeleri yuvarlatmak için */
+  position: relative;
+}
+
+/* Kod Başlığı (Mac Penceresi Görünümü) */
+.code-header {
+  background-color: #252526; /* Başlık Rengi */
+  padding: 8px 15px;
+  display: flex; align-items: center; justify-content: space-between;
+  border-bottom: 1px solid #333;
+}
+.code-controls {
+  display: flex; gap: 6px;
+}
+.code-dot { width: 12px; height: 12px; border-radius: 50%; }
+.dot-red { background: #ff5f56; }
+.dot-yellow { background: #ffbd2e; }
+.dot-green { background: #27c93f; }
+
+/* Kopyala Butonu */
+.copy-btn {
+  background: transparent; border: 1px solid rgba(255,255,255,0.2);
+  color: #ccc; font-size: 0.8em; padding: 2px 8px;
+  border-radius: 4px; cursor: pointer; transition: all 0.2s;
+}
+.copy-btn:hover { background: rgba(255,255,255,0.1); color: #fff; border-color: #fff; }
+
+/* Kod İçeriği */
+div.highlighter-rouge pre.highlight {
+  margin: 0; padding: 15px;
+  background-color: transparent !important;
+  border: none;
+}
+div.highlighter-rouge code {
+  font-family: 'Consolas', 'Monaco', 'Andale Mono', 'Ubuntu Mono', monospace !important;
+  font-size: 0.9em; line-height: 1.6;
+  color: #d4d4d4; /* Varsayılan VS Code Metin Rengi */
+  background: transparent !important;
+  border: none !important;
+}
+
+/* --------------------------------------------------------------------------
+   5. MEVCUT SİSTEMLER (Grid, Sidebar, Dark Mode, Switch)
    -------------------------------------------------------------------------- */
 .robust-grid-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 25px;
-  margin-top: 30px;
-  margin-bottom: 30px;
-
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 25px; margin: 30px 0;
   .feature__item {
-    margin: 0 !important; padding: 0 !important;
-    max-width: 100% !important; flex: none !important;
-
+    margin: 0 !important; padding: 0 !important; max-width: 100% !important; flex: none !important;
     .archive__item {
-      height: 100%;
-      border: 1px solid #e1e4e8;
-      border-radius: 8px;
-      padding: 20px;
-      background: #fff;
-      display: flex; flex-direction: column; align-items: center;
+      height: 100%; border: 1px solid #e1e4e8; border-radius: 8px; padding: 20px;
+      background: #fff; display: flex; flex-direction: column; align-items: center;
       transition: box-shadow 0.3s ease, background-color 0.3s ease;
-      
       &:hover { box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
     }
     .archive__item-teaser { margin-bottom: 15px; i { color: #0056b3; } }
@@ -40,219 +130,65 @@
   }
 }
 
-/* --------------------------------------------------------------------------
-   2. YAN MENÜ & NAVIGASYON
-   -------------------------------------------------------------------------- */
-.sidebar {
-    border: 1px solid transparent; 
-    border-radius: 4px; padding: 1em;
-    transition: background-color 0.3s ease, border-color 0.3s ease;
-}
+.sidebar { border: 1px solid transparent; border-radius: 4px; padding: 1em; transition: all 0.3s ease; }
+.masthead { position: sticky; top: 0; z-index: 9999; background: #fff; border-bottom: 1px solid #eee; transition: all 0.3s ease; }
 
-.masthead {
-  position: -webkit-sticky; position: sticky; top: 0; z-index: 9999;
-  background-color: #fff; border-bottom: 1px solid #eee;
-  transition: background-color 0.3s ease, border-color 0.3s ease;
-}
-
-/* --------------------------------------------------------------------------
-   3. SLIDE SWITCH
-   -------------------------------------------------------------------------- */
 #theme-toggle {
-  position: relative;
-  width: 56px; height: 28px;
-  background: #87CEEB; /* Gündüz Mavisi */
-  border-radius: 30px; border: none; cursor: pointer;
-  margin-right: 15px; outline: none; padding: 0;
-  display: flex; align-items: center;
-  transition: background 0.4s ease;
+  position: relative; width: 56px; height: 28px; background: #87CEEB;
+  border-radius: 30px; border: none; cursor: pointer; margin-right: 15px; padding: 0; display: flex; align-items: center; transition: background 0.4s ease;
 }
-
 #theme-toggle::after {
-  content: '';
-  position: absolute;
-  top: 2px; left: 2px;
-  width: 24px; height: 24px;
-  border-radius: 50%;
-  background: #FFD700;
-  transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55), background-color 0.4s ease, box-shadow 0.4s ease;
+  content: ''; position: absolute; top: 2px; left: 2px; width: 24px; height: 24px;
+  border-radius: 50%; background: #FFD700; pointer-events: none;
+  transition: transform 0.4s cubic-bezier(0.68,-0.55,0.27,1.55), background 0.4s, box-shadow 0.4s;
   box-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
 
-/* Dark Mode Aktifken (Hem HTML hem Body kontrolü) */
-html.dark-mode #theme-toggle, 
-body.dark-mode #theme-toggle {
-  background: #2f3640;
-}
+/* SUPER DARK MODE */
+html.dark-mode body, body.dark-mode {
+  --dm-bg: #121212; --dm-surface: #1e1e1e; --dm-border: #333333;
+  --dm-text-main: #e0e0e0; --dm-text-muted: #a0a0a0; --dm-accent: #64b5f6; --dm-tag-bg: #2d2d2d;
 
-html.dark-mode #theme-toggle::after, 
-body.dark-mode #theme-toggle::after {
-  transform: translateX(28px); 
-  background-color: transparent; 
-  box-shadow: inset -8px -2px 0 0px #ffffff; 
-}
-
-/* --------------------------------------------------------------------------
-   4. DARK MODE (Renk Paleti)
-   -------------------------------------------------------------------------- */
-/* 'html.dark-mode body' seçicisini ekledik, böylece head scripti çalışacak */
-html.dark-mode body,
-body.dark-mode {
-  --dm-bg: #121212;
-  --dm-surface: #1e1e1e;
-  --dm-border: #333333;
-  --dm-text-main: #e0e0e0;
-  --dm-text-muted: #a0a0a0;
-  --dm-accent: #64b5f6;
-  --dm-tag-bg: #2d2d2d;
-
-  background-color: var(--dm-bg) !important;
-  color: var(--dm-text-main) !important;
-
+  background-color: var(--dm-bg) !important; color: var(--dm-text-main) !important;
   a { color: inherit !important; text-decoration: none; }
   a:hover { color: var(--dm-accent) !important; text-decoration: underline; }
-  
   h1, h2, h3, h4, h5, h6 { color: #fff !important; }
 
-  /* Navbar */
-  .masthead, .greedy-nav {
-    background-color: var(--dm-surface) !important;
-    border-bottom-color: var(--dm-border) !important;
-  }
+  .masthead, .greedy-nav { background-color: var(--dm-surface) !important; border-bottom-color: var(--dm-border) !important; }
   .masthead__menu-item a { color: var(--dm-text-main) !important; }
-
-  /* Sidebar */
-  .sidebar {
-    background-color: var(--dm-surface) !important;
-    border-color: var(--dm-border) !important;
-  }
+  .sidebar { background-color: var(--dm-surface) !important; border-color: var(--dm-border) !important; }
   .author__name, .author__bio { color: var(--dm-text-main) !important; }
-
-  /* Kartlar */
-  .archive__item-teaser, .robust-grid-container .feature__item .archive__item {
-    background-color: var(--dm-surface) !important;
-    border-color: var(--dm-border) !important;
-  }
+  .archive__item-teaser, .robust-grid-container .feature__item .archive__item { background-color: var(--dm-surface) !important; border-color: var(--dm-border) !important; }
   .archive__item-title a { color: inherit !important; }
   .archive__item-excerpt { color: var(--dm-text-muted) !important; }
-
-  /* Diğer Elemanlar */
   .skill-tag { background-color: var(--dm-tag-bg) !important; color: var(--dm-text-main) !important; border-color: var(--dm-border) !important; }
   table { background-color: var(--dm-surface); color: var(--dm-text-main); }
-  div.highlighter-rouge, figure.highlight { background-color: #2d2d2d !important; }
-  code, kbd, pre, samp { background-color: #2d2d2d; color: #f8f8f2; border: none; }
-
-  /* Footer & Search */
   .page__footer { background-color: #000000 !important; color: var(--dm-text-muted) !important; border-top: 1px solid var(--dm-border); }
   .page__footer a { color: var(--dm-text-main) !important; }
   .search-content { background-color: var(--dm-bg) !important; }
   .search-content input { background-color: var(--dm-surface) !important; color: #fff !important; border-color: var(--dm-border) !important; }
   .search-result__title a { color: var(--dm-accent) !important; }
+
+  /* Switch Dark Hali */
+  #theme-toggle { background: #2f3640; }
+  #theme-toggle::after { transform: translateX(28px); background: transparent; box-shadow: inset -8px -2px 0 0px #ffffff; }
+
+  /* İkon Düzeltmeleri */
+  .sidebar .author__urls li a, .page__footer a { color: var(--dm-text-main) !important; }
+  .sidebar .author__urls i, .page__footer i, .sidebar svg, .page__footer svg { color: inherit !important; }
+  .sidebar .author__urls li a:hover, .page__footer a:hover { color: var(--dm-accent) !important; }
+  
+  /* TOC Düzeltmeleri */
+  .toc { background-color: var(--dm-surface) !important; border-color: var(--dm-border) !important; box-shadow: none !important; }
+  .toc__title { color: var(--dm-text-main) !important; }
+  .toc__menu a { color: var(--dm-text-muted) !important; }
+  .toc__menu a:hover, .toc__menu a.is-active { color: var(--dm-accent) !important; }
 }
+
+/* TOC Genel */
+.toc { border: 1px solid rgba(0,0,0,0.1); background: #fff; border-radius: 4px; padding: 0.5em 1em; transition: all 0.3s ease; }
+.toc__title { border-bottom: none !important; margin-bottom: 0.5em; font-size: 0.9em; font-weight: bold; color: #333; }
 
 /* Highlight Animasyonu */
-mark.highlighted-term {
-  background-color: #ffff00 !important; color: #000000 !important;
-  padding: 0.1em 0.3em; border-radius: 3px;
-  box-shadow: 0 0 10px rgba(255, 255, 0, 0.7);
-  animation: pulseHighlight 2s infinite;
-}
-@keyframes pulseHighlight {
-  0% { box-shadow: 0 0 0 0 rgba(255, 255, 0, 0.7); }
-  70% { box-shadow: 0 0 0 10px rgba(255, 255, 0, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(255, 255, 0, 0); }
-}
-
-/* ==========================================================================
-   7. İKON VE TOC DÜZELTMELERİ (FINAL CİLA)
-   ========================================================================== */
-
-/* --- A) İKONLARIN RENK YÖNETİMİ --- */
-
-/* 1. Sosyal Medya ve Sidebar İkonlarını Siyah/Beyaz Yap */
-/* Hem footer'daki hem sidebar'daki tüm ikonları hedefler */
-.page__footer .social-icons i,
-.sidebar .author__urls i,
-.sidebar .author__urls svg {
-  /* Marka renklerini (örn: LinkedIn mavisi) ezer, ana metin rengini kullanır */
-  color: inherit !important; 
-}
-
-/* Linklerin kendisini ana metin rengine bağla */
-.page__footer .social-icons a,
-.sidebar .author__urls li a {
-    color: var(--text-color) !important; /* Light mode için */
-    transition: color 0.2s ease;
-}
-/* Hover (Üzerine gelince) senin mavi vurgu rengin olsun */
-.page__footer .social-icons a:hover,
-.sidebar .author__urls li a:hover {
-    color: var(--link-color) !important;
-}
-
-
-/* 2. Dark Mode Özel İkon Ayarları */
-body.dark-mode {
-    /* Sidebar ve Footer'daki linkleri dark mode metin rengine (açık gri/beyaz) çek */
-    .sidebar .author__urls li a,
-    .page__footer a {
-       color: var(--dm-text-main) !important;
-    }
-
-    /* İkonların kendisi de bu rengi miras alsın, böylece parlasınlar */
-    .sidebar .author__urls i,
-    .page__footer i,
-    .sidebar svg,
-    .page__footer svg {
-        color: inherit !important;
-        /* Harita ve mektup ikonları artık sönük gri değil, parlak beyazımsı olacak */
-    }
-
-    /* Hover durumunda yine senin accent mavini kullansınlar */
-    .sidebar .author__urls li a:hover,
-    .page__footer a:hover {
-       color: var(--dm-accent) !important;
-    }
-}
-
-
-/* --- B) CONTENTS BOX (İÇİNDEKİLER KUTUSU) FINAL FIX --- */
-
-/* 1. KUTU YAPISI (Her iki modda da sabit boyut) */
-.toc {
-    /* Border her zaman var olsun ki mod değişince zıplamasın */
-    border: 1px solid rgba(0,0,0,0.1); /* Light mode'da çok hafif sınır */
-    background-color: #fff; /* Light mode arka planı */
-    border-radius: 4px;
-    padding: 0.5em 1em; /* İç boşluk sabit */
-    transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-/* 2. BAŞLIK (Alt çizgiyi kaldır) */
-.toc__title {
-    border-bottom: none !important; /* O çizgiyi yok et */
-    margin-bottom: 0.5em;
-    font-size: 0.9em;
-    font-weight: bold;
-    color: #333; /* Light mode rengi */
-}
-
-/* 3. DARK MODE ÖZELLEŞTİRMESİ */
-body.dark-mode .toc {
-    background-color: var(--dm-surface) !important; /* Koyu gri */
-    border-color: var(--dm-border) !important;     /* Koyu sınır */
-    box-shadow: none !important;
-}
-
-body.dark-mode .toc__title {
-    color: var(--dm-text-main) !important;
-}
-
-/* Linkler */
-body.dark-mode .toc__menu a {
-    color: var(--dm-text-muted) !important;
-}
-body.dark-mode .toc__menu a:hover,
-body.dark-mode .toc__menu a.is-active {
-    color: var(--dm-accent) !important;
-}
+mark.highlighted-term { background: #ffff00 !important; color: #000 !important; padding: 0.1em 0.3em; border-radius: 3px; box-shadow: 0 0 10px rgba(255,255,0,0.7); animation: pulseHighlight 2s infinite; }
+@keyframes pulseHighlight { 0% { box-shadow: 0 0 0 0 rgba(255,255,0,0.7); } 70% { box-shadow: 0 0 0 10px rgba(255,255,0,0); } 100% { box-shadow: 0 0 0 0 rgba(255,255,0,0); } }
