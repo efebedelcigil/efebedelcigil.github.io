@@ -1,32 +1,59 @@
 # _data/projects.yml
-# Burası tek merkezdir. Linki değiştirirsen her yerde değişir.
 
+# --- 1. TEKNİK PROJELER (Technical) ---
 - title: "STM32 Flight Controller"
-  image_path: "/assets/images/drone.jpg" # Yoksa gri kutu çıkar
+  image_path: "/assets/images/drone.jpg"
   url: "https://github.com/efebedelcigil/stm32-drone"
   btn_label: "GitHub"
   btn_class: "btn--info"
-  tags: ["C++", "STM32", "KiCad", "PID Control"]
+  category: technical      # <--- KATEGORİ
+  tags: ["C++", "STM32", "PCB Design"]
   description:
-    tr: "Özelleştirilmiş PCB tasarımı ve sensör füzyonu algoritmaları içeren uçuş kontrol sistemi."
-    en: "Custom flight controller PCB design with sensor fusion algorithms and PID control."
+    tr: "Özelleştirilmiş uçuş kontrol kartı tasarımı ve PID kontrol yazılımı."
+    en: "Custom flight controller PCB design with PID control algorithms."
 
 - title: "IEEE V2X Battery Charger"
   image_path: "/assets/images/charger.jpg"
   url: "#"
-  btn_label: "Detaylar / Details"
+  btn_label: "Detaylar"
   btn_class: "btn--warning"
-  tags: ["MATLAB", "Simulink", "Power Electronics"]
+  category: technical      # <--- KATEGORİ
+  tags: ["Power Electronics", "Matlab", "Simulink"]
   description:
-    tr: "Elektrikli araçlar için şebekeden araca (V2X) enerji aktarımı sağlayan çift yönlü şarj devresi."
-    en: "Bidirectional battery charger design for Vehicle-to-Grid (V2X) energy transfer systems."
+    tr: "Elektrikli araçlar için çift yönlü (V2X) şarj ünitesi tasarımı."
+    en: "Bidirectional battery charger design for V2X systems."
 
+# --- 2. EĞİTİM & WORKSHOP (Educational) ---
 - title: "DC-DC Converter Workshop"
   image_path: "/assets/images/workshop.jpg"
-  url: "https://linkedin.com/in/..."
-  btn_label: "Sertifika / Certificate"
+  url: "#"
+  btn_label: "Sertifika"
   btn_class: "btn--success"
-  tags: ["Education", "NotebookLM", "Mentorship"]
+  category: educational    # <--- KATEGORİ
+  tags: ["Eğitmenlik", "Güç Elektroniği", "Sunum"]
   description:
-    tr: "Üniversite öğrencilerine yönelik, simülasyon destekli güç elektroniği eğitimi."
-    en: "Simulation-supported power electronics workshop for university students."
+    tr: "Üniversite öğrencilerine yönelik simülasyon destekli konvertör eğitimi."
+    en: "Simulation-supported power electronics workshop for students."
+
+# --- 3. SOSYAL SORUMLULUK (Social) ---
+- title: "Köy Okulu Kütüphanesi"
+  image_path: "/assets/images/library.jpg"
+  url: "#"
+  btn_label: "İncele"
+  btn_class: "btn--danger"
+  category: social         # <--- KATEGORİ
+  tags: ["Gönüllülük", "Kitap Bağışı", "Organizasyon"]
+  description:
+    tr: "İhtiyaç sahibi bir köy okulu için kütüphane kurma ve kitap toplama projesi."
+    en: "Library establishment and book donation project for a village school."
+
+- title: "Teach and Make"
+  image_path: "/assets/images/teach.jpg"
+  url: "#"
+  btn_label: "Detaylar"
+  btn_class: "btn--primary"
+  category: social         # <--- KATEGORİ
+  tags: ["Maker", "Çocuklar", "Eğitim"]
+  description:
+    tr: "Çocuklara temel elektronik ve kodlama sevgisi aşılama etkinliği."
+    en: "Activity to instill a love for basic electronics and coding in children."
