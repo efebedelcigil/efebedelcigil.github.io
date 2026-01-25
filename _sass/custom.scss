@@ -162,3 +162,90 @@ mark.highlighted-term {
   70% { box-shadow: 0 0 0 10px rgba(255, 255, 0, 0); }
   100% { box-shadow: 0 0 0 0 rgba(255, 255, 0, 0); }
 }
+
+/* ==========================================================================
+   7. İKON VE TOC DÜZELTMELERİ (FINAL CİLA)
+   ========================================================================== */
+
+/* --- A) İKONLARIN RENK YÖNETİMİ --- */
+
+/* 1. Sosyal Medya ve Sidebar İkonlarını Siyah/Beyaz Yap */
+/* Hem footer'daki hem sidebar'daki tüm ikonları hedefler */
+.page__footer .social-icons i,
+.sidebar .author__urls i,
+.sidebar .author__urls svg {
+  /* Marka renklerini (örn: LinkedIn mavisi) ezer, ana metin rengini kullanır */
+  color: inherit !important; 
+}
+
+/* Linklerin kendisini ana metin rengine bağla */
+.page__footer .social-icons a,
+.sidebar .author__urls li a {
+    color: var(--text-color) !important; /* Light mode için */
+    transition: color 0.2s ease;
+}
+/* Hover (Üzerine gelince) senin mavi vurgu rengin olsun */
+.page__footer .social-icons a:hover,
+.sidebar .author__urls li a:hover {
+    color: var(--link-color) !important;
+}
+
+
+/* 2. Dark Mode Özel İkon Ayarları */
+body.dark-mode {
+    /* Sidebar ve Footer'daki linkleri dark mode metin rengine (açık gri/beyaz) çek */
+    .sidebar .author__urls li a,
+    .page__footer a {
+       color: var(--dm-text-main) !important;
+    }
+
+    /* İkonların kendisi de bu rengi miras alsın, böylece parlasınlar */
+    .sidebar .author__urls i,
+    .page__footer i,
+    .sidebar svg,
+    .page__footer svg {
+        color: inherit !important;
+        /* Harita ve mektup ikonları artık sönük gri değil, parlak beyazımsı olacak */
+    }
+
+    /* Hover durumunda yine senin accent mavini kullansınlar */
+    .sidebar .author__urls li a:hover,
+    .page__footer a:hover {
+       color: var(--dm-accent) !important;
+    }
+}
+
+
+/* --- B) CONTENTS BOX (İÇİNDEKİLER KUTUSU) DÜZELTMESİ --- */
+
+/* Normal (Light) Modda varsayılan halini korusun ama border ekleyelim */
+.toc {
+    border: 1px solid var(--border-color);
+    transition: all 0.3s ease;
+}
+
+/* Dark Mode'da Beyaz Kutuyu Yok Et */
+body.dark-mode .toc {
+    background-color: var(--dm-surface) !important; /* Koyu gri arka plan */
+    border-color: var(--dm-border) !important;     /* Koyu border */
+    box-shadow: none !important; /* Varsa gölgeyi kaldır */
+}
+
+/* TOC Başlığı (Contents) */
+body.dark-mode .toc__title {
+    color: var(--dm-text-main) !important;
+    background-color: var(--dm-surface) !important;
+}
+
+/* TOC Linkleri */
+body.dark-mode .toc__menu a {
+    color: var(--dm-text-muted) !important; /* Biraz daha sönük başlasınlar */
+    border-bottom: none; /* Alt çizgileri kaldıralım, kalabalık yapmasın */
+}
+
+/* TOC Linki Aktif veya Hover Olduğunda */
+body.dark-mode .toc__menu a:hover,
+body.dark-mode .toc__menu a.is-active {
+    color: var(--dm-accent) !important; /* Mavi vurgu rengi */
+    background-color: rgba(100, 181, 246, 0.1); /* Hafif mavi arka plan */
+}
