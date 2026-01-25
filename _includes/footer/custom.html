@@ -19,46 +19,61 @@ document.addEventListener("DOMContentLoaded", function() {
   lightbox.innerHTML = '<img src="" alt="Zoom">';
   body.appendChild(lightbox);
 
-  // B) Dark Mode
+  // B) DARK MODE SENKRONİZASYONU
   var toggleBtn = document.getElementById('theme-toggle');
   
+  // 1. Head script HTML'e sınıfı eklemişti, şimdi Body'ye de ekle
   if (document.documentElement.classList.contains('dark-mode')) {
     body.classList.add('dark-mode');
   }
 
+  // 2. İşletim Sistemi Değişikliğini Dinle (Canlı Takip)
+  // Sadece kullanıcı manuel bir seçim yapmadıysa devreye girer
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(e) {
+    if (!localStorage.getItem('theme')) { // Kullanıcı elle müdahale etmediyse
+      if (e.matches) {
+        document.documentElement.classList.add('dark-mode');
+        document.body.classList.add('dark-mode');
+      } else {
+        document.documentElement.classList.remove('dark-mode');
+        document.body.classList.remove('dark-mode');
+      }
+    }
+  });
+
+  // 3. Toggle Butonu (Manuel Seçim)
   if (toggleBtn) {
     toggleBtn.addEventListener('click', function() {
       requestAnimationFrame(function() {
         document.documentElement.classList.toggle('dark-mode');
         document.body.classList.toggle('dark-mode');
+        
+        // Kullanıcı seçimi kaydet (Artık OS ayarını ezer)
         var isDark = document.documentElement.classList.contains('dark-mode');
         localStorage.setItem('theme', isDark ? 'dark' : 'light');
       });
     });
   }
   
+  // Preload Kilidini Kaldır
   setTimeout(function() {
     document.documentElement.classList.remove('preload');
     document.body.classList.remove('preload');
   }, 200);
 
   // C) SCROLL MANTIĞI (Ultra Smooth & Sensitive)
-  var ticking = false; // Performans kilidi
+  var ticking = false;
 
   window.addEventListener('scroll', function() {
     if (!ticking) {
       window.requestAnimationFrame(function() {
-        
-        // 1. Progress Bar Hesabı
         var winScroll = window.scrollY || document.documentElement.scrollTop;
         var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
         var scrolled = (winScroll / height) * 100;
         
-        // 0'dan küçük veya 100'den büyük olmasın (Güvenlik)
         scrolled = Math.max(0, Math.min(100, scrolled));
         progressBar.style.width = scrolled + "%";
 
-        // 2. Scroll Butonu (Hassasiyet Artırıldı: 50px)
         if (winScroll > 50) {
           scrollBtn.classList.add('show');
         } else {
@@ -80,12 +95,15 @@ document.addEventListener("DOMContentLoaded", function() {
   var lightboxImg = lightbox.querySelector('img');
 
   images.forEach(function(img) {
-    img.style.cursor = 'zoom-in';
-    img.addEventListener('click', function() {
-      lightboxImg.src = this.src;
-      lightbox.classList.add('active');
-      document.body.style.overflow = 'hidden';
-    });
+    // Avatarı hariç tut (eğer istenirse) veya hepsine uygula
+    if (!img.classList.contains('emoji')) { 
+        img.style.cursor = 'zoom-in';
+        img.addEventListener('click', function() {
+        lightboxImg.src = this.src;
+        lightbox.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        });
+    }
   });
 
   lightbox.addEventListener('click', function() {
@@ -180,7 +198,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
   }
   
-  // --- HIGHLIGHTER: TREEWALKER YÖNTEMİ (Kesin Çözüm) ---
+  // --- HIGHLIGHTER: TREEWALKER YÖNTEMİ ---
   var urlParams = new URLSearchParams(window.location.search);
   var query = urlParams.get('q') || urlParams.get('highlight');
 
@@ -189,20 +207,16 @@ document.addEventListener("DOMContentLoaded", function() {
     var context = document.querySelector('.page__content') || document.body;
     var regex = new RegExp(cleanQuery, "gi");
 
-    // Sadece Metin Düğümlerini Gezen Yürüyücü (TreeWalker)
     var walker = document.createTreeWalker(context, NodeFilter.SHOW_TEXT, null, false);
     var nodeList = [];
     var node;
 
-    // Önce tüm aday düğümleri listele (Yürürken DOM'u değiştirmek tehlikelidir)
     while(node = walker.nextNode()) {
-      // Sadece aranan kelimeyi içeren metinleri al
       if (regex.test(node.nodeValue) && node.parentNode.nodeName !== "SCRIPT" && node.parentNode.nodeName !== "STYLE") {
         nodeList.push(node);
       }
     }
 
-    // Şimdi güvenle değiştir
     nodeList.forEach(function(textNode) {
       var fragment = document.createDocumentFragment();
       var parts = textNode.nodeValue.split(new RegExp("(" + cleanQuery + ")", "gi"));
@@ -225,7 +239,6 @@ document.addEventListener("DOMContentLoaded", function() {
       }
     });
 
-    // Kaydırma (Scroll)
     setTimeout(function(){
       var firstMark = document.querySelector('mark.highlighted-term');
       if (firstMark) {
