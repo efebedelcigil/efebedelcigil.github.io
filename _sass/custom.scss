@@ -1,5 +1,5 @@
 /* ==========================================================================
-   _sass/custom.scss - Efe V.B. Final (Smooth & Sensitive)
+   _sass/custom.scss - Efe V.B. Final (Avatar Border Fix)
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
@@ -20,7 +20,6 @@ html { scroll-behavior: smooth; }
   height: 3px; 
   background: linear-gradient(90deg, #007acc, #64b5f6); 
   z-index: 10000;
-  /* ÖNEMLİ: ease yerine linear kullanıyoruz ve süreyi kısalttık */
   transition: width 0.05s linear; 
   box-shadow: 0 1px 3px rgba(0, 122, 204, 0.3);
 }
@@ -39,26 +38,21 @@ html { scroll-behavior: smooth; }
   
   border-radius: 50%;
   cursor: pointer; 
-  /* Başlangıçta gizli */
   opacity: 0; 
   visibility: hidden; 
-  transform: translateY(10px); /* Aşağıdan yukarı çıkma efekti için */
+  transform: translateY(10px); 
   
-  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); /* Yumuşak giriş */
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   z-index: 999;
   display: flex; align-items: center; justify-content: center;
   font-size: 1.1em; 
   box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
 
-/* Görünür Olduğunda */
 #scroll-to-top.show { 
-  opacity: 1; 
-  visibility: visible; 
-  transform: translateY(0); /* Yerine gelsin */
+  opacity: 1; visibility: visible; transform: translateY(0); 
 }
 
-/* Hover */
 #scroll-to-top:hover { 
   transform: translateY(-3px); 
   box-shadow: 0 6px 16px rgba(0,122,204,0.3);
@@ -174,7 +168,7 @@ html.dark-mode body, body.dark-mode {
   .toc__menu a { color: var(--dm-text-muted) !important; }
   .toc__menu a:hover, .toc__menu a.is-active { color: var(--dm-accent) !important; }
 
-  /* DARK MODE SCROLL BUTTON (Güncellendi) */
+  /* DARK MODE SCROLL BUTTON */
   #scroll-to-top {
     background-color: var(--dm-surface) !important;
     color: #ffffff !important;
@@ -185,13 +179,19 @@ html.dark-mode body, body.dark-mode {
     border-color: var(--dm-accent) !important;
     color: var(--dm-accent) !important;
   }
+
+  /* --- EKLENEN KISIM: PROFİL FOTOĞRAFI BORDER KALDIRMA --- */
+  .author__avatar img {
+    border: none !important;
+    box-shadow: none !important; /* Varsa gölgeyi de temizle */
+  }
 }
 
-/* Highlight Animasyonu (Daha agresif) */
+/* Highlight Animasyonu */
 mark.highlighted-term { 
   background-color: #ffff00 !important; 
   color: #000000 !important; 
-  display: inline-block; /* Animasyon için gerekli olabilir */
+  display: inline-block;
   padding: 0 2px;
   border-radius: 2px;
   box-shadow: 0 0 15px rgba(255, 235, 59, 0.8); 
