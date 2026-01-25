@@ -1,0 +1,15 @@
+# _data/ui-text.yml
+
+# İngilizce Tanımları
+en:
+  follow_label: "Contact"
+  menu_label: "Menu"
+  search_label: "Search"
+  close_label: "Close"
+
+# Türkçe Tanımları
+tr:
+  follow_label: "İletişim"
+  menu_label: "Menü"
+  search_label: "Ara"
+  close_label: "Kapat"

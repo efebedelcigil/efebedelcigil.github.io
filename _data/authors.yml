@@ -7,9 +7,9 @@ efe_tr:
   bio: "Ege Üniversitesi Elektrik-Elektronik Mühendisliği Öğrencisi"
   location: "İzmir, Türkiye"
   links:
-    - label: "Email / İletişim"
+    - label: "E-posta"
       icon: "fas fa-fw fa-envelope"
-      url: "/tr/contact/"
+      url: "/tr/iletisim/"
     - label: "LinkedIn"
       icon: "fab fa-fw fa-linkedin"
       url: "https://www.linkedin.com/in/efevarolbedelcigil"
@@ -24,7 +24,7 @@ efe_en:
   bio: "Electrical & Electronics Engineering Student at Ege University"
   location: "Izmir, Turkey"
   links:
-    - label: "Contact Me"
+    - label: "Email"
       icon: "fas fa-fw fa-envelope"
       url: "/en/contact/"
     - label: "LinkedIn"
