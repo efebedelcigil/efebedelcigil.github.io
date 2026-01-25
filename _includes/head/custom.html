@@ -1,11 +1,13 @@
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
 
 <script>
-  // Sayfa yüklenirken 'preload' sınıfını ekle
+  // 1. Preload sınıfını en tepeye (HTML) ekle
   document.documentElement.classList.add('preload');
   
-  // Eğer localStorage'da dark mode varsa hemen ata (Flicker'ı önler)
-  if (localStorage.getItem('theme') === 'dark') {
-    document.body.classList.add('dark-mode');
+  // 2. Eğer daha önce Dark Mode seçildiyse, HTML etiketine ekle
+  // (Body'yi beklemiyoruz, çünkü o daha oluşmadı)
+  var savedTheme = localStorage.getItem('theme');
+  if (savedTheme === 'dark') {
+    document.documentElement.classList.add('dark-mode');
   }
 </script>
