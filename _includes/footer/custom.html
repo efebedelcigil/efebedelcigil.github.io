@@ -19,10 +19,9 @@ document.addEventListener("DOMContentLoaded", function() {
   lightbox.innerHTML = '<img src="" alt="Zoom">';
   body.appendChild(lightbox);
 
-  // B) Dark Mode & Flicker Fix
+  // B) Dark Mode
   var toggleBtn = document.getElementById('theme-toggle');
   
-  // Head scripti HTML'e eklemişti, Body'ye de ekleyelim
   if (document.documentElement.classList.contains('dark-mode')) {
     body.classList.add('dark-mode');
   }
@@ -43,17 +42,32 @@ document.addEventListener("DOMContentLoaded", function() {
     document.body.classList.remove('preload');
   }, 200);
 
-  // C) SCROLL MANTIĞI
-  window.addEventListener('scroll', function() {
-    var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-    var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-    var scrolled = (winScroll / height) * 100;
-    progressBar.style.width = scrolled + "%";
+  // C) SCROLL MANTIĞI (Ultra Smooth & Sensitive)
+  var ticking = false; // Performans kilidi
 
-    if (winScroll > 300) {
-      scrollBtn.classList.add('show');
-    } else {
-      scrollBtn.classList.remove('show');
+  window.addEventListener('scroll', function() {
+    if (!ticking) {
+      window.requestAnimationFrame(function() {
+        
+        // 1. Progress Bar Hesabı
+        var winScroll = window.scrollY || document.documentElement.scrollTop;
+        var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        var scrolled = (winScroll / height) * 100;
+        
+        // 0'dan küçük veya 100'den büyük olmasın (Güvenlik)
+        scrolled = Math.max(0, Math.min(100, scrolled));
+        progressBar.style.width = scrolled + "%";
+
+        // 2. Scroll Butonu (Hassasiyet Artırıldı: 50px)
+        if (winScroll > 50) {
+          scrollBtn.classList.add('show');
+        } else {
+          scrollBtn.classList.remove('show');
+        }
+
+        ticking = false;
+      });
+      ticking = true;
     }
   });
 
@@ -79,7 +93,7 @@ document.addEventListener("DOMContentLoaded", function() {
     document.body.style.overflow = 'auto';
   });
 
-  // E) KOD BLOKLARI (VS Code Style)
+  // E) KOD BLOKLARI
   var codeBlocks = document.querySelectorAll('div.highlighter-rouge');
   codeBlocks.forEach(function(block) {
     if (!block.querySelector('.code-header')) {
@@ -157,7 +171,6 @@ document.addEventListener("DOMContentLoaded", function() {
     }
   }
 
-  // --- External Links ---
   var links = document.links;
   for (var k = 0; k < links.length; k++) {
     if (links[k].hostname != window.location.hostname) {
@@ -167,56 +180,52 @@ document.addEventListener("DOMContentLoaded", function() {
     }
   }
   
-  // --- GELİŞMİŞ HIGHLIGHTER (SORUNSUZ) ---
+  // --- HIGHLIGHTER: TREEWALKER YÖNTEMİ (Kesin Çözüm) ---
   var urlParams = new URLSearchParams(window.location.search);
   var query = urlParams.get('q') || urlParams.get('highlight');
 
-  if (query && query.length > 1) { // En az 2 harf olsun
-    var cleanQuery = query.replace(/[^\w\sğüşıöçĞÜŞİÖÇ]/gi, ''); // Türkçe karakter desteği
-    console.log("Highlight Aktif! Aranan:", cleanQuery);
-
-    // Sadece içerikte ara (Başlıkları ve menüyü bozma)
+  if (query && query.length > 1) {
+    var cleanQuery = query.replace(/[^\w\sğüşıöçĞÜŞİÖÇ]/gi, '');
     var context = document.querySelector('.page__content') || document.body;
-    
-    // Regex: Kelimeyi bul, büyük küçük harf duyarsız (gi)
-    // Parantez () içine aldık ki split yapınca kaybolmasın
-    var regex = new RegExp("(" + cleanQuery + ")", "gi");
+    var regex = new RegExp(cleanQuery, "gi");
 
-    function highlightRecursive(node) {
-      // Eğer bu bir metin düğümü ise ve aranan kelimeyi içeriyorsa
-      if (node.nodeType === 3) { 
-        var val = node.nodeValue;
-        if (regex.test(val)) {
-          var fragment = document.createDocumentFragment();
-          var parts = val.split(regex); // Metni parçala: ["Merhaba ", "v2x", " projesi"]
+    // Sadece Metin Düğümlerini Gezen Yürüyücü (TreeWalker)
+    var walker = document.createTreeWalker(context, NodeFilter.SHOW_TEXT, null, false);
+    var nodeList = [];
+    var node;
 
-          parts.forEach(function(part) {
-            // Eğer parça aranan kelimeye eşitse (büyük/küçük harf farketmeksizin)
-            if (part.toLowerCase() === cleanQuery.toLowerCase()) {
-              var mark = document.createElement("mark");
-              mark.className = "highlighted-term";
-              mark.textContent = part; // Orijinal harf yapısını koru (V2X ise V2X kalsın)
-              fragment.appendChild(mark);
-            } else {
-              fragment.appendChild(document.createTextNode(part));
-            }
-          });
-
-          node.parentNode.replaceChild(fragment, node);
-          return true; // Değişiklik yapıldı
-        }
-      } 
-      // Eğer bu bir element düğümü ise ve script/style değilse içine gir
-      else if (node.nodeType === 1 && node.nodeName !== "SCRIPT" && node.nodeName !== "STYLE" && !node.classList.contains('highlighted-term')) {
-        for (var i = 0; i < node.childNodes.length; i++) {
-          highlightRecursive(node.childNodes[i]);
-        }
+    // Önce tüm aday düğümleri listele (Yürürken DOM'u değiştirmek tehlikelidir)
+    while(node = walker.nextNode()) {
+      // Sadece aranan kelimeyi içeren metinleri al
+      if (regex.test(node.nodeValue) && node.parentNode.nodeName !== "SCRIPT" && node.parentNode.nodeName !== "STYLE") {
+        nodeList.push(node);
       }
     }
 
-    highlightRecursive(context);
+    // Şimdi güvenle değiştir
+    nodeList.forEach(function(textNode) {
+      var fragment = document.createDocumentFragment();
+      var parts = textNode.nodeValue.split(new RegExp("(" + cleanQuery + ")", "gi"));
+      var changed = false;
 
-    // İlk bulunan yere kaydır
+      parts.forEach(function(part) {
+        if (part.toLowerCase() === cleanQuery.toLowerCase()) {
+          var mark = document.createElement("mark");
+          mark.className = "highlighted-term";
+          mark.textContent = part;
+          fragment.appendChild(mark);
+          changed = true;
+        } else {
+          fragment.appendChild(document.createTextNode(part));
+        }
+      });
+
+      if (changed) {
+        textNode.parentNode.replaceChild(fragment, textNode);
+      }
+    });
+
+    // Kaydırma (Scroll)
     setTimeout(function(){
       var firstMark = document.querySelector('mark.highlighted-term');
       if (firstMark) {

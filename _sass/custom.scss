@@ -1,5 +1,5 @@
 /* ==========================================================================
-   _sass/custom.scss - Efe V.B. Ultimate Edition (Refined UI)
+   _sass/custom.scss - Efe V.B. Final (Smooth & Sensitive)
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
@@ -12,49 +12,58 @@
 html { scroll-behavior: smooth; }
 
 /* --------------------------------------------------------------------------
-   1. OKUMA İLERLEME ÇUBUĞU (Zarif & Profesyonel)
+   1. OKUMA İLERLEME ÇUBUĞU (Ultra Smooth)
    -------------------------------------------------------------------------- */
 #reading-progress-bar {
   position: fixed; top: 0; left: 0;
   width: 0%; 
-  height: 3px; /* Çok kalın olmasın, zarif dursun */
-  /* Soldan sağa koyu maviden açık maviye yumuşak geçiş */
+  height: 3px; 
   background: linear-gradient(90deg, #007acc, #64b5f6); 
   z-index: 10000;
-  transition: width 0.1s ease;
-  box-shadow: 0 1px 3px rgba(0, 122, 204, 0.3); /* Hafif parlama */
+  /* ÖNEMLİ: ease yerine linear kullanıyoruz ve süreyi kısalttık */
+  transition: width 0.05s linear; 
+  box-shadow: 0 1px 3px rgba(0, 122, 204, 0.3);
 }
 
 /* --------------------------------------------------------------------------
-   2. YUKARI ÇIK BUTONU (Borderlı & Kontrastlı)
+   2. YUKARI ÇIK BUTONU (Hassas & Belirgin)
    -------------------------------------------------------------------------- */
 #scroll-to-top {
   position: fixed; bottom: 30px; right: 30px;
-  width: 40px; height: 40px; /* Biraz daha kompakt */
+  width: 40px; height: 40px;
   
-  /* LIGHT MODE (Varsayılan) */
-  background-color: #ffffff; /* Beyaz Zemin */
-  color: #333333;            /* Koyu Gri Ok (Görünürlük için) */
-  border: 1px solid #e0e0e0; /* İnce Gri Çerçeve (Kaybolmaması için) */
+  /* LIGHT MODE */
+  background-color: #ffffff;
+  color: #333333;
+  border: 1px solid #e0e0e0;
   
   border-radius: 50%;
-  cursor: pointer; opacity: 0; visibility: hidden;
-  transition: all 0.3s ease; 
+  cursor: pointer; 
+  /* Başlangıçta gizli */
+  opacity: 0; 
+  visibility: hidden; 
+  transform: translateY(10px); /* Aşağıdan yukarı çıkma efekti için */
+  
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); /* Yumuşak giriş */
   z-index: 999;
   display: flex; align-items: center; justify-content: center;
   font-size: 1.1em; 
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1); /* Hafif gölge */
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
 
 /* Görünür Olduğunda */
-#scroll-to-top.show { opacity: 1; visibility: visible; bottom: 30px; }
+#scroll-to-top.show { 
+  opacity: 1; 
+  visibility: visible; 
+  transform: translateY(0); /* Yerine gelsin */
+}
 
-/* Üzerine Gelince */
+/* Hover */
 #scroll-to-top:hover { 
   transform: translateY(-3px); 
-  box-shadow: 0 5px 15px rgba(0,0,0,0.15);
-  border-color: #007acc; /* Hover'da mavi çerçeve */
-  color: #007acc;        /* Hover'da mavi ok */
+  box-shadow: 0 6px 16px rgba(0,122,204,0.3);
+  border-color: #007acc;
+  color: #007acc;
 }
 
 /* --------------------------------------------------------------------------
@@ -101,7 +110,7 @@ div.highlighter-rouge code {
 }
 
 /* --------------------------------------------------------------------------
-   5. MEVCUT SİSTEMLER (Grid, Sidebar, Dark Mode, Switch)
+   5. MEVCUT SİSTEMLER
    -------------------------------------------------------------------------- */
 .robust-grid-container {
   display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 25px; margin: 30px 0;
@@ -165,25 +174,31 @@ html.dark-mode body, body.dark-mode {
   .toc__menu a { color: var(--dm-text-muted) !important; }
   .toc__menu a:hover, .toc__menu a.is-active { color: var(--dm-accent) !important; }
 
-  /* ------------------------------------------------------------------
-     DARK MODE İÇİN ÖZEL SCROLL BUTTON AYARLARI (GÜNCELLENDİ)
-     ------------------------------------------------------------------ */
+  /* DARK MODE SCROLL BUTTON (Güncellendi) */
   #scroll-to-top {
-    background-color: var(--dm-surface) !important; /* Koyu Gri Zemin */
-    color: #ffffff !important;                      /* Beyaz Ok */
-    border-color: #444444 !important;               /* Koyu Gri Çerçeve */
+    background-color: var(--dm-surface) !important;
+    color: #ffffff !important;
+    border-color: #444444 !important;
   }
   #scroll-to-top:hover {
-    background-color: var(--dm-border) !important;  /* Hover'da az daha aç */
-    border-color: var(--dm-accent) !important;      /* Mavi Çerçeve */
-    color: var(--dm-accent) !important;             /* Mavi Ok */
+    background-color: var(--dm-border) !important;
+    border-color: var(--dm-accent) !important;
+    color: var(--dm-accent) !important;
   }
 }
 
-/* TOC Genel */
-.toc { border: 1px solid rgba(0,0,0,0.1); background: #fff; border-radius: 4px; padding: 0.5em 1em; transition: all 0.3s ease; }
-.toc__title { border-bottom: none !important; margin-bottom: 0.5em; font-size: 0.9em; font-weight: bold; color: #333; }
-
-/* Highlight Animasyonu */
-mark.highlighted-term { background: #ffff00 !important; color: #000 !important; padding: 0.1em 0.3em; border-radius: 3px; box-shadow: 0 0 10px rgba(255,255,0,0.7); animation: pulseHighlight 2s infinite; }
-@keyframes pulseHighlight { 0% { box-shadow: 0 0 0 0 rgba(255,255,0,0.7); } 70% { box-shadow: 0 0 0 10px rgba(255,255,0,0); } 100% { box-shadow: 0 0 0 0 rgba(255,255,0,0); } }
+/* Highlight Animasyonu (Daha agresif) */
+mark.highlighted-term { 
+  background-color: #ffff00 !important; 
+  color: #000000 !important; 
+  display: inline-block; /* Animasyon için gerekli olabilir */
+  padding: 0 2px;
+  border-radius: 2px;
+  box-shadow: 0 0 15px rgba(255, 235, 59, 0.8); 
+  animation: pulseHighlight 1.5s infinite; 
+}
+@keyframes pulseHighlight { 
+  0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 235, 59, 0.7); } 
+  70% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(255, 235, 59, 0); } 
+  100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 235, 59, 0); } 
+}
