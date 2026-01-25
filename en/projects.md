@@ -4,6 +4,7 @@ permalink: /en/projects/
 layout: single
 author_profile: true
 classes: wide
+lang_ref: projects
 ---
 
 <style>
