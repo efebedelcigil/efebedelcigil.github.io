@@ -43,6 +43,14 @@ lang: en
   .hidden-field {
     display: none;
   }
+
+  /* 🔥 Dark mode'da formu saran beyaz kartı düzelt */
+  html.dark-mode .page__content,
+  html.dark-mode .initial-content,
+  html.dark-mode .archive__item,
+  html.dark-mode .page__inner-wrap {
+    background-color: transparent !important;
+  }
 </style>
 
 
