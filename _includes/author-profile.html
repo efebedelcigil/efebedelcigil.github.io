@@ -31,8 +31,7 @@
   <div class="author__urls-wrapper">
     
     <style>
-      /* --- BUTON STİLLERİ --- */
-      /* Light Mode (Varsayılan) */
+      /* --- 1. BUTON STİLLERİ (ORTAK) --- */
       .custom-contact-btn {
         background-color: #fff !important;
         color: #000 !important;
@@ -45,54 +44,57 @@
         transition: all 0.3s ease;
       }
       
-      /* Dark Mode (Buton Rengi) - Daha yumuşak tonlar */
+      /* Dark Mode Buton */
       html.dark-mode .custom-contact-btn {
-        background-color: #1e1e1e !important; /* Kömür karası (daha şık) */
-        color: #e0e0e0 !important;            /* Kırık beyaz yazı */
-        border: 1px solid #444 !important;    /* Koyu gri çerçeve */
+        background-color: #000000 !important; /* Simsiyah */
+        color: #ffffff !important;            /* Beyaz yazı */
+        border: 1px solid #ffffff !important; /* Beyaz çerçeve */
       }
       html.dark-mode .custom-contact-btn:hover {
-        background-color: #2d2d2d !important;
+        background-color: #333 !important;
         border-color: #007acc !important;
-        color: #fff !important;
       }
       html.dark-mode .custom-contact-btn i {
-        color: #e0e0e0 !important;
+        color: #ffffff !important;
       }
 
-      /* --- POP-UP MENÜ (TOOLTIP) DÜZELTMESİ --- */
-      /* Dark Mode'da menünün arka planını koyu yap */
+      /* --- 2. MOBİL GÖRÜNÜM (VARSAYILAN) --- */
+      /* Mobilde o "kutu" görünümü kalsın, çünkü açılır menü bu */
       html.dark-mode .author__urls.social-icons {
-        background-color: #252526 !important; /* Koyu arka plan */
-        border: 1px solid #333 !important;    /* Koyu çerçeve */
+        background-color: #252526 !important; 
+        border: 1px solid #444 !important;    
         box-shadow: 0 4px 12px rgba(0,0,0,0.5) !important;
+        border-radius: 8px;
+        margin-top: 10px;
       }
 
-      /* Menü içindeki linklerin rengini beyaz yap */
       html.dark-mode .author__urls.social-icons li a {
         color: #e0e0e0 !important;
       }
-      /* Menü içindeki ikonların rengini beyaz yap */
-      html.dark-mode .author__urls.social-icons li a i,
-      html.dark-mode .author__urls.social-icons li a svg {
-        color: #e0e0e0 !important;
-      }
-
-      /* Hover (Üzerine gelince) mavi olsun */
       html.dark-mode .author__urls.social-icons li a:hover {
         color: #007acc !important;
         background-color: rgba(255,255,255,0.05) !important;
       }
-      html.dark-mode .author__urls.social-icons li a:hover i,
-      html.dark-mode .author__urls.social-icons li a:hover svg {
-        color: #007acc !important;
-      }
-      
-      /* Tepedeki küçük üçgen oku da koyu yap */
-      html.dark-mode .author__urls.social-icons::before {
-        background-color: #252526 !important;
-        border-top-color: #333 !important;
-        border-left-color: #333 !important;
+
+      /* --- 3. PC / MASAÜSTÜ GÖRÜNÜMÜ (DÜZELTME) --- */
+      /* Ekran 1024px'den genişse kutuyu YOK ET, sadece yazılar kalsın */
+      @media (min-width: 1024px) {
+        html.dark-mode .author__urls.social-icons {
+          background-color: transparent !important; /* Şeffaf yap */
+          border: none !important;                  /* Çerçeveyi kaldır */
+          box-shadow: none !important;              /* Gölgeyi kaldır */
+          padding-top: 5px !important;
+        }
+        
+        /* PC modunda tepedeki küçük ok işaretini (triangle) gizle */
+        html.dark-mode .author__urls.social-icons::before {
+          display: none !important;
+        }
+
+        /* İkonların hizasını düzelt */
+        html.dark-mode .author__urls.social-icons li a {
+            padding-left: 0 !important;
+        }
       }
     </style>
 
