@@ -187,33 +187,33 @@ html.dark-mode body, body.dark-mode {
   }
 
   /* =========================================
-   9. BUTON VE UI TEXT DÜZELTMELERİ (DARK MODE FIX)
+   9. BUTON VE UI TEXT DÜZELTMELERİ (KESİN ÇÖZÜM)
    ========================================= */
 
-  /* 1. LIGHT MODE (Normal Görünüm) */
-  .author__urls-wrapper button.btn--inverse {
-    background-color: #fff !important;      /* Beyaz */
-    color: #000 !important;                 /* Siyah Yazı */
+  /* 1. LIGHT MODE (Normal) - ID Selector Kullanıyoruz */
+  #sidebar-contact-btn {
+    background-color: #fff !important;
+    color: #000 !important;
     border: 1px solid #ccc !important;
     font-weight: bold;
   }
 
   /* 2. DARK MODE (Siyah Buton, Beyaz Yazı) */
-  html.dark-mode .author__urls-wrapper button.btn--inverse {
-    background-color: #000000 !important;   /* Simsiyah Arka Plan */
-    color: #ffffff !important;              /* Bembeyaz Yazı */
-    border: 1px solid #ffffff !important;   /* Beyaz Çerçeve (Sınırları belli olsun) */
+  /* ID selector (#) en güçlüsüdür, temanın class'larını ezer */
+  html.dark-mode #sidebar-contact-btn {
+    background-color: #000000 !important;   /* Arka plan SİYAH */
+    color: #ffffff !important;              /* Yazı BEYAZ */
+    border: 1px solid #ffffff !important;   /* Çerçeve BEYAZ */
   }
 
-  /* 3. DARK MODE HOVER (Üzerine Gelince) */
-  html.dark-mode .author__urls-wrapper button.btn--inverse:hover {
-    background-color: #333333 !important;   /* Biraz grileşsin ki tıklandığı anlaşılsın */
-    color: #ffffff !important;
-    border-color: #007acc !important;       /* Çerçeve mavi olsun */
+  /* 3. DARK MODE HOVER */
+  html.dark-mode #sidebar-contact-btn:hover {
+    background-color: #333333 !important;
+    border-color: #007acc !important;
   }
 
-  /* İkon Renkleri (Dark Mode'da Beyaz) */
-  html.dark-mode .author__urls-wrapper button.btn--inverse i {
+  /* 4. İKON RENGİ (Siyah zemin üstünde beyaz ikon) */
+  html.dark-mode #sidebar-contact-btn i {
     color: #ffffff !important;
   }
 }
