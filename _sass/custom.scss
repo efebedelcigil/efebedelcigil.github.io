@@ -250,3 +250,49 @@ html.dark-mode body, body.dark-mode {
     font-size: 0.8em;
   }
 }
+
+/* --- 10. MENÜ BUTONU (TOGGLE) FIX --- */
+
+.greedy-nav__toggle {
+  /* Follow Butonu (btn--inverse) Stili */
+  background-color: #fff !important;       /* Beyaz Arka Plan */
+  border: 1px solid #ccc !important;       /* Gri/Siyah Çerçeve */
+  border-radius: 4px !important;           /* Köşeleri Yuvarla */
+  padding: 0 12px !important;              /* İç boşluk */
+  height: 32px !important;                 /* Yükseklik sabitle */
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px; /* İkon ve yazı arası boşluk */
+}
+
+/* Temadan gelen "Toggle Menu" yazısını SİL (Burası sorunu çözer) */
+.greedy-nav__toggle::before {
+  content: none !important;
+  display: none !important;
+}
+
+/* İkon (Hamburger) Rengi - Her zaman Siyah */
+.greedy-nav__toggle .navicon,
+.greedy-nav__toggle .navicon::before,
+.greedy-nav__toggle .navicon::after {
+  background: #000 !important; /* Çizgiler SİYAH */
+  height: 2px !important;
+}
+
+/* DARK MODE AYARLARI */
+html.dark-mode .greedy-nav__toggle {
+  background-color: #e0e0e0 !important;   /* Kırık beyaz (göz almasın) */
+  color: #000 !important;
+  border-color: #999 !important;
+}
+html.dark-mode .greedy-nav__toggle:hover {
+  background-color: #fff !important;
+}
+
+/* Dark Mode'da ikon hala siyah kalsın (çünkü arka plan beyaz) */
+html.dark-mode .greedy-nav__toggle .navicon,
+html.dark-mode .greedy-nav__toggle .navicon::before,
+html.dark-mode .greedy-nav__toggle .navicon::after {
+  background: #000 !important; 
+}
