@@ -11,41 +11,55 @@ lang: en
 ---
 
 <style>
-  /* 1. LIGHT MODE (Temiz Başlangıç) */
+  /* 1. VARSAYILAN AYARLAR (LIGHT MODE) */
+  .contact-form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #333;
+  }
+
   .contact-form input, 
   .contact-form textarea {
-    background-color: #ffffff;
-    color: #000000;
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0 20px 0;
     border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #ffffff; /* Beyaz arka plan */
+    color: #000000;            /* Siyah yazı */
+    transition: background-color 0.3s ease;
   }
 
-  /* 2. DARK MODE (Yüksek Özgünlükçü Seçici) */
-  /* Hem html.dark-mode hem de sayfa içeriği sınıflarını birlikte kullanarak temayı eziyoruz */
-  html.dark-mode .page__content .contact-form input, 
-  html.dark-mode .page__content .contact-form textarea {
-    background: #1e1e1e !important;       /* background-color yerine direkt background */
-    background-color: #1e1e1e !important;
-    color: #eeeeee !important;
-    border: 1px solid #444 !important;
+  /* 2. DARK MODE AYARLARI (ÖNCELİKLİ) */
+  /* Seçiciliği artırmak için html.dark-mode ile başlıyoruz */
+  html.dark-mode .contact-form label {
+    color: #e0e0e0 !important;
   }
 
-  /* 3. ODAKLANMA VE OTOMATİK DOLDURMA (BEYAZLIĞIN ASIL SEBEBİ OLABİLİR) */
-  /* Tarayıcı kutuya tıkladığında ya da kendi doldurduğunda beyaz yapmasını engelliyoruz */
-  html.dark-mode .page__content .contact-form input:focus, 
-  html.dark-mode .page__content .contact-form textarea:focus,
-  html.dark-mode .page__content .contact-form input:-webkit-autofill {
+  html.dark-mode .contact-form input, 
+  html.dark-mode .contact-form textarea {
+    background-color: #1e1e1e !important; /* Koyu Gri/Siyah */
+    color: #eeeeee !important;           /* Kırık Beyaz Yazı */
+    border: 1px solid #444444 !important; /* Koyu Çerçeve */
+  }
+
+  /* 3. TIKLAYINCA (FOCUS) VE OTOMATİK DOLDURMA (AUTOFILL) */
+  /* Tarayıcının 'beyazlatma' inatçılığını burada kırıyoruz */
+  html.dark-mode .contact-form input:focus, 
+  html.dark-mode .contact-form textarea:focus {
     background-color: #252525 !important;
-    -webkit-box-shadow: 0 0 0px 1000px #1e1e1e inset !important;
-    -webkit-text-fill-color: #eeeeee !important;
     border-color: #007acc !important;
     outline: none !important;
   }
 
-  /* Label Rengi */
-  html.dark-mode .page__content .contact-form label {
-    color: #e0e0e0 !important;
+  /* Chrome/Safari'nin kayıtlı e-postayı doldurunca kutuyu beyaz yapmasını engeller */
+  html.dark-mode .contact-form input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0px 1000px #1e1e1e inset !important;
+    -webkit-text-fill-color: #eeeeee !important;
   }
 
+  /* Spam Koruması */
   .hidden-field { display: none !important; }
 </style>
 
