@@ -11,64 +11,84 @@ lang: en
 ---
 
 <style>
-  /* 1. VARSAYILAN AYARLAR (LIGHT MODE) */
-  .contact-form label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-    color: #333;
-  }
+/* ============================= */
+/* LIGHT MODE (DEFAULT) */
+/* ============================= */
 
-  .contact-form input, 
-  .contact-form textarea {
-    width: 100%;
-    padding: 10px;
-    margin: 5px 0 20px 0;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    background-color: #ffffff; /* Beyaz arka plan */
-    color: #000000;            /* Siyah yazı */
-    transition: background-color 0.3s ease;
-  }
+.contact-form label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #333;
+}
 
-  /* 2. DARK MODE AYARLARI (ÖNCELİKLİ) */
-  /* Seçiciliği artırmak için html.dark-mode ile başlıyoruz */
-  html.dark-mode .contact-form label {
-    color: #e0e0e0 !important;
-  }
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  padding: 10px;
+  margin: 5px 0 20px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #ffffff;
+  color: #000000;
+}
 
-  html.dark-mode .contact-form input, 
-  html.dark-mode .contact-form textarea {
-    background-color: #1e1e1e !important; /* Koyu Gri/Siyah */
-    color: #eeeeee !important;           /* Kırık Beyaz Yazı */
-    border: 1px solid #444444 !important; /* Koyu Çerçeve */
-  }
+/* ============================= */
+/* DARK MODE – SAYFA ARKAPLANI */
+/* ============================= */
 
-  /* 3. TIKLAYINCA (FOCUS) VE OTOMATİK DOLDURMA (AUTOFILL) */
-  /* Tarayıcının 'beyazlatma' inatçılığını burada kırıyoruz */
-  html.dark-mode .contact-form input:focus, 
-  html.dark-mode .contact-form textarea:focus {
-    background-color: #252525 !important;
-    border-color: #007acc !important;
-    outline: none !important;
-  }
+/* ASIL SORUNLU BEYAZ BLOK */
+html.dark-mode .page__inner-wrap,
+html.dark-mode .page__inner-wrap > section,
+html.dark-mode .page__content,
+html.dark-mode .initial-content {
+  background-color: #121212 !important;
+}
 
-  /* Chrome/Safari'nin kayıtlı e-postayı doldurunca kutuyu beyaz yapmasını engeller */
-  html.dark-mode .contact-form input:-webkit-autofill {
-    -webkit-box-shadow: 0 0 0px 1000px #1e1e1e inset !important;
-    -webkit-text-fill-color: #eeeeee !important;
-  }
+/* Layout padding boşlukları beyaz kalmasın */
+html.dark-mode body {
+  background-color: #121212 !important;
+}
 
-  /* Spam Koruması */
-  .hidden-field { display: none !important; }
+/* ============================= */
+/* DARK MODE – FORM KENDİSİ */
+/* ============================= */
 
-  /* FORMUN BULUNDUĞU BEYAZ ALANI KOYULT */
-  html.dark-mode .page__content,
-  html.dark-mode .page,
-  html.dark-mode .initial-content,
-  html.dark-mode .layout--single {
-    background-color: #121212 !important;
-  }
+html.dark-mode .contact-form {
+  background-color: #121212 !important;
+  padding: 24px;
+  border-radius: 8px;
+}
+
+html.dark-mode .contact-form label {
+  color: #e0e0e0 !important;
+}
+
+html.dark-mode .contact-form input,
+html.dark-mode .contact-form textarea {
+  background-color: #1e1e1e !important;
+  color: #eeeeee !important;
+  border: 1px solid #444444 !important;
+}
+
+/* Focus durumu */
+html.dark-mode .contact-form input:focus,
+html.dark-mode .contact-form textarea:focus {
+  background-color: #252525 !important;
+  border-color: #007acc !important;
+  outline: none !important;
+}
+
+/* Chrome autofill beyazlığı */
+html.dark-mode .contact-form input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px #1e1e1e inset !important;
+  -webkit-text-fill-color: #eeeeee !important;
+}
+
+/* Spam field */
+.hidden-field {
+  display: none !important;
+}
 
 </style>
 
