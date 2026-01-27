@@ -1,5 +1,6 @@
 ---
 seo_title: "Projeler - Efe Varol Bedelcigil"
+excerpt: "Kontrol sistemleri, gömülü yazılım ve robotik alanındaki teknik ve akademik çalışmalarım."
 title: "Projelerim 🚀"
 permalink: /tr/projeler/
 layout: single

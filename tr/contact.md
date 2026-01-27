@@ -1,6 +1,7 @@
 ---
 seo_title: "İletişim - Efe Varol Bedelcigil"
 title: "Bana Ulaşın 📬"
+excerpt: "Projeler, iş birlikleri veya tanışmak için iletişim kanallarım."
 permalink: /tr/iletisim/
 lang_ref: contact_page
 layout: single

@@ -1,6 +1,7 @@
 ---
 seo_title: "Özgeçmiş - Efe Varol Bedelcigil"
 title: "Özgeçmişim / CV 📄"
+excerpt: "Akademik geçmişim, teknik yetkinliklerim, deneyimlerim ve sertifikalarım."
 permalink: /tr/ozgecmis/
 lang_ref: cv_page
 layout: single

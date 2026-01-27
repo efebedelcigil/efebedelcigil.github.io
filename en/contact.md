@@ -1,6 +1,7 @@
 ---
 seo_title: "Contact - Efe Varol Bedelcigil"
 title: "Contact Me 📬"
+excerpt: "Contact channels for projects, collaborations, or just to say hi."
 permalink: /en/contact/
 lang_ref: contact_page
 layout: single

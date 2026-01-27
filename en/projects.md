@@ -1,6 +1,7 @@
 ---
 seo_title: "Projects - Efe Varol Bedelcigil"
 title: "My Projects 🚀"
+excerpt: "My technical and academic projects in control systems, embedded software, and robotics."
 permalink: /en/projects/
 layout: single
 author_profile: true

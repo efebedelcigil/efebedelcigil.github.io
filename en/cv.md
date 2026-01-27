@@ -1,6 +1,7 @@
 ---
 seo_title: "Resume - Efe Varol Bedelcigil"
 title: "My Resume / CV 📄"
+excerpt: "My academic background, technical skills, professional experience, and certifications."
 permalink: /en/resume/
 lang_ref: cv_page
 layout: single
