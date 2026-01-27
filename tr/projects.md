@@ -20,7 +20,7 @@ lang_ref: projects
 <div class="feature__wrapper">
   {% assign tech = site.data.projects | where: "category", "technical" %}
   {% for project in tech %}
-    {% include project-card.html %}
+    {% include project-card.html project=project %}
   {% endfor %}
 </div>
 
@@ -30,7 +30,7 @@ lang_ref: projects
 <div class="feature__wrapper">
   {% assign edu = site.data.projects | where: "category", "educational" %}
   {% for project in edu %}
-    {% include project-card.html %}
+    {% include project-card.html project=project %}
   {% endfor %}
 </div>
 
@@ -40,6 +40,6 @@ lang_ref: projects
 <div class="feature__wrapper">
   {% assign soc = site.data.projects | where: "category", "social" %}
   {% for project in soc %}
-    {% include project-card.html %}
+    {% include project-card.html project=project %}
   {% endfor %}
 </div>
