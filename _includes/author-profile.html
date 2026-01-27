@@ -29,6 +29,37 @@
   </div>
 
   <div class="author__urls-wrapper">
+    
+    <style>
+      /* Light Mode (Varsayılan) */
+      #sidebar-contact-btn {
+        background-color: #ffffff !important;
+        color: #000000 !important;
+        border: 1px solid #cccccc !important;
+        font-weight: bold !important;
+        transition: all 0.2s ease-in-out;
+      }
+      
+      /* Dark Mode (SİYAH BUTON - BEYAZ YAZI) */
+      html.dark-mode #sidebar-contact-btn {
+        background-color: #000000 !important;   /* Arka plan SİYAH */
+        color: #ffffff !important;              /* Yazı BEYAZ */
+        border: 1px solid #ffffff !important;   /* Çerçeve BEYAZ */
+      }
+      
+      /* Dark Mode Hover */
+      html.dark-mode #sidebar-contact-btn:hover {
+        background-color: #333333 !important;   /* Koyu Gri */
+        color: #ffffff !important;
+        border-color: #007acc !important;       /* Mavi Çerçeve */
+      }
+      
+      /* İkon Rengi */
+      html.dark-mode #sidebar-contact-btn i {
+        color: #ffffff !important;
+      }
+    </style>
+
     <button id="sidebar-contact-btn" class="btn btn--inverse">
       {% if site.data.ui-text[page.lang].follow_label %}
         {{ site.data.ui-text[page.lang].follow_label }}
