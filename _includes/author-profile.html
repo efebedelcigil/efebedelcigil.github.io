@@ -31,35 +31,68 @@
   <div class="author__urls-wrapper">
     
     <style>
-      /* Temadan bağımsız Kendi Tasarımımız */
+      /* --- BUTON STİLLERİ --- */
+      /* Light Mode (Varsayılan) */
       .custom-contact-btn {
-        background-color: #fff !important;    /* Light Mode: Beyaz */
-        color: #000 !important;               /* Light Mode: Siyah Yazı */
-        border: 1px solid #ccc !important;    /* Gri Çerçeve */
+        background-color: #fff !important;
+        color: #000 !important;
+        border: 1px solid #ccc !important;
         font-weight: bold !important;
-        width: 100%;                          /* Tam genişlik */
+        width: 100%;
         padding: 10px !important;
         margin-bottom: 20px !important;
         cursor: pointer;
         transition: all 0.3s ease;
       }
       
-      /* Dark Mode'da SİYAH BUTON - BEYAZ YAZI */
+      /* Dark Mode (Buton Rengi) - Daha yumuşak tonlar */
       html.dark-mode .custom-contact-btn {
-        background-color: #000000 !important; /* Simsiyah Arka Plan */
-        color: #ffffff !important;            /* Bembeyaz Yazı */
-        border: 1px solid #ffffff !important; /* Beyaz Çerçeve */
+        background-color: #1e1e1e !important; /* Kömür karası (daha şık) */
+        color: #e0e0e0 !important;            /* Kırık beyaz yazı */
+        border: 1px solid #444 !important;    /* Koyu gri çerçeve */
       }
-      
-      /* Dark Mode Hover */
       html.dark-mode .custom-contact-btn:hover {
-        background-color: #333 !important;
+        background-color: #2d2d2d !important;
         border-color: #007acc !important;
+        color: #fff !important;
+      }
+      html.dark-mode .custom-contact-btn i {
+        color: #e0e0e0 !important;
       }
 
-      /* İkon Rengi */
-      html.dark-mode .custom-contact-btn i {
-        color: #ffffff !important;
+      /* --- POP-UP MENÜ (TOOLTIP) DÜZELTMESİ --- */
+      /* Dark Mode'da menünün arka planını koyu yap */
+      html.dark-mode .author__urls.social-icons {
+        background-color: #252526 !important; /* Koyu arka plan */
+        border: 1px solid #333 !important;    /* Koyu çerçeve */
+        box-shadow: 0 4px 12px rgba(0,0,0,0.5) !important;
+      }
+
+      /* Menü içindeki linklerin rengini beyaz yap */
+      html.dark-mode .author__urls.social-icons li a {
+        color: #e0e0e0 !important;
+      }
+      /* Menü içindeki ikonların rengini beyaz yap */
+      html.dark-mode .author__urls.social-icons li a i,
+      html.dark-mode .author__urls.social-icons li a svg {
+        color: #e0e0e0 !important;
+      }
+
+      /* Hover (Üzerine gelince) mavi olsun */
+      html.dark-mode .author__urls.social-icons li a:hover {
+        color: #007acc !important;
+        background-color: rgba(255,255,255,0.05) !important;
+      }
+      html.dark-mode .author__urls.social-icons li a:hover i,
+      html.dark-mode .author__urls.social-icons li a:hover svg {
+        color: #007acc !important;
+      }
+      
+      /* Tepedeki küçük üçgen oku da koyu yap */
+      html.dark-mode .author__urls.social-icons::before {
+        background-color: #252526 !important;
+        border-top-color: #333 !important;
+        border-left-color: #333 !important;
       }
     </style>
 
