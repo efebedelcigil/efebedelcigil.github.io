@@ -61,6 +61,15 @@ lang: en
 
   /* Spam Koruması */
   .hidden-field { display: none !important; }
+
+  /* FORMUN BULUNDUĞU BEYAZ ALANI KOYULT */
+  html.dark-mode .page__content,
+  html.dark-mode .page,
+  html.dark-mode .initial-content,
+  html.dark-mode .layout--single {
+    background-color: #121212 !important;
+  }
+
 </style>
 
 Feel free to contact me for collaborations, business inquiries or questions.
