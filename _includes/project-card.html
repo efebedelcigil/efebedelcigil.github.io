@@ -1,3 +1,5 @@
+{% assign project = include.project %}
+
 <div class="grid__item">
   <div class="archive__item">
     
@@ -10,7 +12,9 @@
     <div class="archive__item-body">
       <h2 class="archive__item-title">{{ project.title }}</h2>
       
-      <small style="color:red;">{{ project.category }}</small>
+      <p class="page__meta" style="font-size: 0.75em; text-transform: uppercase; color: #888;">
+        <i class="fas fa-tag"></i> {{ project.category }}
+      </p>
       
       {% if page.lang == 'tr' %}
         <p class="archive__item-excerpt">{{ project.description.tr }}</p>
@@ -18,9 +22,32 @@
         <p class="archive__item-excerpt">{{ project.description.en }}</p>
       {% endif %}
 
-      {% if project.url %}
-        <p><a href="{{ project.url }}" class="btn {{ project.btn_class }} btn--small">{{ project.btn_label }}</a></p>
-      {% endif %}
-    </div>
+      <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px;">
+
+        {% if project.category == 'technical' and project.github_url and project.github_url != '#' %}
+          <a href="{{ project.github_url }}" target="_blank" class="btn btn--inverse btn--small">
+            <i class="fab fa-github"></i> GitHub
+          </a>
+        {% endif %}
+
+        {% if project.doc_url and project.doc_url != '#' %}
+          <a href="{{ project.doc_url }}" target="_blank" class="btn btn--info btn--small">
+            <i class="fas fa-file-alt"></i> 
+            {% if project.category == 'educational' %}
+               {% if page.lang == 'tr' %}Sunum{% else %}Slides{% endif %}
+            {% else %}
+               {% if page.lang == 'tr' %}Rapor{% else %}Report{% endif %}
+            {% endif %}
+          </a>
+        {% endif %}
+
+        {% if project.url %}
+          <a href="{{ project.url }}" class="btn btn--primary btn--small">
+            <i class="fas fa-arrow-right"></i> {% if page.lang == 'tr' %}İncele{% else %}Details{% endif %}
+          </a>
+        {% endif %}
+        
+      </div>
+      </div>
   </div>
 </div>

@@ -3,10 +3,13 @@
 # --- 1. TEKNİK PROJELER (Technical) ---
 - title: "STM32 Flight Controller"
   image_path: "/assets/images/drone.jpg"
-  url: "https://github.com/efebedelcigil/stm32-drone"
-  btn_label: "GitHub"
-  btn_class: "btn--info"
-  category: technical      # <--- KATEGORİ
+  category: technical
+  
+  # --- BUTONLAR ---
+  github_url: "https://github.com/efebedelcigil/stm32-drone" # URL buraya taşındı
+  doc_url: "#"   # Rapor linki eklenecek
+  url: "#"       # Detay sayfası (henüz yoksa #)
+  
   tags: ["C++", "STM32", "PCB Design"]
   description:
     tr: "Özelleştirilmiş uçuş kontrol kartı tasarımı ve PID kontrol yazılımı."
@@ -14,10 +17,13 @@
 
 - title: "IEEE V2X Battery Charger"
   image_path: "/assets/images/charger.jpg"
+  category: technical
+  
+  # --- BUTONLAR ---
+  github_url: "#" 
+  doc_url: "#"
   url: "#"
-  btn_label: "Detaylar"
-  btn_class: "btn--warning"
-  category: technical      # <--- KATEGORİ
+  
   tags: ["Power Electronics", "Matlab", "Simulink"]
   description:
     tr: "Elektrikli araçlar için çift yönlü (V2X) şarj ünitesi tasarımı."
@@ -26,10 +32,13 @@
 # --- 2. EĞİTİM & WORKSHOP (Educational) ---
 - title: "DC-DC Converter Workshop"
   image_path: "/assets/images/workshop.jpg"
+  category: educational
+  
+  # --- BUTONLAR ---
+  # Eğitimde github genelde olmaz, doc_url sunum içindir
+  doc_url: "#" 
   url: "#"
-  btn_label: "Sertifika"
-  btn_class: "btn--success"
-  category: educational    # <--- KATEGORİ
+  
   tags: ["Eğitmenlik", "Güç Elektroniği", "Sunum"]
   description:
     tr: "Üniversite öğrencilerine yönelik simülasyon destekli konvertör eğitimi."
@@ -38,10 +47,12 @@
 # --- 3. SOSYAL SORUMLULUK (Social) ---
 - title: "Köy Okulu Kütüphanesi"
   image_path: "/assets/images/library.jpg"
+  category: social
+  
+  # --- BUTONLAR ---
+  # Sosyal projelerde sadece detay linki
   url: "#"
-  btn_label: "İncele"
-  btn_class: "btn--danger"
-  category: social         # <--- KATEGORİ
+  
   tags: ["Gönüllülük", "Kitap Bağışı", "Organizasyon"]
   description:
     tr: "İhtiyaç sahibi bir köy okulu için kütüphane kurma ve kitap toplama projesi."
@@ -49,10 +60,10 @@
 
 - title: "Teach and Make"
   image_path: "/assets/images/teach.jpg"
+  category: social
+  
   url: "#"
-  btn_label: "Detaylar"
-  btn_class: "btn--primary"
-  category: social         # <--- KATEGORİ
+  
   tags: ["Maker", "Çocuklar", "Eğitim"]
   description:
     tr: "Çocuklara temel elektronik ve kodlama sevgisi aşılama etkinliği."
