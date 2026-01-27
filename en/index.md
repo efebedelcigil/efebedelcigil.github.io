@@ -1,4 +1,5 @@
 ---
+seo_title: "About - Efe Varol Bedelcigil"
 title: "Hello, I'm Efe Varol Bedelcigil"
 permalink: /en/
 lang_ref: home_page
