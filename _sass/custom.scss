@@ -186,55 +186,44 @@ html.dark-mode body, body.dark-mode {
     box-shadow: none !important; /* Varsa gölgeyi de temizle */
   }
 
-  /* --- 9. BUTON VE UI TEXT DÜZELTMELERİ (DARK MODE) --- */
-  
-  /* Sidebar "Follow/İletişim" Butonu ve Menü Toggle Yazısı */
-  .author__urls-wrapper button, 
-  .greedy-nav__toggle span { 
-    color: var(--dm-text-main) !important; 
-  }
-  
-  .author__urls-wrapper button:hover {
-     color: var(--dm-accent) !important;
-  }
+  /* --- 9. BUTON VE UI TEXT DÜZELTMELERİ (DARK MODE FIX) --- */
 
-  /* GitHub Butonu (btn--inverse) Dark Mode Fix */
-  /* Buton beyaz kalsın ama yazı kesinlikle SİYAH olsun */
-  .btn--inverse {
-    background-color: #e0e0e0 !important; /* Hafif kırık beyaz, göz almasın */
-    color: #000000 !important; 
+  /* Sidebar "Follow/İletişim" Butonu - KESİN ÇÖZÜM */
+  /* Hem normal modda hem dark modda okunabilir olması için */
+  .author__urls-wrapper button.btn--inverse {
+    background-color: #fff !important;      /* Arka plan bembeyaz */
+    color: #000 !important;                 /* Yazı simsiyah */
     border: 1px solid #ccc !important;
+    font-weight: bold;
   }
-  
-  .btn--inverse:hover {
+
+  /* Dark Mode açıldığında bozulmayı önle */
+  html.dark-mode .author__urls-wrapper button.btn--inverse {
+    background-color: #e0e0e0 !important;   /* Gözü almasın diye hafif gri */
+    color: #1a1a1a !important;              /* Koyu siyah */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.5);  /* Derinlik kat */
+  }
+
+  /* Hover (Mouse ile üstüne gelince) */
+  html.dark-mode .author__urls-wrapper button.btn--inverse:hover {
     background-color: #ffffff !important;
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+    color: #007acc !important;              /* Hoverda mavi olsun */
   }
-  
-  /* Diğer UI Butonları (Email, Social ikonlar) */
-  .author__urls.social-icons .svg-inline--fa {
-    color: var(--dm-text-main) !important;
+
+  /* Toggle Menu (Hamburger) İkon Rengi */
+  .greedy-nav__toggle .navicon {
+    background: #333;
+  }
+  html.dark-mode .greedy-nav__toggle .navicon {
+    background: #fff !important; /* Çizgiler beyaz olsun */
+  }
+  html.dark-mode .greedy-nav__toggle .navicon::before,
+  html.dark-mode .greedy-nav__toggle .navicon::after {
+    background: #fff !important;
   }
 }
-
-/* Highlight Animasyonu */
-mark.highlighted-term { 
-  background-color: #ffff00 !important; 
-  color: #000000 !important; 
-  display: inline-block;
-  padding: 0 2px;
-  border-radius: 2px;
-  box-shadow: 0 0 15px rgba(255, 235, 59, 0.8); 
-  animation: pulseHighlight 1.5s infinite; 
-}
-@keyframes pulseHighlight { 
-  0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 235, 59, 0.7); } 
-  70% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(255, 235, 59, 0); } 
-  100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 235, 59, 0); } 
-}
-
 /* =========================================
-   8. YAZDIRMA OPTİMİZASYONU (Print CSS)
+   6. YAZDIRMA OPTİMİZASYONU (Print CSS)
    ========================================= */
 @media print {
   /* Arka planı boşalt, mürekkep tasarrufu */
