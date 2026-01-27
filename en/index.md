@@ -1,5 +1,5 @@
 ---
-title: "About Me"
+title: "About Me ⚡"
 classes: home-page
 permalink: /en/
 layout: single
@@ -8,9 +8,10 @@ sidebar:
   nav: "sidebar_en"
 lang_ref: home
 lang: en
+excerpt: "Hi! I am Efe Varol Bedelcigil." 
 ---
 
-I am a 3rd-year **Electrical and Electronics Engineering** student at Ege University, passionate about Autonomous Systems, **Control Theory**, and **Embedded Systems**.
+A 3rd-year **Electrical and Electronics Engineering** student at Ege University, passionate about Autonomous Systems, **Control Theory**, and **Embedded Systems**.
 
 Currently, I serve as the **Chair of the IEEE Ege University Student Branch**, taking an active role in leading technology and engineering-focused organizations.
 
