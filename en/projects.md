@@ -32,18 +32,42 @@ lang: en
   html.dark-mode .contact-form label {
     color: #e0e0e0;
   }
+
+  /* 🔽 EK: placeholder görünürlüğü */
+  html.dark-mode .contact-form input::placeholder,
+  html.dark-mode .contact-form textarea::placeholder {
+    color: #9a9a9a;
+  }
+
+  /* 🔽 EK: honeypot alanı gizle */
+  .hidden-field {
+    display: none;
+  }
 </style>
+
 
 Feel free to contact me for collaborations, business inquiries or questions.
 
 <form action="https://formspree.io/f/xlgjvlev" method="POST" class="contact-form">
+
+  <!-- 🔽 EK: Formspree mail başlığı -->
+  <input type="hidden" name="_subject" value="New message from contact page">
+
+  <!-- 🔽 EK: Honeypot spam koruması -->
+  <div class="hidden-field">
+    <label>Leave this field empty</label>
+    <input type="text" name="company">
+  </div>
+
   <label>
     Your Email:
     <input type="email" name="email" required>
   </label>
+
   <label>
     Message:
     <textarea name="message" required></textarea>
   </label>
+
   <button type="submit" class="btn btn--primary">Send</button>
 </form>
