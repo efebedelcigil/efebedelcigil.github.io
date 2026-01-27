@@ -1,48 +1,49 @@
 ---
-seo_title: "Projects - Efe Varol Bedelcigil"
-title: "My Projects 🚀"
-excerpt: "My technical and academic projects in control systems, embedded software, and robotics."
-permalink: /en/projects/
+seo_title: "Contact - Efe Varol Bedelcigil"
+title: "Contact Me 📬"
+excerpt: "Contact channels for projects, collaborations, or just to say hi."
+permalink: /en/contact/
+lang_ref: contact_page
 layout: single
 author_profile: true
-classes: wide
-lang_ref: projects
+author: efe_en
 lang: en
 ---
 
 <style>
-.feature__wrapper {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 30px;
-  margin-bottom: 40px;
-}
+  .contact-form input, .contact-form textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0 20px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+    color: #000;
+  }
+
+  /* Dark Mode Styles */
+  html.dark-mode .contact-form input, 
+  html.dark-mode .contact-form textarea {
+    background-color: #1e1e1e !important;
+    border-color: #444 !important;
+    color: #e0e0e0 !important;
+  }
+
+  html.dark-mode .contact-form label {
+    color: #e0e0e0;
+  }
 </style>
 
-## 🛠️ Technical Projects
-<div class="feature__wrapper">
-  {% assign tech = site.data.projects | where: "category", "technical" %}
-  {% for project in tech %}
-    {% include project-card.html project=project %}
-  {% endfor %}
-</div>
+Feel free to contact me for collaborations, business inquiries or questions.
 
-<hr style="border: 0; border-top: 1px solid #ddd; margin: 30px 0;">
-
-## 🎓 Education & Workshops
-<div class="feature__wrapper">
-  {% assign edu = site.data.projects | where: "category", "educational" %}
-  {% for project in edu %}
-    {% include project-card.html project=project %}
-  {% endfor %}
-</div>
-
-<hr style="border: 0; border-top: 1px solid #ddd; margin: 30px 0;">
-
-## 🤝 Social Responsibility & Volunteering
-<div class="feature__wrapper">
-  {% assign soc = site.data.projects | where: "category", "social" %}
-  {% for project in soc %}
-    {% include project-card.html project=project %}
-  {% endfor %}
-</div>
+<form action="https://formspree.io/f/xlgjvlev" method="POST" class="contact-form">
+  <label>
+    Your Email:
+    <input type="email" name="email" required>
+  </label>
+  <label>
+    Message:
+    <textarea name="message" required></textarea>
+  </label>
+  <button type="submit" class="btn btn--primary">Send</button>
+</form>
