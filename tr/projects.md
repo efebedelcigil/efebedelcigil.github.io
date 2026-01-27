@@ -1,5 +1,6 @@
 ---
-title: "Projelerim"
+seo_title: "Projeler - Efe Varol Bedelcigil"
+title: "Projelerim 🚀"
 permalink: /tr/projeler/
 layout: single
 author_profile: true

@@ -1,5 +1,6 @@
 ---
-title: "Özgeçmiş / CV"
+seo_title: "Özgeçmiş - Efe Varol Bedelcigil"
+title: "Özgeçmişim / CV 📄"
 permalink: /tr/ozgecmis/
 lang_ref: cv_page
 layout: single

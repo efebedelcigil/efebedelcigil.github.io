@@ -1,5 +1,6 @@
 ---
-title: "Projects"
+seo_title: "Projects - Efe Varol Bedelcigil"
+title: "My Projects 🚀"
 permalink: /en/projects/
 layout: single
 author_profile: true

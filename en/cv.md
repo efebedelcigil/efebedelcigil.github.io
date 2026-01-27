@@ -1,5 +1,6 @@
 ---
-title: "Resume / CV"
+seo_title: "Resume - Efe Varol Bedelcigil"
+title: "My Resume / CV 📄"
 permalink: /en/resume/
 lang_ref: cv_page
 layout: single

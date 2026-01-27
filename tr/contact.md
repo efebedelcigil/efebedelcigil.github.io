@@ -1,5 +1,6 @@
 ---
-title: "İletişim"
+seo_title: "İletişim - Efe Varol Bedelcigil"
+title: "Bana Ulaşın 📬"
 permalink: /tr/iletisim/
 lang_ref: contact_page
 layout: single
