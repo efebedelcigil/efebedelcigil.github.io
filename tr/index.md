@@ -1,10 +1,15 @@
 ---
-seo_title: "Hakkımda - Efe Varol Bedelcigil"
-title: "Merhaba, Ben Efe Varol Bedelcigil"
+title: "Hakkımda"  
+
+classes: home-page 
+
 permalink: /tr/
-lang_ref: home_page
+layout: single
+author_profile: true
+sidebar:
+  nav: "sidebar_tr"
+lang_ref: home
 lang: tr
-excerpt: "Ege Üniversitesi Elektrik-Elektronik Mühendisliği Öğrencisi"
 ---
 
 Ege Üniversitesi **Elektrik-Elektronik Mühendisliği** 3. sınıf öğrencisiyim. Otonom sistemler, **Kontrol Teorisi** ve **Gömülü Sistemler** üzerine çalışıyorum.

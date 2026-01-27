@@ -1,12 +1,14 @@
 ---
-seo_title: "About - Efe Varol Bedelcigil"
-title: "Hello, I'm Efe Varol Bedelcigil"
+title: "About Me"
+
+classes: home-page
+
 permalink: /en/
-lang_ref: home_page
-excerpt: "Electrical & Electronics Engineering Student"
 layout: single
 author_profile: true
-author: efe_en
+sidebar:
+  nav: "sidebar_en"
+lang_ref: home
 lang: en
 ---
 
