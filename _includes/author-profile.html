@@ -1,5 +1,3 @@
-{% include base_path %}
-
 {% if page.author and site.data.authors[page.author] %}
   {% assign author = site.data.authors[page.author] %}
 {% else %}
@@ -13,9 +11,9 @@
       {% if author.avatar contains "://" %}
         {% assign author_avatar_url = author.avatar %}
       {% else %}
-        {% assign author_avatar_url = author.avatar | prepend: "/images/" | prepend: base_path %}
+        {% assign author_avatar_url = author.avatar | relative_url %}
       {% endif %}
-      <a href="{{ author.home | default: '/' | prepend: base_path }}">
+      <a href="{{ author.home | default: '/' | relative_url }}">
         <img src="{{ author_avatar_url }}" class="u-photo" alt="{{ author.name }}" itemprop="image">
       </a>
     </div>
@@ -70,7 +68,37 @@
           </a>
         </li>
       {% endif %}
-      
-      </ul>
-  </div>
-</div>
+
+      {% if author.keybase %}
+        <li>
+          <a href="https://keybase.io/{{ author.keybase }}" itemprop="sameAs" rel="nofollow noopener noreferrer">
+            <i class="fas fa-fw fa-key" aria-hidden="true"></i> Keybase
+          </a>
+        </li>
+      {% endif %}
+      {% if author.twitter %}
+        <li>
+          <a href="https://twitter.com/{{ author.twitter }}" itemprop="sameAs" rel="nofollow noopener noreferrer">
+            <i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter
+          </a>
+        </li>
+      {% endif %}
+      {% if author.facebook %}
+        <li>
+          <a href="https://www.facebook.com/{{ author.facebook }}" itemprop="sameAs" rel="nofollow noopener noreferrer">
+            <i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i> Facebook
+          </a>
+        </li>
+      {% endif %}
+      {% if author.linkedin %}
+        <li>
+          <a href="https://www.linkedin.com/in/{{ author.linkedin }}" itemprop="sameAs" rel="nofollow noopener noreferrer">
+            <i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> LinkedIn
+          </a>
+        </li>
+      {% endif %}
+      {% if author.github %}
+        <li>
+          <a href="https://github.com/{{ author.github }}" itemprop="sameAs" rel="nofollow noopener noreferrer">
+            <i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub
+          </a>
