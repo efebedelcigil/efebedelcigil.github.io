@@ -10,42 +10,84 @@ lang: tr
 ---
 
 <style>
-  /* 1. LIGHT MODE (Temiz Başlangıç) */
-  .contact-form input, 
-  .contact-form textarea {
-    background-color: #ffffff;
-    color: #000000;
-    border: 1px solid #ccc;
-  }
+/* ============================= */
+/* LIGHT MODE (DEFAULT) */
+/* ============================= */
 
-  /* 2. DARK MODE (Yüksek Özgünlükçü Seçici) */
-  /* Hem html.dark-mode hem de sayfa içeriği sınıflarını birlikte kullanarak temayı eziyoruz */
-  html.dark-mode .page__content .contact-form input, 
-  html.dark-mode .page__content .contact-form textarea {
-    background: #1e1e1e !important;       /* background-color yerine direkt background */
-    background-color: #1e1e1e !important;
-    color: #eeeeee !important;
-    border: 1px solid #444 !important;
-  }
+.contact-form label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #333;
+}
 
-  /* 3. ODAKLANMA VE OTOMATİK DOLDURMA (BEYAZLIĞIN ASIL SEBEBİ OLABİLİR) */
-  /* Tarayıcı kutuya tıkladığında ya da kendi doldurduğunda beyaz yapmasını engelliyoruz */
-  html.dark-mode .page__content .contact-form input:focus, 
-  html.dark-mode .page__content .contact-form textarea:focus,
-  html.dark-mode .page__content .contact-form input:-webkit-autofill {
-    background-color: #252525 !important;
-    -webkit-box-shadow: 0 0 0px 1000px #1e1e1e inset !important;
-    -webkit-text-fill-color: #eeeeee !important;
-    border-color: #007acc !important;
-    outline: none !important;
-  }
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  padding: 10px;
+  margin: 5px 0 20px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #ffffff;
+  color: #000000;
+}
 
-  /* Label Rengi */
-  html.dark-mode .page__content .contact-form label {
-    color: #e0e0e0 !important;
-  }
+/* ============================= */
+/* DARK MODE – SAYFA ARKAPLANI */
+/* ============================= */
 
-  .hidden-field { display: none !important; }
+/* ASIL SORUNLU BEYAZ BLOK */
+html.dark-mode .page__inner-wrap,
+html.dark-mode .page__inner-wrap > section,
+html.dark-mode .page__content,
+html.dark-mode .initial-content {
+  background-color: #121212 !important;
+}
+
+/* Layout padding boşlukları beyaz kalmasın */
+html.dark-mode body {
+  background-color: #121212 !important;
+}
+
+/* ============================= */
+/* DARK MODE – FORM KENDİSİ */
+/* ============================= */
+
+html.dark-mode .contact-form {
+  background-color: #121212 !important;
+  padding: 24px;
+  border-radius: 8px;
+}
+
+html.dark-mode .contact-form label {
+  color: #e0e0e0 !important;
+}
+
+html.dark-mode .contact-form input,
+html.dark-mode .contact-form textarea {
+  background-color: #1e1e1e !important;
+  color: #eeeeee !important;
+  border: 1px solid #444444 !important;
+}
+
+/* Focus durumu */
+html.dark-mode .contact-form input:focus,
+html.dark-mode .contact-form textarea:focus {
+  background-color: #252525 !important;
+  border-color: #007acc !important;
+  outline: none !important;
+}
+
+/* Chrome autofill beyazlığı */
+html.dark-mode .contact-form input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px #1e1e1e inset !important;
+  -webkit-text-fill-color: #eeeeee !important;
+}
+
+/* Spam field */
+.hidden-field {
+  display: none !important;
+}
 </style>
 
 Projelerim veya iş hakkında konuşmak veya iş birliği yapmak için aşağıdaki formu kullanabilirsiniz.
