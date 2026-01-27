@@ -1,15 +1,29 @@
-# _data/ui-text.yml
-
-# İngilizce Tanımları
+# İngilizce Tanımlar
 en:
   follow_label: "Contact"
   menu_label: "Menu"
   search_label: "Search"
   close_label: "Close"
+  search_placeholder: "Search..."
+  toc_label: "Table of Contents"
+  pagination_previous: "Previous"
+  pagination_next: "Next"
+  related_posts: "Related Posts"
+  date_label: "Published:"
+  read_time: "Read time:"
+  page_not_found_title: "Page Not Found"
 
-# Türkçe Tanımları
+# Türkçe Tanımlar
 tr:
   follow_label: "İletişim"
   menu_label: "Menü"
   search_label: "Ara"
   close_label: "Kapat"
+  search_placeholder: "Site içinde ara..."
+  toc_label: "İçindekiler"
+  pagination_previous: "Önceki"
+  pagination_next: "Sonraki"
+  related_posts: "İlgili İçerikler"
+  date_label: "Yayınlanma:"
+  read_time: "Okuma süresi:"
+  page_not_found_title: "Sayfa Bulunamadı"
