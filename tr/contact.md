@@ -4,6 +4,7 @@ permalink: /tr/iletisim/
 lang_ref: contact_page
 layout: single
 author_profile: true
+lang: tr
 ---
 
 Projelerim veya iş hakkında konuşmak veya iş birliği yapmak için aşağıdaki formu kullanabilirsiniz.

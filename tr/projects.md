@@ -5,6 +5,7 @@ layout: single
 author_profile: true
 classes: wide
 lang_ref: projects
+lang: tr
 ---
 
 <style>

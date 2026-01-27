@@ -8,6 +8,7 @@ author: efe_en
 toc: true
 toc_label: "Contents"
 toc_icon: "file-alt"
+lang: en
 ---
 
 <div style="text-align: center; margin-bottom: 2rem;">

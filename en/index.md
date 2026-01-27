@@ -6,6 +6,7 @@ excerpt: "Electrical & Electronics Engineering Student"
 layout: single
 author_profile: true
 author: efe_en
+lang: en
 ---
 
 Welcome to my personal portfolio website.

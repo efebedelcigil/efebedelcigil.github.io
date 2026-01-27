@@ -7,6 +7,7 @@ author_profile: true
 toc: true
 toc_label: "İçerik"
 toc_icon: "file-alt"
+lang: tr
 ---
 
 <div style="text-align: center; margin-bottom: 2rem;">

@@ -5,6 +5,7 @@ lang_ref: contact_page
 layout: single
 author_profile: true
 author: efe_en
+lang: en
 ---
 
 Feel free to contact me for collaborations, business inquiries or questions.
