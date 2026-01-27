@@ -2,7 +2,7 @@ programming:
   title: "Yazılım Dilleri"
   icon: "fas fa-code"
   items:
-    - Python (Pandas, NumPy)
+    - Python
     - C / C++
     - MATLAB
     - LaTeX
