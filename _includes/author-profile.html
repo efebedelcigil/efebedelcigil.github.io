@@ -31,7 +31,7 @@
   <div class="author__urls-wrapper">
     
     <style>
-      /* --- 1. BUTON STİLLERİ (ORTAK) --- */
+      /* --- 1. BUTON STİLLERİ --- */
       .custom-contact-btn {
         background-color: #fff !important;
         color: #000 !important;
@@ -44,54 +44,57 @@
         transition: all 0.3s ease;
       }
       
-      /* Dark Mode Buton */
+      /* Dark Mode Buton (Yumuşak Tonlar) */
       html.dark-mode .custom-contact-btn {
-        background-color: #000000 !important; /* Simsiyah */
-        color: #ffffff !important;            /* Beyaz yazı */
-        border: 1px solid #ffffff !important; /* Beyaz çerçeve */
+        background-color: #2d2d2d !important;
+        color: #eeeeee !important;
+        border: 1px solid #555555 !important;
       }
+      
       html.dark-mode .custom-contact-btn:hover {
-        background-color: #333 !important;
+        background-color: #383838 !important;
         border-color: #007acc !important;
-      }
-      html.dark-mode .custom-contact-btn i {
         color: #ffffff !important;
       }
+      html.dark-mode .custom-contact-btn i {
+        color: #eeeeee !important;
+      }
 
-      /* --- 2. MOBİL GÖRÜNÜM (VARSAYILAN) --- */
-      /* Mobilde o "kutu" görünümü kalsın, çünkü açılır menü bu */
+      /* --- 2. MOBİL GÖRÜNÜM (AÇILIR KUTU) --- */
       html.dark-mode .author__urls.social-icons {
-        background-color: #252526 !important; 
+        background-color: #252526 !important;
         border: 1px solid #444 !important;    
-        box-shadow: 0 4px 12px rgba(0,0,0,0.5) !important;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.4) !important;
         border-radius: 8px;
         margin-top: 10px;
       }
 
       html.dark-mode .author__urls.social-icons li a {
-        color: #e0e0e0 !important;
+        color: #c0c0c0 !important;
       }
       html.dark-mode .author__urls.social-icons li a:hover {
         color: #007acc !important;
         background-color: rgba(255,255,255,0.05) !important;
       }
+      
+      /* Konum Yazısı Rengi (Dark Mode) */
+      html.dark-mode .author__urls.social-icons li {
+        color: #c0c0c0 !important;
+      }
 
-      /* --- 3. PC / MASAÜSTÜ GÖRÜNÜMÜ (DÜZELTME) --- */
-      /* Ekran 1024px'den genişse kutuyu YOK ET, sadece yazılar kalsın */
+      /* --- 3. PC / MASAÜSTÜ GÖRÜNÜMÜ --- */
       @media (min-width: 1024px) {
         html.dark-mode .author__urls.social-icons {
-          background-color: transparent !important; /* Şeffaf yap */
-          border: none !important;                  /* Çerçeveyi kaldır */
-          box-shadow: none !important;              /* Gölgeyi kaldır */
+          background-color: transparent !important;
+          border: none !important;
+          box-shadow: none !important;
           padding-top: 5px !important;
         }
         
-        /* PC modunda tepedeki küçük ok işaretini (triangle) gizle */
         html.dark-mode .author__urls.social-icons::before {
           display: none !important;
         }
 
-        /* İkonların hizasını düzelt */
         html.dark-mode .author__urls.social-icons li a {
             padding-left: 0 !important;
         }
@@ -113,51 +116,11 @@
         </li>
       {% endif %}
 
-      {% if author.links %}
-        {% for link in author.links %}
-          {% if link.label and link.url %}
-            <li><a href="{{ link.url }}" rel="nofollow noopener noreferrer"><i class="{{ link.icon | default: 'fas fa-link' }}" aria-hidden="true"></i> {{ link.label }}</a></li>
-          {% endif %}
-        {% endfor %}
-      {% endif %}
-
-      {% if author.uri %}
-        <li>
-          <a href="{{ author.uri }}" itemprop="url">
-            <i class="fas fa-fw fa-link" aria-hidden="true"></i> Website
-          </a>
-        </li>
-      {% endif %}
-
       {% if author.email %}
         <li>
           <a href="mailto:{{ author.email }}">
             <meta itemprop="email" content="{{ author.email }}" />
             <i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i> Email
-          </a>
-        </li>
-      {% endif %}
-
-      {% if author.keybase %}
-        <li>
-          <a href="https://keybase.io/{{ author.keybase }}" itemprop="sameAs" rel="nofollow noopener noreferrer">
-            <i class="fas fa-fw fa-key" aria-hidden="true"></i> Keybase
-          </a>
-        </li>
-      {% endif %}
-
-      {% if author.twitter %}
-        <li>
-          <a href="https://twitter.com/{{ author.twitter }}" itemprop="sameAs" rel="nofollow noopener noreferrer">
-            <i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter
-          </a>
-        </li>
-      {% endif %}
-
-      {% if author.facebook %}
-        <li>
-          <a href="https://www.facebook.com/{{ author.facebook }}" itemprop="sameAs" rel="nofollow noopener noreferrer">
-            <i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i> Facebook
           </a>
         </li>
       {% endif %}
@@ -177,14 +140,15 @@
           </a>
         </li>
       {% endif %}
-
-      {% if author.instagram %}
-        <li>
-          <a href="https://instagram.com/{{ author.instagram }}" itemprop="sameAs" rel="nofollow noopener noreferrer">
-            <i class="fab fa-fw fa-instagram" aria-hidden="true"></i> Instagram
-          </a>
-        </li>
+      
+      {% if author.links %}
+        {% for link in author.links %}
+          {% if link.label and link.url %}
+            <li><a href="{{ link.url }}" rel="nofollow noopener noreferrer"><i class="{{ link.icon | default: 'fas fa-link' }}" aria-hidden="true"></i> {{ link.label }}</a></li>
+          {% endif %}
+        {% endfor %}
       {% endif %}
+
     </ul>
   </div>
 </div>
