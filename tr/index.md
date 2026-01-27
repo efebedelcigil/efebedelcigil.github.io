@@ -11,6 +11,8 @@ lang_ref: home
 lang: tr
 ---
 
+**Merhaba! Ben Efe Varol Bedelcigil.**
+
 Ege Üniversitesi **Elektrik-Elektronik Mühendisliği** 3. sınıf öğrencisiyim. Otonom sistemler, **Kontrol Teorisi** ve **Gömülü Sistemler** üzerine çalışıyorum.
 
 Aynı zamanda **IEEE Ege Üniversitesi Öğrenci Kolu Yönetim Kurulu Başkanı** olarak görev alıyor, teknoloji ve mühendislik odaklı organizasyonların yönetiminde aktif rol oynuyorum.
