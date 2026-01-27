@@ -11,49 +11,42 @@ lang: en
 ---
 
 <style>
-  /* Light Mode (Varsayılan) */
+  /* 1. LIGHT MODE (Temiz Başlangıç) */
   .contact-form input, 
   .contact-form textarea {
-    width: 100%;
-    padding: 10px;
-    margin: 5px 0 20px 0;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    background-color: #ffffff;
-    color: #000000;
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    border: 1px solid #ccc !important;
   }
 
-  /* 🔽 DARK MODE DÜZELTMELERİ */
-  html.dark-mode .contact-form label {
+  /* 2. DARK MODE (Yüksek Özgünlükçü Seçici) */
+  /* Hem html.dark-mode hem de sayfa içeriği sınıflarını birlikte kullanarak temayı eziyoruz */
+  html.dark-mode .page__content .contact-form input, 
+  html.dark-mode .page__content .contact-form textarea {
+    background: #1e1e1e !important;       /* background-color yerine direkt background */
+    background-color: #1e1e1e !important;
+    color: #eeeeee !important;
+    border: 1px solid #444 !important;
+  }
+
+  /* 3. ODAKLANMA VE OTOMATİK DOLDURMA (BEYAZLIĞIN ASIL SEBEBİ OLABİLİR) */
+  /* Tarayıcı kutuya tıkladığında ya da kendi doldurduğunda beyaz yapmasını engelliyoruz */
+  html.dark-mode .page__content .contact-form input:focus, 
+  html.dark-mode .page__content .contact-form textarea:focus,
+  html.dark-mode .page__content .contact-form input:-webkit-autofill {
+    background-color: #252525 !important;
+    -webkit-box-shadow: 0 0 0px 1000px #1e1e1e inset !important;
+    -webkit-text-fill-color: #eeeeee !important;
+    border-color: #007acc !important;
+    outline: none !important;
+  }
+
+  /* Label Rengi */
+  html.dark-mode .page__content .contact-form label {
     color: #e0e0e0 !important;
   }
 
-  html.dark-mode .contact-form input, 
-  html.dark-mode .contact-form textarea {
-    background-color: #1e1e1e !important;
-    border-color: #444 !important;
-    color: #eeeeee !important;
-  }
-
-  /* Tıklayınca (Focus) beyaz olmasını engelle */
-  html.dark-mode .contact-form input:focus, 
-  html.dark-mode .contact-form textarea:focus {
-    background-color: #252525 !important;
-    border-color: #007acc !important;
-    color: #ffffff !important;
-    outline: none;
-  }
-
-  /* Placeholder rengi */
-  html.dark-mode .contact-form input::placeholder,
-  html.dark-mode .contact-form textarea::placeholder {
-    color: #888 !important;
-  }
-
-  /* Honeypot alanı gizle */
-  .hidden-field {
-    display: none !important;
-  }
+  .hidden-field { display: none !important; }
 </style>
 
 Feel free to contact me for collaborations, business inquiries or questions.
