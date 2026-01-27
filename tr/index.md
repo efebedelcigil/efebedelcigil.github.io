@@ -1,8 +1,6 @@
 ---
 title: "Hakkımda"  
-
 classes: home-page 
-
 permalink: /tr/
 layout: single
 author_profile: true

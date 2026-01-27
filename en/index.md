@@ -1,8 +1,6 @@
 ---
 title: "About Me"
-
 classes: home-page
-
 permalink: /en/
 layout: single
 author_profile: true
