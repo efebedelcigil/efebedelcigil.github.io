@@ -90,12 +90,19 @@ html.dark-mode .contact-form input:-webkit-autofill {
   display: none !important;
 }
 
+/* DARK MODE – PLACEHOLDER RENGİ */
+html.dark-mode .contact-form ::placeholder {
+  color: #aaaaaa;
+  opacity: 0.8;
+}
+
 </style>
 
 Feel free to contact me for collaborations, business inquiries or questions.
 
 <form action="https://formspree.io/f/xlgjvlev" method="POST" class="contact-form">
 
+  <input type="hidden" name="form_title" value="Contact Form (EN)">
   <input type="hidden" name="_subject" value="New message from contact page">
 
   <div class="hidden-field">
