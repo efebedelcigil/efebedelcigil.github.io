@@ -23,4 +23,4 @@ Aynı zamanda **IEEE Ege Üniversitesi Öğrenci Kolu Yönetim Kurulu Başkanı*
 Projelerimde teorik bilgiyi pratik uygulamalarla birleştirmeyi hedeflerim. Detaylı teknik çalışmalarımı **[Projeler](/tr/projeler/)** sayfasından inceleyebilirsiniz.
 
 ### 📫 İletişim
-Benimle projeler, iş birlikleri veya sadece tanışmak için **[İletişim](/tr/contact/)** sayfası üzerinden veya sosyal medya kanallarından bağlantıya geçebilirsiniz.
+Benimle projeler, iş birlikleri veya sadece tanışmak için **[İletişim](/tr/iletisim/)** sayfası üzerinden veya sosyal medya kanallarından bağlantıya geçebilirsiniz.
