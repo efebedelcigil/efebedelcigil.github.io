@@ -19,8 +19,8 @@ lang: en
     margin: 5px 0 20px 0;
     border: 1px solid #ccc;
     border-radius: 4px;
-    background-color: #ffffff !important;
-    color: #000000 !important;
+    background-color: #ffffff;
+    color: #000000;
   }
 
   /* 🔽 DARK MODE DÜZELTMELERİ */
