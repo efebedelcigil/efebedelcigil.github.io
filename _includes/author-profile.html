@@ -1,0 +1,76 @@
+{% include base_path %}
+
+{% if page.author and site.data.authors[page.author] %}
+  {% assign author = site.data.authors[page.author] %}
+{% else %}
+  {% assign author = site.author %}
+{% endif %}
+
+<div itemscope itemtype="http://schema.org/Person">
+
+  {% if author.avatar %}
+    <div class="author__avatar">
+      {% if author.avatar contains "://" %}
+        {% assign author_avatar_url = author.avatar %}
+      {% else %}
+        {% assign author_avatar_url = author.avatar | prepend: "/images/" | prepend: base_path %}
+      {% endif %}
+      <a href="{{ author.home | default: '/' | prepend: base_path }}">
+        <img src="{{ author_avatar_url }}" class="u-photo" alt="{{ author.name }}" itemprop="image">
+      </a>
+    </div>
+  {% endif %}
+
+  <div class="author__content">
+    <h3 class="author__name" itemprop="name">{{ author.name }}</h3>
+    {% if author.bio %}
+      <p class="author__bio" itemprop="description">
+        {{ author.bio }}
+      </p>
+    {% endif %}
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">
+      {% if site.data.ui-text[page.lang].follow_label %}
+        {{ site.data.ui-text[page.lang].follow_label }}
+      {% else %}
+        Follow
+      {% endif %}
+    </button>
+    
+    <ul class="author__urls social-icons">
+      {% if author.location %}
+        <li itemprop="homeLocation" itemscope itemtype="http://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">{{ author.location }}</span>
+        </li>
+      {% endif %}
+
+      {% if author.links %}
+        {% for link in author.links %}
+          {% if link.label and link.url %}
+            <li><a href="{{ link.url }}" rel="nofollow noopener noreferrer"><i class="{{ link.icon | default: 'fas fa-link' }}" aria-hidden="true"></i> {{ link.label }}</a></li>
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+
+      {% if author.uri %}
+        <li>
+          <a href="{{ author.uri }}" itemprop="url">
+            <i class="fas fa-fw fa-link" aria-hidden="true"></i> Website
+          </a>
+        </li>
+      {% endif %}
+
+      {% if author.email %}
+        <li>
+          <a href="mailto:{{ author.email }}">
+            <meta itemprop="email" content="{{ author.email }}" />
+            <i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i> Email
+          </a>
+        </li>
+      {% endif %}
+      
+      </ul>
+  </div>
+</div>

@@ -185,6 +185,36 @@ html.dark-mode body, body.dark-mode {
     border: none !important;
     box-shadow: none !important; /* Varsa gölgeyi de temizle */
   }
+
+  /* --- 9. BUTON VE UI TEXT DÜZELTMELERİ (DARK MODE) --- */
+  
+  /* Sidebar "Follow/İletişim" Butonu ve Menü Toggle Yazısı */
+  .author__urls-wrapper button, 
+  .greedy-nav__toggle span { 
+    color: var(--dm-text-main) !important; 
+  }
+  
+  .author__urls-wrapper button:hover {
+     color: var(--dm-accent) !important;
+  }
+
+  /* GitHub Butonu (btn--inverse) Dark Mode Fix */
+  /* Buton beyaz kalsın ama yazı kesinlikle SİYAH olsun */
+  .btn--inverse {
+    background-color: #e0e0e0 !important; /* Hafif kırık beyaz, göz almasın */
+    color: #000000 !important; 
+    border: 1px solid #ccc !important;
+  }
+  
+  .btn--inverse:hover {
+    background-color: #ffffff !important;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+  }
+  
+  /* Diğer UI Butonları (Email, Social ikonlar) */
+  .author__urls.social-icons .svg-inline--fa {
+    color: var(--dm-text-main) !important;
+  }
 }
 
 /* Highlight Animasyonu */
