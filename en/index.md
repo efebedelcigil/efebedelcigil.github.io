@@ -1,5 +1,6 @@
 ---
 title: "About Me ⚡"
+excerpt: "Hi! I am Efe Varol Bedelcigil."
 classes: home-page
 permalink: /en/
 layout: single
@@ -8,7 +9,6 @@ sidebar:
   nav: "sidebar_en"
 lang_ref: home
 lang: en
-excerpt: "Hi! I am Efe Varol Bedelcigil." 
 ---
 
 A 3rd-year **Electrical and Electronics Engineering** student at Ege University, passionate about Autonomous Systems, **Control Theory**, and **Embedded Systems**.
