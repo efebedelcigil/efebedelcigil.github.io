@@ -76,6 +76,7 @@
           </a>
         </li>
       {% endif %}
+
       {% if author.twitter %}
         <li>
           <a href="https://twitter.com/{{ author.twitter }}" itemprop="sameAs" rel="nofollow noopener noreferrer">
@@ -83,6 +84,7 @@
           </a>
         </li>
       {% endif %}
+
       {% if author.facebook %}
         <li>
           <a href="https://www.facebook.com/{{ author.facebook }}" itemprop="sameAs" rel="nofollow noopener noreferrer">
@@ -90,6 +92,7 @@
           </a>
         </li>
       {% endif %}
+
       {% if author.linkedin %}
         <li>
           <a href="https://www.linkedin.com/in/{{ author.linkedin }}" itemprop="sameAs" rel="nofollow noopener noreferrer">
@@ -97,8 +100,22 @@
           </a>
         </li>
       {% endif %}
+
       {% if author.github %}
         <li>
           <a href="https://github.com/{{ author.github }}" itemprop="sameAs" rel="nofollow noopener noreferrer">
             <i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub
           </a>
+        </li>
+      {% endif %}
+
+      {% if author.instagram %}
+        <li>
+          <a href="https://instagram.com/{{ author.instagram }}" itemprop="sameAs" rel="nofollow noopener noreferrer">
+            <i class="fab fa-fw fa-instagram" aria-hidden="true"></i> Instagram
+          </a>
+        </li>
+      {% endif %}
+    </ul>
+  </div>
+</div>
