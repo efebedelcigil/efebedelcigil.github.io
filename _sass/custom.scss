@@ -186,36 +186,35 @@ html.dark-mode body, body.dark-mode {
     box-shadow: none !important; /* Varsa gölgeyi de temizle */
   }
 
-  /* --- 9. BUTON VE UI TEXT DÜZELTMELERİ (DARK MODE FIX) --- */
+  /* =========================================
+   9. BUTON VE UI TEXT DÜZELTMELERİ (DARK MODE FIX)
+   ========================================= */
 
-  /* Sidebar "Follow/İletişim" Butonu - KESİN ÇÖZÜM */
-  /* Hem normal modda hem dark modda okunabilir olması için */
+  /* 1. LIGHT MODE (Normal Görünüm) */
   .author__urls-wrapper button.btn--inverse {
-    background-color: #fff !important;      /* Arka plan bembeyaz */
-    color: #000 !important;                 /* Yazı simsiyah */
+    background-color: #fff !important;      /* Beyaz */
+    color: #000 !important;                 /* Siyah Yazı */
     border: 1px solid #ccc !important;
     font-weight: bold;
   }
 
-  /* Sidebar "Follow/İletişim" Butonu - DARK MODE ÖZEL */
-  /* Burada !important kullanarak temanın renklerini eziyoruz */
+  /* 2. DARK MODE (Siyah Buton, Beyaz Yazı) */
   html.dark-mode .author__urls-wrapper button.btn--inverse {
-    background-color: #d1d1d1 !important;   /* Arka plan: Açık Gri (Okunabilirlik için) */
-    color: #000000 !important;              /* Yazı: SİMSİYAH */
-    border-color: #999 !important;          /* Kenarlık: Koyu Gri */
+    background-color: #000000 !important;   /* Simsiyah Arka Plan */
+    color: #ffffff !important;              /* Bembeyaz Yazı */
+    border: 1px solid #ffffff !important;   /* Beyaz Çerçeve (Sınırları belli olsun) */
   }
 
-  /* Hover (Mouse ile üstüne gelince) */
+  /* 3. DARK MODE HOVER (Üzerine Gelince) */
   html.dark-mode .author__urls-wrapper button.btn--inverse:hover {
-    background-color: #ffffff !important;
-    color: #007acc !important;              /* Hoverda mavi olsun */
+    background-color: #333333 !important;   /* Biraz grileşsin ki tıklandığı anlaşılsın */
+    color: #ffffff !important;
+    border-color: #007acc !important;       /* Çerçeve mavi olsun */
   }
-  /* İkonların Rengi (Dark Mode'da Beyaz Kalmasın, Siyah Olsun) */
+
+  /* İkon Renkleri (Dark Mode'da Beyaz) */
   html.dark-mode .author__urls-wrapper button.btn--inverse i {
-    color: #000000 !important;
-  }
-  html.dark-mode .author__urls-wrapper button.btn--inverse:hover i {
-    color: #007acc !important;
+    color: #ffffff !important;
   }
 }
 
