@@ -13,9 +13,9 @@ lang: tr
   /* 1. LIGHT MODE (Temiz Başlangıç) */
   .contact-form input, 
   .contact-form textarea {
-    background-color: #ffffff !important;
-    color: #000000 !important;
-    border: 1px solid #ccc !important;
+    background-color: #ffffff;
+    color: #000000;
+    border: 1px solid #ccc;
   }
 
   /* 2. DARK MODE (Yüksek Özgünlükçü Seçici) */
