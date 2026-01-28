@@ -1,3 +1,8 @@
+// En başa ekle
+if (typeof window.onloadTurnstileCallback === 'undefined') {
+    window.onloadTurnstileCallback = renderTurnstile;
+}
+
 const submitBtn = document.getElementById("submitBtn");
 const errorBox = document.getElementById("turnstileError");
 const turnstileContainer = document.querySelector(".cf-turnstile");
