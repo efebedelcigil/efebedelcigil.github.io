@@ -7,7 +7,16 @@
   let turnstileWidgetId;
   let isValidated = false; 
   const WORKER_URL = "https://verifalia-handler.efebedelcigil.workers.dev/";
-  const TURNSTILE_SITEKEY = "0x4AAAAAACULU4HpGNkW9SVM";
+  const TURNSTILE_SITEKEY = "0x4AAAAAACULU4HpGNkW9SVM"; // Senin Site Key'in
+
+  // --- Sayfa Önbellekten Yüklenirse (Geri Butonu vb.) Butonu Sıfırla ---
+  window.addEventListener('pageshow', function(event) {
+    if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.innerText = "Gönder";
+    }
+    isValidated = false;
+  });
 
   // --- Turnstile Render Fonksiyonu ---
   window.onloadTurnstileCallback = function () {
@@ -40,6 +49,7 @@
   // --- Form Submit İşleyici ---
   if (form) {
     form.addEventListener('submit', async (e) => {
+      // Eğer doğrulama bittiyse formun normal gönderilmesine izin ver
       if (isValidated) return; 
 
       e.preventDefault();
@@ -49,7 +59,7 @@
 
       if (!emailInput) return;
 
-      const originalText = submitBtn.innerText;
+      const originalText = "Gönder";
       submitBtn.disabled = true;
       submitBtn.innerText = "Email Kontrol Ediliyor...";
 
@@ -66,48 +76,33 @@
           throw new Error(data.error || "Sunucu hatası");
         }
 
-        const verifaliaBody = data.body; 
-        
-        // --- DÜZELTME BURADA ---
-        // Verifalia yapısı: body -> entries -> data array -> item
+        // Verifalia yanıtını güvenli şekilde çözümle
         let entry = null;
-        if (verifaliaBody && verifaliaBody.entries) {
-            if (Array.isArray(verifaliaBody.entries)) {
-                entry = verifaliaBody.entries[0];
-            } else if (verifaliaBody.entries.data && Array.isArray(verifaliaBody.entries.data)) {
-                entry = verifaliaBody.entries.data[0];
+        if (data.body && data.body.entries) {
+            if (Array.isArray(data.body.entries)) {
+                entry = data.body.entries[0];
+            } else if (data.body.entries.data && Array.isArray(data.body.entries.data)) {
+                entry = data.body.entries.data[0];
             }
         }
 
-        if (entry) {
-          const classification = entry.classification;
-          
-          if (classification === "Deliverable") {
+        if (entry && entry.classification === "Deliverable") {
             // BAŞARILI
             isValidated = true; 
-            submitBtn.innerText = "Gönderiliyor...";
+            submitBtn.innerText = "Yönlendiriliyor...";
             form.requestSubmit(); 
-          } else {
+        } else {
             // BAŞARISIZ
-            alert("Girdiğiniz e-posta adresi geçerli görünmüyor (" + classification + "). Lütfen kontrol ediniz.");
+            const statusMsg = entry ? entry.classification : "Bilinmiyor";
+            alert("Girdiğiniz e-posta adresi geçerli görünmüyor (" + statusMsg + "). Lütfen kontrol ediniz.");
             submitBtn.disabled = false;
             submitBtn.innerText = originalText;
-          }
-        } else {
-          // BEKLENMEYEN YAPI (Yine de loglayalım ama kullanıcıyı geçirelim)
-          console.warn("Verifalia yanıtı okunamadı:", verifaliaBody);
-          if(confirm("E-posta servisi yanıt verdi fakat sonuç okunamadı. Yine de göndermek ister misiniz?")) {
-             isValidated = true;
-             form.requestSubmit();
-          } else {
-             submitBtn.disabled = false;
-             submitBtn.innerText = originalText;
-          }
         }
 
       } catch (err) {
         console.error("Worker Hatası:", err);
-        if(confirm("Kontrol sırasında bir hata oluştu. Formu yine de göndermek ister misiniz?")) {
+        // Hata olsa bile kullanıcıyı mağdur etmemek için onayla gönder
+        if(confirm("E-posta kontrolü sırasında bağlantı sorunu oluştu. Yine de göndermek ister misiniz?")) {
           isValidated = true;
           form.requestSubmit();
         } else {
