@@ -8,49 +8,45 @@ function isDarkMode() {
 }
 
 function renderTurnstile() {
-  if (!window.turnstile) return;
+  if (!window.turnstile || !turnstileContainer) return;
 
-  // Analitik Temizlik: Eski widget varsa bellekten kaldır
-  if (turnstileWidgetId !== undefined) {
+  // Önceki widget'ı güvenli bir şekilde kaldır
+  if (typeof turnstileWidgetId !== 'undefined') {
     window.turnstile.remove(turnstileWidgetId);
   }
 
-  // Container içeriğini sıfırla ve yeni widget'ı render et
-  turnstileContainer.innerHTML = "";
+  // Widget'ı render et
   turnstileWidgetId = window.turnstile.render(turnstileContainer, {
     sitekey: "0x4AAAAAACULU4HpGNkW9SVM",
     theme: isDarkMode() ? "dark" : "light",
-    callback: turnstileDone,
-    "expired-callback": turnstileExpired,
-    "error-callback": turnstileError
+    callback: function(token) {
+      submitBtn.disabled = false;
+      errorBox.style.display = "none";
+    },
+    "expired-callback": function() {
+      submitBtn.disabled = true;
+      errorBox.style.display = "block";
+    },
+    "error-callback": function() {
+      submitBtn.disabled = true;
+      errorBox.style.display = "block";
+    }
   });
-  
-  submitBtn.disabled = true;
 }
 
-function turnstileDone(token) {
-  submitBtn.disabled = false;
-  errorBox.style.display = "none";
-}
+// Turnstile hazır olduğunda render et
+window.onloadTurnstileCallback = function() {
+  renderTurnstile();
+};
 
-function turnstileExpired() {
-  submitBtn.disabled = true;
-  errorBox.style.display = "block";
-}
-
-function turnstileError() {
-  submitBtn.disabled = true;
-  errorBox.style.display = "block";
-}
-
-// Sayfa yüklendiğinde başlat
+// Sayfa yüklendiğinde ve tema değiştiğinde tetikle
 window.addEventListener("load", renderTurnstile);
 
-// Tema değişimini izle (Sadece class değişimine odaklanarak döngüyü engeller)
 const darkModeObserver = new MutationObserver((mutations) => {
   mutations.forEach((mutation) => {
     if (mutation.attributeName === "class") {
-      renderTurnstile();
+      // Sonsuz döngüyü önlemek için kısa bir gecikme ekleyelim
+      setTimeout(renderTurnstile, 50);
     }
   });
 });
@@ -60,42 +56,39 @@ darkModeObserver.observe(document.documentElement, {
   attributeFilter: ["class"]
 });
 
-// --- Email Doğrulama API (Verifalia & Cloudflare Workers) ---
+// --- Verifalia Email Verification ---
 const form = document.querySelector('.contact-form');
-
 form.addEventListener('submit', async (e) => {
-    e.preventDefault(); 
+  e.preventDefault();
+  
+  const emailInput = form.querySelector('input[name="email"]').value;
+  const workerUrl = "https://verifalia-handler.efebedelcigil.workers.dev/"; 
+
+  submitBtn.disabled = true;
+  const originalText = submitBtn.innerText;
+  submitBtn.innerText = "Checking email...";
+
+  try {
+    const response = await fetch(workerUrl, {
+      method: 'POST',
+      body: JSON.stringify({ email: emailInput }),
+      headers: { 'Content-Type': 'application/json' }
+    });
     
-    const emailInput = form.querySelector('input[name="email"]').value;
-    const workerUrl = "https://verifalia-handler.efebedelcigil.workers.dev/"; 
+    const result = await response.json();
 
-    submitBtn.disabled = true;
-    const originalText = submitBtn.innerText;
-    submitBtn.innerText = "Checking email...";
-
-    try {
-        const response = await fetch(workerUrl, {
-            method: 'POST',
-            body: JSON.stringify({ email: emailInput }),
-            headers: { 'Content-Type': 'application/json' }
-        });
-        
-        const result = await response.json();
-
-        // Verifalia 'Deliverable' sonucu verirse formu gönder
-        if (result.entry?.classification === "Deliverable") {
-            submitBtn.innerText = "Sending...";
-            form.submit(); 
-        } else {
-            alert("This email address seems invalid. Please check it.");
-            submitBtn.disabled = false;
-            submitBtn.innerText = originalText;
-            // Hatalı mail girişinde Turnstile'ı güvenlik için sıfırla
-            if (window.turnstile) window.turnstile.reset(turnstileWidgetId);
-        }
-    } catch (error) {
-        // API hatası veya kredi bitmesi durumunda (fail-safe) formu yine de gönder
-        console.warn("Email validation service unavailable, bypassing...", error);
-        form.submit();
+    if (result.entry?.classification === "Deliverable") {
+      submitBtn.innerText = "Sending...";
+      form.submit(); 
+    } else {
+      alert("Please enter a valid email address.");
+      submitBtn.disabled = false;
+      submitBtn.innerText = originalText;
+      if (window.turnstile) window.turnstile.reset(turnstileWidgetId);
     }
+  } catch (error) {
+    // Verifalia günlük 25 kredi limitini [cite: 40, 46, 150] aşarsan 
+    // veya hata olursa formu yine de gönder (Fail-safe)
+    form.submit();
+  }
 });

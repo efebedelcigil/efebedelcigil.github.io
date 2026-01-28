@@ -1,8 +1,8 @@
-{% if page.layout == "single" and page.permalink contains "/contact/" %}
+{% if page.permalink contains "en/contact/" or page.permalink contains "tr/iletisim/" %}
 <meta http-equiv="Content-Security-Policy"
 content="
   default-src 'self';
-  script-src 'self' https://challenges.cloudflare.com;
+  script-src 'self' https://challenges.cloudflare.com 'unsafe-eval';
   style-src 'self' 'unsafe-inline';
   frame-src https://challenges.cloudflare.com;
   connect-src 'self' https://challenges.cloudflare.com https://verifalia-handler.efebedelcigil.workers.dev;
@@ -12,14 +12,13 @@ content="
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
 
 <script>
-  // 1. Preload sınıfını hemen ekle (Animasyonları durdur)
-  document.documentElement.classList.add('preload');
-  
-  // 2. Mod Kararı Ver
-  var savedTheme = localStorage.getItem('theme');
-  var systemDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-  if (savedTheme === 'dark' || (!savedTheme && systemDark)) {
-    document.documentElement.classList.add('dark-mode');
-  }
+  // Sayfa yüklenmeden önce Dark Mode kontrolü (Flash etkisini önler)
+  (function() {
+    var savedTheme = localStorage.getItem('theme');
+    var systemDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    if (savedTheme === 'dark' || (!savedTheme && systemDark)) {
+      document.documentElement.classList.add('dark-mode');
+    }
+    document.documentElement.classList.add('preload');
+  })();
 </script>
