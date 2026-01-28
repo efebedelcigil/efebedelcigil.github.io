@@ -282,3 +282,32 @@ html.dark-mode body, body.dark-mode {
 .home-page .page__header {
   display: none !important;
 }
+
+/* 1. TIKLAMA SORUNU ÇÖZÜMÜ */
+/* Menüyü ve butonu sayfanın en üst katmanına alır */
+.masthead {
+  position: relative;
+  z-index: 9999 !important;
+}
+
+#theme-toggle {
+  pointer-events: auto !important; /* Tıklamayı zorla aç */
+  cursor: pointer;
+}
+
+/* 2. NAVBAR RENK DÜZELTMESİ */
+/* Dark mode açıldığında menü arkaplanını ve yazılarını düzeltir */
+html.dark-mode .masthead {
+  background-color: #1e1e1e !important; /* Menü arkaplanı koyu gri */
+  border-bottom: 1px solid #333 !important;
+}
+
+html.dark-mode .masthead a {
+  color: #e0e0e0 !important; /* Link renkleri açık gri */
+}
+
+/* İkonların rengini koru */
+html.dark-mode .masthead i, 
+html.dark-mode .masthead svg {
+  color: inherit !important;
+}

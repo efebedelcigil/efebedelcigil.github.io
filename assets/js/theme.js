@@ -1,52 +1,35 @@
 (function() {
-  // --- 1. KISIM: Renk Ayarları (Hemen Çalışır - Flash'ı önler) ---
+  // 1. ADIM: Sayfa açılır açılmaz rengi belirle (Flash'ı önler)
   const savedTheme = localStorage.getItem('theme');
-  const systemDark = window.matchMedia('(prefers-color-scheme: dark)');
-
-  function setTheme(theme) {
-    if (theme === 'dark') {
-      document.documentElement.classList.add('dark-mode');
-    } else {
-      document.documentElement.classList.remove('dark-mode');
-    }
-  }
-
-  // Açılışta rengi ver
-  if (savedTheme) {
-    setTheme(savedTheme);
-  } else {
-    setTheme(systemDark.matches ? 'dark' : 'light');
-  }
-
-  // Preload (Geçişleri yumuşat)
-  document.documentElement.classList.add('preload');
-  window.addEventListener('load', () => {
-    document.documentElement.classList.remove('preload');
-  });
-
-  // Sistem teması değişirse canlı güncelle
-  systemDark.addEventListener('change', (e) => {
-    if (!localStorage.getItem('theme')) {
-      setTheme(e.matches ? 'dark' : 'light');
-    }
-  });
-
-  // --- 2. KISIM: Tıklama Mantığı (Event Delegation) ---
-  // Burası çok önemli: Sayfadaki herhangi bir tıklamayı dinliyoruz.
-  // Tıklanan şey bizim butonumuz mu diye kontrol ediyoruz.
+  const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
   
+  const currentTheme = savedTheme || (systemDark ? 'dark' : 'light');
+  
+  if (currentTheme === 'dark') {
+    document.documentElement.classList.add('dark-mode');
+  } else {
+    document.documentElement.classList.remove('dark-mode');
+  }
+
+  // 2. ADIM: Tıklama Olayı (En Garanti Yöntem)
+  // DOMContentLoaded beklemeden, global tıklamayı dinliyoruz.
+  // Minimal Mistakes temasının menü kopyalama huyu yüzünden bu şart.
   document.addEventListener('click', function(event) {
-    // Tıklanan element veya onun kapsayıcısı #theme-toggle ID'sine sahip mi?
+    // Tıklanan şey bizim #theme-toggle veya onun içindeki bir parça mı?
     const toggleBtn = event.target.closest('#theme-toggle');
 
     if (toggleBtn) {
-      // Eğer bizim butonsa (veya içindeki topa tıklandıysa):
-      const isDark = document.documentElement.classList.contains('dark-mode');
-      const newTheme = isDark ? 'light' : 'dark';
+      event.preventDefault(); // Sayfanın zıplamasını engelle
       
-      setTheme(newTheme);
-      localStorage.setItem('theme', newTheme);
+      const isDark = document.documentElement.classList.contains('dark-mode');
+      
+      if (isDark) {
+        document.documentElement.classList.remove('dark-mode');
+        localStorage.setItem('theme', 'light');
+      } else {
+        document.documentElement.classList.add('dark-mode');
+        localStorage.setItem('theme', 'dark');
+      }
     }
   });
-
 })();
