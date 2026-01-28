@@ -18,7 +18,7 @@ content="
   script-src 'self' https://challenges.cloudflare.com;
   style-src 'self';
   frame-src https://challenges.cloudflare.com;
-  connect-src https://challenges.cloudflare.com;
+  connect-src 'self' https://challenges.cloudflare.com https://verifalia-handler.efebedelcigil.workers.dev;
 ">
 
 <p>Feel free to contact me regarding projects, potential job/internship roles, or other professional matters.</p>
