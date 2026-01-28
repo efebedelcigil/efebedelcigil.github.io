@@ -1,21 +1,14 @@
 {% if page.url == "/contact/" or page.url == "/iletisim/" or page.url contains "contact" or page.url contains "iletisim" %}
 <meta http-equiv="Content-Security-Policy" content="
   default-src 'self';
-  script-src 'self' https://challenges.cloudflare.com;
-  script-src-elem 'self' https://challenges.cloudflare.com;
-  script-src-attr 'self';
+  script-src 'self' https://challenges.cloudflare.com https://unpkg.com;
+  script-src-elem 'self' https://challenges.cloudflare.com https://unpkg.com;
   style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net;
   img-src 'self' data: https://challenges.cloudflare.com;
+  font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net;
   frame-src 'self' https://challenges.cloudflare.com;
   connect-src 'self' https://challenges.cloudflare.com https://verifalia-handler.efebedelcigil.workers.dev;
 ">
 {% endif %}
 
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
-
-<!-- Tema JS -->
-<script src="/assets/js/theme.js" defer></script>
-<!-- Contact JS -->
-<script src="/assets/js/contact.js" defer></script>
-<!-- Cloudflare Turnstile -->
-<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
