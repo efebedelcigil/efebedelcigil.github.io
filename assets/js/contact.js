@@ -5,12 +5,11 @@ let turnstileWidgetId;
 let currentTheme = document.documentElement.classList.contains("dark-mode") ? "dark" : "light";
 
 function renderTurnstile() {
-  // Analitik Kontrol: Render fonksiyonu gerçekten hazır mı?
+  // Analitik Kontrol: Sadece turnstile.render fonksiyonu gerçekten hazırsa başla
   if (typeof window.turnstile === 'undefined' || typeof window.turnstile.render !== 'function' || !turnstileContainer) return;
 
-  // Temizlik: Çift widget oluşumunu engellemek için bellekten ve DOM'dan süpür
   if (turnstileWidgetId !== undefined) {
-    try { window.turnstile.remove(turnstileWidgetId); } catch (e) {}
+    try { window.turnstile.remove(turnstileWidgetId); } catch(e) {}
     turnstileWidgetId = undefined;
   }
   turnstileContainer.innerHTML = "";
@@ -22,20 +21,20 @@ function renderTurnstile() {
       callback: (token) => { submitBtn.disabled = false; if(errorBox) errorBox.style.display = "none"; },
       "error-callback": () => { submitBtn.disabled = true; if(errorBox) errorBox.style.display = "block"; }
     });
-  } catch (err) {
-    console.warn("Turnstile render denemesi başarısız, kütüphane eksik yüklenmiş olabilir.");
+  } catch (e) {
+    console.warn("Turnstile render denemesi başarısız, kütüphane henüz tam hazır değil.");
   }
 }
 
-// Akıllı Başlatıcı: Turnstile objesinin tam fonksiyonel olmasını bekle
-const bootTurnstile = setInterval(() => {
+// Akıllı Başlatıcı: Kütüphanenin (ve iç fonksiyonlarının) tam hazır olduğunu bekle
+const checkTurnstile = setInterval(() => {
   if (window.turnstile && typeof window.turnstile.render === 'function') {
-    clearInterval(bootTurnstile);
+    clearInterval(checkTurnstile);
     renderTurnstile();
   }
 }, 200);
 
-// Tema Değişimi: Sadece sınıf gerçekten değişirse render et
+// Tema Değişimi Takibi
 const observer = new MutationObserver(() => {
   const newTheme = document.documentElement.classList.contains("dark-mode") ? "dark" : "light";
   if (newTheme !== currentTheme) {
@@ -54,7 +53,7 @@ if (form) {
     const workerUrl = "https://verifalia-handler.efebedelcigil.workers.dev/"; 
 
     submitBtn.disabled = true;
-    const originalBtnText = submitBtn.innerText;
+    const originalText = submitBtn.innerText;
     submitBtn.innerText = "Checking email...";
 
     try {
@@ -71,12 +70,11 @@ if (form) {
       } else {
         alert("Lütfen geçerli bir e-posta adresi girdiğinizden emin olun.");
         submitBtn.disabled = false;
-        submitBtn.innerText = originalBtnText;
+        submitBtn.innerText = originalText;
         if (window.turnstile) window.turnstile.reset(turnstileWidgetId);
       }
     } catch (error) {
       // Fail-safe: Kredi biterse veya API çökerse mesajı doğrulamadan gönder
-      console.warn("Email verification bypassed.");
       form.submit();
     }
   });
