@@ -1,7 +1,5 @@
 (function() {
   // --- BÖLÜM 1: Hemen Çalışacak Kısım (Renk Ataması) ---
-  // Sayfa daha görünmeden rengi verelim ki beyaz patlama olmasın.
-  
   const savedTheme = localStorage.getItem('theme');
   const systemDark = window.matchMedia('(prefers-color-scheme: dark)');
 
@@ -34,16 +32,12 @@
   });
 
   // --- BÖLÜM 2: Gecikmeli Çalışacak Kısım (Buton İşlevselliği) ---
-  // HTML tamamen yüklendikten sonra butonu arayıp bulacağız.
-  
   document.addEventListener('DOMContentLoaded', function() {
-      const toggleBtn = document.querySelector('.theme-toggle'); // Veya senin buton class'ın neyse
+      // DİKKAT: Burayı ID (#) olarak değiştirdik
+      const toggleBtn = document.getElementById('theme-toggle'); 
       
       if (toggleBtn) {
-          // Butonun mevcut duruma göre ikonunu vs. ayarlamak istersen buraya ekleyebilirsin
-          
           toggleBtn.addEventListener('click', () => {
-              // Güncel durumu class üzerinden oku (localStorage bazen gecikir)
               const isDark = document.documentElement.classList.contains('dark-mode');
               const newTheme = isDark ? 'light' : 'dark';
               
@@ -51,7 +45,7 @@
               localStorage.setItem('theme', newTheme);
           });
       } else {
-          console.warn("Tema değiştirme butonu sayfada bulunamadı.");
+          console.warn("Tema butonu (#theme-toggle) bulunamadı.");
       }
   });
 
