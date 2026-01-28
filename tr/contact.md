@@ -28,7 +28,7 @@ lang: tr
   </div>
 </noscript>
 
-<form action="https://formspree.io/f/xlgjvlev" method="POST" class="contact-form" novalidate>
+<form action="https://formspree.io/f/xlgjvlev" method="POST" class="contact-form">
   <input type="hidden" name="form_title" value="Contact Form (EN)">
   <input type="hidden" name="_subject" value="New message from contact page">
 
