@@ -1,5 +1,5 @@
 (function() {
-  // --- BÖLÜM 1: Hemen Çalışacak Kısım (Renk Ataması) ---
+  // --- 1. KISIM: Renk Ayarları (Hemen Çalışır - Flash'ı önler) ---
   const savedTheme = localStorage.getItem('theme');
   const systemDark = window.matchMedia('(prefers-color-scheme: dark)');
 
@@ -11,14 +11,14 @@
     }
   }
 
-  // İlk açılış kontrolü
+  // Açılışta rengi ver
   if (savedTheme) {
     setTheme(savedTheme);
   } else {
     setTheme(systemDark.matches ? 'dark' : 'light');
   }
 
-  // Preload (Transition engelleme)
+  // Preload (Geçişleri yumuşat)
   document.documentElement.classList.add('preload');
   window.addEventListener('load', () => {
     document.documentElement.classList.remove('preload');
@@ -31,22 +31,22 @@
     }
   });
 
-  // --- BÖLÜM 2: Gecikmeli Çalışacak Kısım (Buton İşlevselliği) ---
-  document.addEventListener('DOMContentLoaded', function() {
-      // DİKKAT: Burayı ID (#) olarak değiştirdik
-      const toggleBtn = document.getElementById('theme-toggle'); 
+  // --- 2. KISIM: Tıklama Mantığı (Event Delegation) ---
+  // Burası çok önemli: Sayfadaki herhangi bir tıklamayı dinliyoruz.
+  // Tıklanan şey bizim butonumuz mu diye kontrol ediyoruz.
+  
+  document.addEventListener('click', function(event) {
+    // Tıklanan element veya onun kapsayıcısı #theme-toggle ID'sine sahip mi?
+    const toggleBtn = event.target.closest('#theme-toggle');
+
+    if (toggleBtn) {
+      // Eğer bizim butonsa (veya içindeki topa tıklandıysa):
+      const isDark = document.documentElement.classList.contains('dark-mode');
+      const newTheme = isDark ? 'light' : 'dark';
       
-      if (toggleBtn) {
-          toggleBtn.addEventListener('click', () => {
-              const isDark = document.documentElement.classList.contains('dark-mode');
-              const newTheme = isDark ? 'light' : 'dark';
-              
-              setTheme(newTheme);
-              localStorage.setItem('theme', newTheme);
-          });
-      } else {
-          console.warn("Tema butonu (#theme-toggle) bulunamadı.");
-      }
+      setTheme(newTheme);
+      localStorage.setItem('theme', newTheme);
+    }
   });
 
 })();
