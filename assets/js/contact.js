@@ -1,32 +1,32 @@
 const submitBtn = document.getElementById("submitBtn");
-const errorBox = document.getElementById("turnstileError");
 const turnstileContainer = document.querySelector(".cf-turnstile");
 let turnstileWidgetId;
 let currentTheme = document.documentElement.classList.contains("dark-mode") ? "dark" : "light";
 
 function renderTurnstile() {
-  if (typeof window.turnstile === 'undefined' || !turnstileContainer) return;
+  // Turnstile objesi veya container yoksa veya zaten render ediliyorsa dur
+  if (!window.turnstile || !turnstileContainer) return;
 
-  // Temizlik aşaması
+  // Önceki widget'ı temizle (Memory leak ve çift widget önleyici)
   if (turnstileWidgetId !== undefined) {
-    try {
-      window.turnstile.remove(turnstileWidgetId);
-    } catch (e) { console.warn("Widget removal failed", e); }
+    try { window.turnstile.remove(turnstileWidgetId); } catch(e) {}
     turnstileWidgetId = undefined;
   }
-  
   turnstileContainer.innerHTML = "";
 
-  // Render aşaması
-  turnstileWidgetId = window.turnstile.render(turnstileContainer, {
-    sitekey: "0x4AAAAAACULU4HpGNkW9SVM",
-    theme: currentTheme,
-    callback: (token) => { submitBtn.disabled = false; errorBox.style.display = "none"; },
-    "error-callback": () => { submitBtn.disabled = true; errorBox.style.display = "block"; }
-  });
+  try {
+    turnstileWidgetId = window.turnstile.render(turnstileContainer, {
+      sitekey: "0x4AAAAAACULU4HpGNkW9SVM",
+      theme: currentTheme,
+      callback: (token) => { submitBtn.disabled = false; },
+      "error-callback": () => { submitBtn.disabled = true; }
+    });
+  } catch (e) {
+    console.error("Turnstile Render Hatası (V is not a function koruması):", e);
+  }
 }
 
-// Sadece tema gerçekten değiştiğinde render et
+// Tema değişimini sadece 'dark-mode' sınıfı gerçekten değişirse tetikle
 const darkModeObserver = new MutationObserver(() => {
   const newTheme = document.documentElement.classList.contains("dark-mode") ? "dark" : "light";
   if (newTheme !== currentTheme) {
@@ -34,24 +34,26 @@ const darkModeObserver = new MutationObserver(() => {
     renderTurnstile();
   }
 });
-
 darkModeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
 
-// Sayfa yüklenince Turnstile'ın hazır olduğundan emin ol
-window.addEventListener("load", () => {
-  let checkTurnstile = setInterval(() => {
-    if (window.turnstile) {
-      clearInterval(checkTurnstile);
-      renderTurnstile();
-    }
-  }, 100);
-});
+// Ready Check: Turnstile script'inin yüklendiğinden emin ol
+let retryCount = 0;
+const initTurnstile = setInterval(() => {
+  if (window.turnstile) {
+    clearInterval(initTurnstile);
+    renderTurnstile();
+  } else if (retryCount > 50) { // 5 saniye sonra vazgeç
+    clearInterval(initTurnstile);
+    console.warn("Turnstile yüklenemedi, fail-safe modu.");
+    submitBtn.disabled = false; // Kullanıcıyı mağdur etme
+  }
+  retryCount++;
+}, 100);
 
-// --- Verifalia Sorgu Mantığı ---
+// --- Verifalia Entegrasyonu ---
 const form = document.querySelector('.contact-form');
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
-  
   const emailInput = form.querySelector('input[name="email"]').value;
   const workerUrl = "https://verifalia-handler.efebedelcigil.workers.dev/"; 
 
@@ -71,13 +73,13 @@ form.addEventListener('submit', async (e) => {
       submitBtn.innerText = "Sending...";
       form.submit(); 
     } else {
-      alert("Invalid email address. Please double check.");
+      alert("Please enter a valid email address.");
       submitBtn.disabled = false;
       submitBtn.innerText = "Send";
-      window.turnstile.reset(turnstileWidgetId);
+      if (window.turnstile) window.turnstile.reset(turnstileWidgetId);
     }
   } catch (error) {
-    // Kredi biterse veya API çökerse fail-safe olarak gönder
+    // Kredi biterse (günlük 25 hakkın dolması gibi) formu direkt gönder
     form.submit();
   }
 });
