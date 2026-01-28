@@ -28,13 +28,13 @@ lang: tr
   </div>
 </noscript>
 
-<form action="https://formspree.io/f/xlgjvlev" method="POST" class="contact-form">
+<form action="https://formspree.io/f/xlgjvlev" method="POST" class="contact-form" novalidate>
   <input type="hidden" name="form_title" value="Contact Form (EN)">
   <input type="hidden" name="_subject" value="New message from contact page">
 
   <div class="hidden-field" aria-hidden="true">
     <label>Bu alanı boş bırakın</label>
-    <input type="text" name="company">
+    <input type="text" name="company" autocomplete="off">
   </div>
 
   <label>
