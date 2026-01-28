@@ -6,7 +6,9 @@ let currentTheme = document.documentElement.classList.contains("dark-mode") ? "d
 
 function renderTurnstile() {
   // Analitik Kontrol: Sadece turnstile.render fonksiyonu gerçekten hazırsa başla
-  if (typeof window.turnstile === 'undefined' || typeof window.turnstile.render !== 'function' || !turnstileContainer) return;
+  if (typeof window.turnstile === 'undefined' || typeof window.turnstile.render !== 'function' || !turnstileContainer) {
+    return;
+  }
 
   if (turnstileWidgetId !== undefined) {
     try { window.turnstile.remove(turnstileWidgetId); } catch(e) {}
