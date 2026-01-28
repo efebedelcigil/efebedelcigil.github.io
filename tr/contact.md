@@ -46,7 +46,7 @@ lang: tr
     Lütfen robot olmadığınızı doğrulayın.
   </div>
 
-  <div class="cf-turnstile"></div>
+  <div id="turnstile-widget"></div>
 
   <button type="submit" class="btn btn--primary" id="submitBtn" disabled>
     Gönder
