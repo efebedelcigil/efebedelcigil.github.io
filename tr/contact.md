@@ -1,13 +1,13 @@
 ---
-seo_title: "Contact - Efe Varol Bedelcigil"
-title: "Contact Me 📬"
-excerpt: "Contact channels for projects, collaborations, or just to say hi."
-permalink: /en/contact/
+seo_title: "İletişim - Efe Varol Bedelcigil"
+title: "Bana Ulaşın 📬"
+excerpt: "Projeler, olası iş/staj pozisyonları veya diğer profesyonel konular için iletişim kanallarım."
+permalink: /tr/iletisim/
 lang_ref: contact_page
 layout: single
 author_profile: true
-author: efe_en
-lang: en
+author: efe_tr
+lang: tr
 ---
 
 <meta http-equiv="Content-Security-Policy"
