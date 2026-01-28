@@ -2,7 +2,6 @@
   const form = document.getElementById('contactForm');
   const submitBtn = document.getElementById("submitBtn");
   const errorBox = document.getElementById("turnstileError");
-  // DİKKAT: Artık class değil ID arıyoruz
   const turnstileContainer = document.getElementById("turnstile-widget");
 
   let turnstileWidgetId;
@@ -14,7 +13,6 @@
   window.onloadTurnstileCallback = function () {
     const currentTheme = document.documentElement.classList.contains("dark-mode") ? "dark" : "light";
     
-    // Eğer container yoksa veya zaten render edilmişse dur.
     if (!turnstileContainer || turnstileContainer.innerHTML.trim() !== "") {
         return;
     }
@@ -64,30 +62,41 @@
 
         const data = await response.json();
 
-        // API Yanıt Kontrolü
         if (data.status !== 200) {
           throw new Error(data.error || "Sunucu hatası");
         }
 
         const verifaliaBody = data.body; 
         
-        if (verifaliaBody && verifaliaBody.entries && verifaliaBody.entries.length > 0) {
-          const classification = verifaliaBody.entries[0].classification;
+        // --- DÜZELTME BURADA ---
+        // Verifalia yapısı: body -> entries -> data array -> item
+        let entry = null;
+        if (verifaliaBody && verifaliaBody.entries) {
+            if (Array.isArray(verifaliaBody.entries)) {
+                entry = verifaliaBody.entries[0];
+            } else if (verifaliaBody.entries.data && Array.isArray(verifaliaBody.entries.data)) {
+                entry = verifaliaBody.entries.data[0];
+            }
+        }
+
+        if (entry) {
+          const classification = entry.classification;
           
           if (classification === "Deliverable") {
+            // BAŞARILI
             isValidated = true; 
             submitBtn.innerText = "Gönderiliyor...";
             form.requestSubmit(); 
           } else {
+            // BAŞARISIZ
             alert("Girdiğiniz e-posta adresi geçerli görünmüyor (" + classification + "). Lütfen kontrol ediniz.");
             submitBtn.disabled = false;
             submitBtn.innerText = originalText;
           }
         } else {
-          // HATA AYIKLAMA: Object yerine içeriği yazdırıyoruz
-          console.warn("Beklenmeyen API yanıtı:", JSON.stringify(data, null, 2));
-          
-          if(confirm("E-posta doğrulama servisi net bir yanıt veremedi. Yine de göndermek istiyor musunuz?")) {
+          // BEKLENMEYEN YAPI (Yine de loglayalım ama kullanıcıyı geçirelim)
+          console.warn("Verifalia yanıtı okunamadı:", verifaliaBody);
+          if(confirm("E-posta servisi yanıt verdi fakat sonuç okunamadı. Yine de göndermek ister misiniz?")) {
              isValidated = true;
              form.requestSubmit();
           } else {
@@ -97,8 +106,8 @@
         }
 
       } catch (err) {
-        console.error("Worker Error:", err);
-        if(confirm("E-posta kontrolü sırasında bir bağlantı hatası oluştu. Formu yine de göndermek ister misiniz?")) {
+        console.error("Worker Hatası:", err);
+        if(confirm("Kontrol sırasında bir hata oluştu. Formu yine de göndermek ister misiniz?")) {
           isValidated = true;
           form.requestSubmit();
         } else {
