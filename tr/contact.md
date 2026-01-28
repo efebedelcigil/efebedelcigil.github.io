@@ -29,8 +29,8 @@ lang: tr
 </noscript>
 
 <form action="https://formspree.io/f/xlgjvlev" method="POST" class="contact-form">
-  <input type="hidden" name="form_title" value="Contact Form (EN)">
-  <input type="hidden" name="_subject" value="New message from contact page">
+  <input type="hidden" name="form_title" value="Contact Form (TR)">
+  <input type="hidden" name="_subject" value="Yeni mesaj iletişim sayfasından">
 
   <div class="hidden-field" aria-hidden="true">
     <label>Bu alanı boş bırakın</label>
@@ -44,12 +44,12 @@ lang: tr
 
   <label>
     Konu (isteğe bağlı):
-    <input type="text" name="subject" placeholder="e.g. Collaboration request">
+    <input type="text" name="subject" placeholder="Örn: İşbirliği talebi">
   </label>
 
   <label>
     Mesajınız:
-    <textarea name="message" placeholder="Your message here..." required></textarea>
+    <textarea name="message" placeholder="Mesajınızı buraya yazın..." required></textarea>
   </label>
 
   <div id="turnstileError" class="turnstile-error">
@@ -68,7 +68,7 @@ lang: tr
   </button>
 </form>
 
-<script src="/assets/js/theme.js"></script>
-<script src="/assets/js/contact.js"></script>
+<!-- EXTERNAL JS -->
+<script src="/assets/js/theme.js" defer></script>
+<script src="/assets/js/contact.js" defer></script>
 <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
-
