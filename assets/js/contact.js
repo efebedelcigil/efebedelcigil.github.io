@@ -45,36 +45,44 @@ const observer = new MutationObserver(() => {
 observer.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
 
 // --- Verifalia Sorgu Mantığı ---
+
 const form = document.querySelector('.contact-form');
 if (form) {
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
+    
     const emailInput = form.querySelector('input[name="email"]').value;
     const workerUrl = "https://verifalia-handler.efebedelcigil.workers.dev/"; 
 
     submitBtn.disabled = true;
-    const originalText = submitBtn.innerText;
+    const originalBtnText = submitBtn.innerText;
     submitBtn.innerText = "Checking email...";
 
     try {
+      // Analitik Not: Eğer CSP düzgün çalışıyorsa bu istek Worker'a ulaşacak
       const response = await fetch(workerUrl, {
         method: 'POST',
-        body: JSON.stringify({ email: emailInput }),
-        headers: { 'Content-Type': 'application/json' }
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: emailInput })
       });
+      
+      if (!response.ok) throw new Error("Worker hatası veya CSP engeli");
+
       const result = await response.json();
 
       if (result.entry?.classification === "Deliverable") {
         submitBtn.innerText = "Sending...";
         form.submit(); 
       } else {
-        alert("Lütfen geçerli bir e-posta adresi girdiğinizden emin olun.");
+        alert("Lütfen geçerli ve ulaşılabilir bir e-posta adresi girdiğinizden emin olun.");
         submitBtn.disabled = false;
-        submitBtn.innerText = originalText;
+        submitBtn.innerText = originalBtnText;
         if (window.turnstile) window.turnstile.reset(turnstileWidgetId);
       }
     } catch (error) {
-      // Fail-safe: Kredi biterse veya API çökerse mesajı doğrulamadan gönder
+      // Fail-safe: Eğer 25 kredin bittiyse veya CSP hala takılıyorsa 
+      // ziyaretçiyi engelleme, mesajı Formspree'ye direkt gönder.
+      console.warn("Mühendislik uyarısı: Doğrulama atlandı, form gönderiliyor.", error);
       form.submit();
     }
   });
