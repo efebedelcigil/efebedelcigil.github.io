@@ -129,7 +129,21 @@ html.dark-mode .turnstile-error {
 }
 </style>
 
-Feel free to contact me regarding projects, potential job/internship roles, or other professional matters.
+<p>Feel free to contact me regarding projects, potential job/internship roles, or other professional matters.</p>
+
+<noscript>
+  <div style="
+    margin: 1.5rem 0;
+    padding: 1rem;
+    border-radius: 6px;
+    background-color: #fdecea;
+    color: #b71c1c;
+    font-size: 0.95rem;
+  ">
+    This contact form requires JavaScript to function properly.
+    Please enable JavaScript or contact me directly via email.
+  </div>
+</noscript>
 
 <form action="https://formspree.io/f/xlgjvlev" method="POST" class="contact-form">
 

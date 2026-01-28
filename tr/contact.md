@@ -129,7 +129,21 @@ html.dark-mode .turnstile-error {
 }
 </style>
 
-Projeler, olası iş/staj pozisyonları veya diğer profesyonel konular hakkında benimle iletişime geçebilirsiniz.
+<p>Projeler, olası iş/staj pozisyonları veya diğer profesyonel konular hakkında benimle iletişime geçebilirsiniz.</p>
+
+<noscript>
+  <div style="
+    margin: 1.5rem 0;
+    padding: 1rem;
+    border-radius: 6px;
+    background-color: #fdecea;
+    color: #b71c1c;
+    font-size: 0.95rem;
+  ">
+    Bu iletişim formunun düzgün çalışması için JavaScript gereklidir.
+    Lütfen JavaScript'i etkinleştirin veya doğrudan e-posta ile bana ulaşın.
+  </div>
+</noscript>
 
 <form action="https://formspree.io/f/xlgjvlev" method="POST" class="contact-form">
 
