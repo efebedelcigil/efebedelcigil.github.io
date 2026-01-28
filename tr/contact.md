@@ -122,6 +122,11 @@ html.dark-mode .turnstile-error {
   color: #ffb3b3;
   border-color: #663333;
 }
+
+/* Cloudflare Turnstile spacing */
+.cf-turnstile {
+  margin: 20px 0 24px 0;
+}
 </style>
 
 Projeler, olası iş/staj pozisyonları veya diğer profesyonel konular hakkında benimle iletişime geçebilirsiniz.
@@ -160,7 +165,6 @@ Projeler, olası iş/staj pozisyonları veya diğer profesyonel konular hakkınd
   <div
     class="cf-turnstile"
     data-sitekey="0x4AAAAAACULU4HpGNkW9SVM"
-    data-theme="auto"
     data-callback="turnstileDone"
     data-expired-callback="turnstileExpired"
     data-error-callback="turnstileError">
@@ -176,6 +180,23 @@ Projeler, olası iş/staj pozisyonları veya diğer profesyonel konular hakkınd
   const submitBtn = document.getElementById("submitBtn");
   const errorBox = document.getElementById("turnstileError");
 
+  function isDarkMode() {
+    return document.documentElement.classList.contains("dark-mode");
+  }
+
+  function renderTurnstile() {
+    const container = document.querySelector(".cf-turnstile");
+    container.innerHTML = "";
+
+    window.turnstile.render(container, {
+      sitekey: "0x4AAAAAACULU4HpGNkW9SVM",
+      theme: isDarkMode() ? "dark" : "light",
+      callback: turnstileDone,
+      "expired-callback": turnstileExpired,
+      "error-callback": turnstileError
+    });
+  }
+
   function turnstileDone(token) {
     submitBtn.disabled = false;
     errorBox.style.display = "none";
@@ -190,6 +211,12 @@ Projeler, olası iş/staj pozisyonları veya diğer profesyonel konular hakkınd
     submitBtn.disabled = true;
     errorBox.style.display = "block";
   }
+
+  window.addEventListener("load", () => {
+    if (window.turnstile) {
+      renderTurnstile();
+    }
+  });
 </script>
 
 <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
