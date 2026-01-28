@@ -68,5 +68,6 @@ lang: en
   </button>
 </form>
 
+<script src="/assets/js/theme.js"></script>
 <script src="/assets/js/contact.js"></script>
 <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
