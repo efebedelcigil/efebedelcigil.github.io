@@ -8,14 +8,19 @@ function isDarkMode() {
 }
 
 function renderTurnstile() {
-  if (!window.turnstile || !turnstileContainer) return;
+  // 1. Güvenlik Kontrolü: Container yoksa veya Turnstile yüklenmediyse çık
+  if (typeof window.turnstile === 'undefined' || !turnstileContainer) return;
 
-  // Önceki widget'ı güvenli bir şekilde kaldır
-  if (typeof turnstileWidgetId !== 'undefined') {
+  // 2. Temizlik: Eğer bir widget ID'si varsa Cloudflare belleğinden sil
+  if (turnstileWidgetId !== undefined) {
     window.turnstile.remove(turnstileWidgetId);
+    turnstileWidgetId = undefined;
   }
 
-  // Widget'ı render et
+  // 3. DOM Temizliği: Container içindeki tüm eski kalıntıları (iframe vs) temizle
+  turnstileContainer.innerHTML = "";
+
+  // 4. Yeni Render: Temiz sayfaya tek bir widget bas
   turnstileWidgetId = window.turnstile.render(turnstileContainer, {
     sitekey: "0x4AAAAAACULU4HpGNkW9SVM",
     theme: isDarkMode() ? "dark" : "light",
@@ -25,7 +30,6 @@ function renderTurnstile() {
     },
     "expired-callback": function() {
       submitBtn.disabled = true;
-      errorBox.style.display = "block";
     },
     "error-callback": function() {
       submitBtn.disabled = true;
@@ -34,19 +38,25 @@ function renderTurnstile() {
   });
 }
 
-// Turnstile hazır olduğunda render et
-window.onloadTurnstileCallback = function() {
-  renderTurnstile();
-};
+// Çakışmayı Önleyen Tetikleyici Yönetimi
+// Sadece bir kez yükleme yapılması için 'load' olayını beklemek yeterlidir
+window.addEventListener("load", () => {
+  // Cloudstile'ın hazır olduğundan emin olalım
+  if (window.turnstile) {
+    renderTurnstile();
+  } else {
+    // Eğer script henüz hazır değilse callback'i bekle
+    window.onloadTurnstileCallback = renderTurnstile;
+  }
+});
 
-// Sayfa yüklendiğinde ve tema değiştiğinde tetikle
-window.addEventListener("load", renderTurnstile);
-
+// Tema Değişim Gözlemcisi (Debounce ile optimize edildi)
+let renderTimeout;
 const darkModeObserver = new MutationObserver((mutations) => {
   mutations.forEach((mutation) => {
     if (mutation.attributeName === "class") {
-      // Sonsuz döngüyü önlemek için kısa bir gecikme ekleyelim
-      setTimeout(renderTurnstile, 50);
+      clearTimeout(renderTimeout);
+      renderTimeout = setTimeout(renderTurnstile, 100);
     }
   });
 });
@@ -56,7 +66,7 @@ darkModeObserver.observe(document.documentElement, {
   attributeFilter: ["class"]
 });
 
-// --- Verifalia Email Verification ---
+// --- Verifalia Email Verification (Fail-Safe Yapısı) ---
 const form = document.querySelector('.contact-form');
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
@@ -77,18 +87,20 @@ form.addEventListener('submit', async (e) => {
     
     const result = await response.json();
 
+    // Verifalia sonucuna göre aksiyon al
     if (result.entry?.classification === "Deliverable") {
       submitBtn.innerText = "Sending...";
       form.submit(); 
     } else {
-      alert("Please enter a valid email address.");
+      alert("Lütfen geçerli bir e-posta adresi girdiğinizden emin olun.");
       submitBtn.disabled = false;
       submitBtn.innerText = originalText;
       if (window.turnstile) window.turnstile.reset(turnstileWidgetId);
     }
   } catch (error) {
-    // Verifalia günlük 25 kredi limitini [cite: 40, 46, 150] aşarsan 
-    // veya hata olursa formu yine de gönder (Fail-safe)
+    // Verifalia günlük 25 kredi limitini aşarsan veya API hata verirse formu yine de gönder
+    // Kullanıcıyı (özellikle staj başvurusu yapacak İK'cıyı) engellemiyoruz.
+    console.warn("Email verification bypassed due to error.");
     form.submit();
   }
 });
