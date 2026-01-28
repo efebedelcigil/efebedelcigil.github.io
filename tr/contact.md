@@ -15,54 +15,44 @@ lang: tr
 <p>Projeler, olası iş/staj pozisyonları veya diğer profesyonel konular hakkında benimle iletişime geçebilirsiniz.</p>
 
 <noscript>
-  <div style="
-    margin: 1.5rem 0;
-    padding: 1rem;
-    border-radius: 6px;
-    background-color: #fdecea;
-    color: #b71c1c;
-    font-size: 0.95rem;
-  ">
+  <div style="margin: 1.5rem 0; padding: 1rem; border-radius: 6px; background-color: #fdecea; color: #b71c1c; font-size: 0.95rem;">
     Bu iletişim formunun düzgün çalışması için JavaScript gereklidir.
     Lütfen JavaScript'i etkinleştirin veya doğrudan e-posta ile bana ulaşın.
   </div>
 </noscript>
 
-<form action="https://formspree.io/f/xlgjvlev" method="POST" class="contact-form">
-  <input type="hidden" name="form_title" value="Contact Form (EN)">
-  <input type="hidden" name="_subject" value="New message from contact page">
-
-  <div class="hidden-field" aria-hidden="true">
-    <label>Bu alanı boş bırakın</label>
-    <input type="text" name="company" autocomplete="off">
-  </div>
+<form action="https://formspree.io/f/xlgjvlev" method="POST" class="contact-form" id="contactForm">
+  <input type="text" name="_gotcha" style="display:none !important">
+  
+  <input type="hidden" name="form_title" value="Contact Form (TR)">
+  <input type="hidden" name="_subject" value="Websitesinden Yeni Mesaj Var!">
 
   <label>
     E-posta Adresiniz:
-    <input type="email" name="email" placeholder="example@email.com" required>
+    <input type="email" name="email" placeholder="ornek@email.com" required>
   </label>
 
   <label>
     Konu (isteğe bağlı):
-    <input type="text" name="subject" placeholder="e.g. Collaboration request">
+    <input type="text" name="subject" placeholder="Örn: Proje İşbirliği">
   </label>
 
   <label>
     Mesajınız:
-    <textarea name="message" placeholder="Your message here..." required></textarea>
+    <textarea name="message" placeholder="Mesajınız..." required></textarea>
   </label>
 
-  <div id="turnstileError" class="turnstile-error" style="display:none;">
-    Lütfen mesaj göndermek için insan olduğunuzu doğrulayın.
+  <div id="turnstileError" class="turnstile-error" style="display:none; color: red; margin-bottom: 10px;">
+    Lütfen robot olmadığınızı doğrulayın.
   </div>
 
   <div class="cf-turnstile"></div>
 
-  <button type="submit" class="btn btn--primary" disabled id="submitBtn">
+  <button type="submit" class="btn btn--primary" id="submitBtn" disabled>
     Gönder
   </button>
 </form>
 
 <script src="/assets/js/theme.js"></script>
 <script src="/assets/js/contact.js"></script>
-<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js?onload=onloadTurnstileCallback" async defer></script>
