@@ -1,13 +1,23 @@
 ---
-seo_title: "İletişim - Efe Varol Bedelcigil"
-title: "Bana Ulaşın 📬"
-excerpt: "Projeler, iş birlikleri veya tanışmak için iletişim kanallarım."
-permalink: /tr/iletisim/
+seo_title: "Contact - Efe Varol Bedelcigil"
+title: "Contact Me 📬"
+excerpt: "Contact channels for projects, collaborations, or just to say hi."
+permalink: /en/contact/
 lang_ref: contact_page
 layout: single
 author_profile: true
-lang: tr
+author: efe_en
+lang: en
 ---
+
+<meta http-equiv="Content-Security-Policy"
+content="
+  default-src 'self';
+  script-src 'self' https://challenges.cloudflare.com;
+  style-src 'self' 'unsafe-inline';
+  frame-src https://challenges.cloudflare.com;
+  connect-src https://challenges.cloudflare.com;
+">
 
 <style>
 /* ============================= */
@@ -95,9 +105,26 @@ html.dark-mode .contact-form ::placeholder {
   opacity: 0.8;
 }
 
+<style>
+.turnstile-error {
+  display: none;
+  margin: 12px 0;
+  padding: 10px 12px;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  background-color: #ffecec;
+  color: #8a1f1f;
+  border: 1px solid #f5c2c2;
+}
+
+html.dark-mode .turnstile-error {
+  background-color: #3a1f1f;
+  color: #ffb3b3;
+  border-color: #663333;
+}
 </style>
 
-Projelerim veya iş hakkında konuşmak veya iş birliği yapmak için aşağıdaki formu kullanabilirsiniz.
+Projeler, olası iş/staj pozisyonları veya diğer profesyonel konular hakkında benimle iletişime geçebilirsiniz.
 
 <form action="https://formspree.io/f/xlgjvlev" method="POST" class="contact-form">
 
@@ -111,27 +138,58 @@ Projelerim veya iş hakkında konuşmak veya iş birliği yapmak için aşağıd
 
   <label>
     E-posta Adresiniz:
-    <input type="email" name="email" placeholder="ornek@eposta.com" required>
+    <input type="email" name="email" placeholder="ornek@email.com" required>
   </label>
 
   <label>
     Konu (isteğe bağlı):
-    <input type="text" name="subject" placeholder="Örn: Proje iş birliği">
+    <input type="text" name="subject" placeholder="Örn. İş birliği teklifi">
   </label>
-
-  <!-- Cloudflare Turnstile -->
-  <div
-    class="cf-turnstile"
-    data-sitekey="0x4AAAAAACULU4HpGNkW9SVM"
-    data-theme="auto">
-  </div>
 
   <label>
     Mesajınız:
     <textarea name="message" placeholder="Mesajınızı buraya yazın..." required></textarea>
   </label>
 
-  <button type="submit" class="btn btn--primary">Gönder</button>
+  <!-- Turnstile hata mesajı -->
+  <div id="turnstileError" class="turnstile-error">
+    Lütfen mesaj göndermek için insan olduğunuzu doğrulayın.
+  </div>
+
+  <!-- Cloudflare Turnstile -->
+  <div
+    class="cf-turnstile"
+    data-sitekey="0x4AAAAAACULU4HpGNkW9SVM"
+    data-theme="auto"
+    data-callback="turnstileDone"
+    data-expired-callback="turnstileExpired"
+    data-error-callback="turnstileError">
+  </div>
+
+  <button type="submit" class="btn btn--primary" disabled id="submitBtn">
+    Gönder
+  </button>
+
 </form>
+
+<script>
+  const submitBtn = document.getElementById("submitBtn");
+  const errorBox = document.getElementById("turnstileError");
+
+  function turnstileDone(token) {
+    submitBtn.disabled = false;
+    errorBox.style.display = "none";
+  }
+
+  function turnstileExpired() {
+    submitBtn.disabled = true;
+    errorBox.style.display = "block";
+  }
+
+  function turnstileError() {
+    submitBtn.disabled = true;
+    errorBox.style.display = "block";
+  }
+</script>
 
 <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>

@@ -10,6 +10,15 @@ author: efe_en
 lang: en
 ---
 
+<meta http-equiv="Content-Security-Policy"
+content="
+  default-src 'self';
+  script-src 'self' https://challenges.cloudflare.com;
+  style-src 'self' 'unsafe-inline';
+  frame-src https://challenges.cloudflare.com;
+  connect-src https://challenges.cloudflare.com;
+">
+
 <style>
 /* ============================= */
 /* LIGHT MODE (DEFAULT) */
@@ -96,9 +105,26 @@ html.dark-mode .contact-form ::placeholder {
   opacity: 0.8;
 }
 
+<style>
+.turnstile-error {
+  display: none;
+  margin: 12px 0;
+  padding: 10px 12px;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  background-color: #ffecec;
+  color: #8a1f1f;
+  border: 1px solid #f5c2c2;
+}
+
+html.dark-mode .turnstile-error {
+  background-color: #3a1f1f;
+  color: #ffb3b3;
+  border-color: #663333;
+}
 </style>
 
-Feel free to contact me for collaborations, business inquiries or questions.
+Feel free to contact me regarding projects, potential job/internship roles, or other professional matters.
 
 <form action="https://formspree.io/f/xlgjvlev" method="POST" class="contact-form">
 
@@ -115,25 +141,55 @@ Feel free to contact me for collaborations, business inquiries or questions.
     <input type="email" name="email" placeholder="example@email.com" required>
   </label>
 
-  <label>s
+  <label>
     Subject (optional):
     <input type="text" name="subject" placeholder="e.g. Collaboration request">
   </label>
-
 
   <label>
     Message:
     <textarea name="message" placeholder="Your message here..." required></textarea>
   </label>
 
+  <!-- Turnstile error message -->
+  <div id="turnstileError" class="turnstile-error">
+    Please verify that you are human to send the message.
+  </div>
+
   <!-- Cloudflare Turnstile -->
   <div
     class="cf-turnstile"
     data-sitekey="0x4AAAAAACULU4HpGNkW9SVM"
-    data-theme="auto">
+    data-theme="auto"
+    data-callback="turnstileDone"
+    data-expired-callback="turnstileExpired"
+    data-error-callback="turnstileError">
   </div>
 
-  <button type="submit" class="btn btn--primary">Send</button>
+  <button type="submit" class="btn btn--primary" disabled id="submitBtn">
+    Send
+  </button>
+
 </form>
+
+<script>
+  const submitBtn = document.getElementById("submitBtn");
+  const errorBox = document.getElementById("turnstileError");
+
+  function turnstileDone(token) {
+    submitBtn.disabled = false;
+    errorBox.style.display = "none";
+  }
+
+  function turnstileExpired() {
+    submitBtn.disabled = true;
+    errorBox.style.display = "block";
+  }
+
+  function turnstileError() {
+    submitBtn.disabled = true;
+    errorBox.style.display = "block";
+  }
+</script>
 
 <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
