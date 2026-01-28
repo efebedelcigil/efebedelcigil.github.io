@@ -1,11 +1,10 @@
 (function() {
-  // 1. Kullanıcının daha önce seçtiği bir tercih var mı?
-  const savedTheme = localStorage.getItem('theme');
+  // --- BÖLÜM 1: Hemen Çalışacak Kısım (Renk Ataması) ---
+  // Sayfa daha görünmeden rengi verelim ki beyaz patlama olmasın.
   
-  // 2. Sistem tercihi karanlık mı?
+  const savedTheme = localStorage.getItem('theme');
   const systemDark = window.matchMedia('(prefers-color-scheme: dark)');
 
-  // Tema Uygulama Fonksiyonu
   function setTheme(theme) {
     if (theme === 'dark') {
       document.documentElement.classList.add('dark-mode');
@@ -14,36 +13,46 @@
     }
   }
 
-  // Başlangıç Kararı:
+  // İlk açılış kontrolü
   if (savedTheme) {
-    // Kayıtlı tercih varsa onu kullan
     setTheme(savedTheme);
   } else {
-    // Kayıt yoksa sistem tercihine bak
     setTheme(systemDark.matches ? 'dark' : 'light');
   }
 
-  // Preload sınıfını ekle (CSS geçişlerini yumuşatmak için)
+  // Preload (Transition engelleme)
   document.documentElement.classList.add('preload');
   window.addEventListener('load', () => {
     document.documentElement.classList.remove('preload');
   });
 
-  // Sistem temasını dinle (Kullanıcı manuel seçim yapmadıysa sistem değişince site de değişsin)
+  // Sistem teması değişirse canlı güncelle
   systemDark.addEventListener('change', (e) => {
     if (!localStorage.getItem('theme')) {
       setTheme(e.matches ? 'dark' : 'light');
     }
   });
 
-  // Toggle Butonu Mantığı (Eğer sayfada varsa)
-  const toggleBtn = document.querySelector('.theme-toggle'); // Buton sınıfın neyse burayı ona göre ayarla
-  if(toggleBtn) {
-      toggleBtn.addEventListener('click', () => {
-          const isDark = document.documentElement.classList.contains('dark-mode');
-          const newTheme = isDark ? 'light' : 'dark';
-          setTheme(newTheme);
-          localStorage.setItem('theme', newTheme);
-      });
-  }
+  // --- BÖLÜM 2: Gecikmeli Çalışacak Kısım (Buton İşlevselliği) ---
+  // HTML tamamen yüklendikten sonra butonu arayıp bulacağız.
+  
+  document.addEventListener('DOMContentLoaded', function() {
+      const toggleBtn = document.querySelector('.theme-toggle'); // Veya senin buton class'ın neyse
+      
+      if (toggleBtn) {
+          // Butonun mevcut duruma göre ikonunu vs. ayarlamak istersen buraya ekleyebilirsin
+          
+          toggleBtn.addEventListener('click', () => {
+              // Güncel durumu class üzerinden oku (localStorage bazen gecikir)
+              const isDark = document.documentElement.classList.contains('dark-mode');
+              const newTheme = isDark ? 'light' : 'dark';
+              
+              setTheme(newTheme);
+              localStorage.setItem('theme', newTheme);
+          });
+      } else {
+          console.warn("Tema değiştirme butonu sayfada bulunamadı.");
+      }
+  });
+
 })();

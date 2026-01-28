@@ -7,10 +7,6 @@ sidebar_tr:
         url: "/tr/projeler/"
       - title: "Özgeçmiş (CV)"
         url: "/tr/ozgecmis/"
-  - title: "Dil / Language"
-    children:
-      - title: "English (İngilizce)"
-        url: "/en/"
 
 sidebar_en:
   - title: "Menu"
@@ -21,7 +17,3 @@ sidebar_en:
         url: "/en/projects/"
       - title: "Resume (CV)"
         url: "/en/resume/"
-  - title: "Language / Dil"
-    children:
-      - title: "Türkçe (Turkish)"
-        url: "/tr/"

@@ -24,7 +24,33 @@
           {%- endfor -%}
         </ul>
         
-        <button id="theme-toggle" type="button" title="Dark/Light Mode"></button>
+        {% assign current_lang = page.lang | default: "tr" %}
+        {% assign translated_page = nil %}
+
+        {% for p in site.pages %}
+          {% if p.lang_ref == page.lang_ref and p.lang != current_lang %}
+            {% assign translated_page = p %}
+            {% break %}
+          {% endif %}
+        {% endfor %}
+
+        {% if current_lang == "tr" %}
+           {% assign target_label = "EN" %}
+           {% assign target_url = "/en/" %}
+        {% else %}
+           {% assign target_label = "TR" %}
+           {% assign target_url = "/tr/" %}
+        {% endif %}
+
+        {% if translated_page %}
+           {% assign target_url = translated_page.url | relative_url %}
+        {% endif %}
+
+        <a href="{{ target_url }}" class="btn btn--success" style="padding: 5px 10px; margin-right: 10px; font-weight: bold; font-size: 0.85em; border-radius: 4px;">
+           {{ target_label }}
+        </a>
+        <button class="theme-toggle" type="button" title="Dark/Light Mode">
+           </button>
 
         {% if site.search == true %}
         <button class="search__toggle" type="button">
