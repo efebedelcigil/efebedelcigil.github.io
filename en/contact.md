@@ -105,7 +105,7 @@ Feel free to contact me for collaborations, business inquiries or questions.
   <input type="hidden" name="form_title" value="Contact Form (EN)">
   <input type="hidden" name="_subject" value="New message from contact page">
 
-  <div class="hidden-field">
+  <div class="hidden-field" aria-hidden="true">
     <label>Leave this field empty</label>
     <input type="text" name="company">
   </div>
@@ -115,10 +115,25 @@ Feel free to contact me for collaborations, business inquiries or questions.
     <input type="email" name="email" placeholder="example@email.com" required>
   </label>
 
+  <label>s
+    Subject (optional):
+    <input type="text" name="subject" placeholder="e.g. Collaboration request">
+  </label>
+
+
   <label>
     Message:
     <textarea name="message" placeholder="Your message here..." required></textarea>
   </label>
 
+  <!-- Cloudflare Turnstile -->
+  <div
+    class="cf-turnstile"
+    data-sitekey="0x4AAAAAACULU4HpGNkW9SVM"
+    data-theme="auto">
+  </div>
+
   <button type="submit" class="btn btn--primary">Send</button>
 </form>
+
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>

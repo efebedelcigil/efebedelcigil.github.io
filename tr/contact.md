@@ -104,7 +104,7 @@ Projelerim veya iş hakkında konuşmak veya iş birliği yapmak için aşağıd
   <input type="hidden" name="form_title" value="İletişim Formu (TR)">
   <input type="hidden" name="_subject" value="İletişim Sayfasından Yeni Mesaj">
 
-  <div class="hidden-field">
+  <div class="hidden-field" aria-hidden="true">
     <label>Bu alanı boş bırakın</label>
     <input type="text" name="company">
   </div>
@@ -115,9 +115,23 @@ Projelerim veya iş hakkında konuşmak veya iş birliği yapmak için aşağıd
   </label>
 
   <label>
+    Konu (isteğe bağlı):
+    <input type="text" name="subject" placeholder="Örn: Proje iş birliği">
+  </label>
+
+  <!-- Cloudflare Turnstile -->
+  <div
+    class="cf-turnstile"
+    data-sitekey="0x4AAAAAACULU4HpGNkW9SVM"
+    data-theme="auto">
+  </div>
+
+  <label>
     Mesajınız:
     <textarea name="message" placeholder="Mesajınızı buraya yazın..." required></textarea>
   </label>
 
   <button type="submit" class="btn btn--primary">Gönder</button>
 </form>
+
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
