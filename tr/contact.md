@@ -52,11 +52,11 @@ lang: tr
     <textarea name="message" placeholder="Your message here..." required></textarea>
   </label>
 
-  <div id="turnstileError" class="turnstile-error">
+  <div id="turnstileError" class="turnstile-error" style="display:none;">
     Lütfen mesaj göndermek için insan olduğunuzu doğrulayın.
   </div>
 
-  <div class="cf-turnstile"></div> <!-- ✅ sadece boş div bırakıyoruz -->
+  <div class="cf-turnstile"></div>
 
   <button type="submit" class="btn btn--primary" disabled id="submitBtn">
     Gönder
