@@ -1,3 +1,14 @@
+{% if page.layout == "single" and page.permalink contains "/contact/" %}
+<meta http-equiv="Content-Security-Policy"
+content="
+  default-src 'self';
+  script-src 'self' https://challenges.cloudflare.com;
+  style-src 'self' 'unsafe-inline';
+  frame-src https://challenges.cloudflare.com;
+  connect-src 'self' https://challenges.cloudflare.com https://verifalia-handler.efebedelcigil.workers.dev;
+">
+{% endif %}
+
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
 
 <script>
@@ -8,13 +19,7 @@
   var savedTheme = localStorage.getItem('theme');
   var systemDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
 
-  // Mantık:
-  // A) Kullanıcı daha önce "Dark" seçmişse -> DARK
-  // B) Kullanıcı hiç seçim yapmamışsa (null) VE İşletim Sistemi "Dark" ise -> DARK
   if (savedTheme === 'dark' || (!savedTheme && systemDark)) {
     document.documentElement.classList.add('dark-mode');
   }
-  
-  // Not: Eğer kullanıcı "Light" seçtiyse veya seçim yapmadıysa ve OS "Light" ise
-  // hiçbir sınıf eklenmez, varsayılan (Light) açılır.
 </script>

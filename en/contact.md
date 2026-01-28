@@ -12,15 +12,6 @@ lang: en
 
 <link rel="stylesheet" href="/assets/css/contact.css">
 
-<meta http-equiv="Content-Security-Policy"
-content="
-  default-src 'self';
-  script-src 'self' https://challenges.cloudflare.com;
-  style-src 'self';
-  frame-src https://challenges.cloudflare.com;
-  connect-src 'self' https://challenges.cloudflare.com https://verifalia-handler.efebedelcigil.workers.dev;
-">
-
 <p>Feel free to contact me regarding projects, potential job/internship roles, or other professional matters.</p>
 
 <noscript>
