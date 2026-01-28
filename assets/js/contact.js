@@ -9,6 +9,13 @@ function isDarkMode() {
 
 function renderTurnstile() {
   if (!window.turnstile) return;
+
+  // Analitik Temizlik: Eski widget varsa bellekten kaldır
+  if (turnstileWidgetId !== undefined) {
+    window.turnstile.remove(turnstileWidgetId);
+  }
+
+  // Container içeriğini sıfırla ve yeni widget'ı render et
   turnstileContainer.innerHTML = "";
   turnstileWidgetId = window.turnstile.render(turnstileContainer, {
     sitekey: "0x4AAAAAACULU4HpGNkW9SVM",
@@ -17,6 +24,7 @@ function renderTurnstile() {
     "expired-callback": turnstileExpired,
     "error-callback": turnstileError
   });
+  
   submitBtn.disabled = true;
 }
 
@@ -24,32 +32,39 @@ function turnstileDone(token) {
   submitBtn.disabled = false;
   errorBox.style.display = "none";
 }
+
 function turnstileExpired() {
   submitBtn.disabled = true;
   errorBox.style.display = "block";
 }
+
 function turnstileError() {
   submitBtn.disabled = true;
   errorBox.style.display = "block";
 }
 
-window.addEventListener("load", () => {
-  renderTurnstile();
+// Sayfa yüklendiğinde başlat
+window.addEventListener("load", renderTurnstile);
+
+// Tema değişimini izle (Sadece class değişimine odaklanarak döngüyü engeller)
+const darkModeObserver = new MutationObserver((mutations) => {
+  mutations.forEach((mutation) => {
+    if (mutation.attributeName === "class") {
+      renderTurnstile();
+    }
+  });
 });
 
-const darkModeObserver = new MutationObserver(() => {
-  renderTurnstile();
-});
 darkModeObserver.observe(document.documentElement, {
   attributes: true,
   attributeFilter: ["class"]
 });
 
-// Email doğrulama API kısmı
+// --- Email Doğrulama API (Verifalia & Cloudflare Workers) ---
 const form = document.querySelector('.contact-form');
 
 form.addEventListener('submit', async (e) => {
-    e.preventDefault(); // Formu hemen gönderme
+    e.preventDefault(); 
     
     const emailInput = form.querySelector('input[name="email"]').value;
     const workerUrl = "https://verifalia-handler.efebedelcigil.workers.dev/"; 
@@ -67,7 +82,7 @@ form.addEventListener('submit', async (e) => {
         
         const result = await response.json();
 
-        // Eğer mail ulaşılabilirse (Deliverable) gönder
+        // Verifalia 'Deliverable' sonucu verirse formu gönder
         if (result.entry?.classification === "Deliverable") {
             submitBtn.innerText = "Sending...";
             form.submit(); 
@@ -75,10 +90,12 @@ form.addEventListener('submit', async (e) => {
             alert("This email address seems invalid. Please check it.");
             submitBtn.disabled = false;
             submitBtn.innerText = originalText;
+            // Hatalı mail girişinde Turnstile'ı güvenlik için sıfırla
             if (window.turnstile) window.turnstile.reset(turnstileWidgetId);
         }
     } catch (error) {
-        // Bir hata çıkarsa kullanıcıyı mağdur etme, formu gönder
+        // API hatası veya kredi bitmesi durumunda (fail-safe) formu yine de gönder
+        console.warn("Email validation service unavailable, bypassing...", error);
         form.submit();
     }
 });
