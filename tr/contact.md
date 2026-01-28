@@ -56,12 +56,7 @@ lang: tr
     Lütfen mesaj göndermek için insan olduğunuzu doğrulayın.
   </div>
 
-  <div class="cf-turnstile"
-       data-sitekey="0x4AAAAAACULU4HpGNkW9SVM"
-       data-callback="turnstileDone"
-       data-expired-callback="turnstileExpired"
-       data-error-callback="turnstileError">
-  </div>
+  <div class="cf-turnstile"></div> <!-- ✅ sadece boş div bırakıyoruz -->
 
   <button type="submit" class="btn btn--primary" disabled id="submitBtn">
     Gönder

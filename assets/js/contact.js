@@ -2,6 +2,7 @@
 const submitBtn = document.getElementById("submitBtn");
 const errorBox = document.getElementById("turnstileError");
 const turnstileContainer = document.querySelector(".cf-turnstile");
+
 let turnstileWidgetId;
 let currentTheme = document.documentElement.classList.contains("dark-mode") ? "dark" : "light";
 
@@ -56,7 +57,7 @@ const form = document.querySelector('.contact-form');
 if (form) {
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
-    
+
     const emailInput = form.querySelector('input[name="email"]').value;
     const workerUrl = "https://verifalia-handler.efebedelcigil.workers.dev/";
 
@@ -70,14 +71,14 @@ if (form) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: emailInput })
       });
-      
+
       if (!response.ok) throw new Error("Worker hatası veya CSP engeli");
 
       const result = await response.json();
 
       if (result.entry?.classification === "Deliverable") {
         submitBtn.innerText = "Sending...";
-        form.submit();
+        form.requestSubmit(); // ✅ modern ve güvenli
       } else {
         alert("Lütfen geçerli ve ulaşılabilir bir e-posta adresi girdiğinizden emin olun.");
         submitBtn.disabled = false;
@@ -86,7 +87,7 @@ if (form) {
       }
     } catch (error) {
       console.warn("Doğrulama atlandı, form gönderiliyor.", error);
-      form.submit();
+      form.requestSubmit(); // ✅
     }
   });
 }
