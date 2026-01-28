@@ -1,77 +1,55 @@
-// 1. Element Seçimleri
 const submitBtn = document.getElementById("submitBtn");
 const errorBox = document.getElementById("turnstileError");
 const turnstileContainer = document.querySelector(".cf-turnstile");
 let turnstileWidgetId;
 let currentTheme = document.documentElement.classList.contains("dark-mode") ? "dark" : "light";
 
-// 2. Yardımcı Fonksiyon: Turnstile'ı Temizle ve Yeniden Render Et
 function renderTurnstile() {
-  // Turnstile kütüphanesi veya container yoksa işlemi durdur
-  if (!window.turnstile || typeof window.turnstile.render !== 'function' || !turnstileContainer) {
-    return;
-  }
+  // Analitik Kontrol: Render fonksiyonu gerçekten hazır mı?
+  if (typeof window.turnstile === 'undefined' || typeof window.turnstile.render !== 'function' || !turnstileContainer) return;
 
-  // V is not a function hatasını önlemek için bellek temizliği
+  // Temizlik: Çift widget oluşumunu engellemek için bellekten ve DOM'dan süpür
   if (turnstileWidgetId !== undefined) {
-    try {
-      window.turnstile.remove(turnstileWidgetId);
-    } catch (e) {
-      console.warn("Eski widget temizlenemedi:", e);
-    }
+    try { window.turnstile.remove(turnstileWidgetId); } catch (e) {}
     turnstileWidgetId = undefined;
   }
-  
-  // DOM temizliği (Çift widget oluşmasını engeller)
   turnstileContainer.innerHTML = "";
 
-  // Yeni Widget Render
   try {
     turnstileWidgetId = window.turnstile.render(turnstileContainer, {
       sitekey: "0x4AAAAAACULU4HpGNkW9SVM",
       theme: currentTheme,
-      callback: function(token) {
-        submitBtn.disabled = false;
-        if(errorBox) errorBox.style.display = "none";
-      },
-      "error-callback": function() {
-        submitBtn.disabled = true;
-        if(errorBox) errorBox.style.display = "block";
-      }
+      callback: (token) => { submitBtn.disabled = false; if(errorBox) errorBox.style.display = "none"; },
+      "error-callback": () => { submitBtn.disabled = true; if(errorBox) errorBox.style.display = "block"; }
     });
   } catch (err) {
-    console.error("Render sırasında hata oluştu:", err);
+    console.warn("Turnstile render denemesi başarısız, kütüphane eksik yüklenmiş olabilir.");
   }
 }
 
-// 3. Tema Değişim Gözlemcisi (Sadece tema gerçekten değişirse tetiklenir)
-const darkModeObserver = new MutationObserver(() => {
+// Akıllı Başlatıcı: Turnstile objesinin tam fonksiyonel olmasını bekle
+const bootTurnstile = setInterval(() => {
+  if (window.turnstile && typeof window.turnstile.render === 'function') {
+    clearInterval(bootTurnstile);
+    renderTurnstile();
+  }
+}, 200);
+
+// Tema Değişimi: Sadece sınıf gerçekten değişirse render et
+const observer = new MutationObserver(() => {
   const newTheme = document.documentElement.classList.contains("dark-mode") ? "dark" : "light";
   if (newTheme !== currentTheme) {
     currentTheme = newTheme;
     renderTurnstile();
   }
 });
+observer.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
 
-darkModeObserver.observe(document.documentElement, { 
-  attributes: true, 
-  attributeFilter: ["class"] 
-});
-
-// 4. Akıllı Başlatıcı (Kütüphanenin yüklenmesini bekler)
-const checkTurnstileReady = setInterval(() => {
-  if (window.turnstile && typeof window.turnstile.render === 'function') {
-    clearInterval(checkTurnstileReady);
-    renderTurnstile();
-  }
-}, 200);
-
-// 5. Verifalia & Form Gönderim Mantığı
+// --- Verifalia Sorgu Mantığı ---
 const form = document.querySelector('.contact-form');
 if (form) {
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
-    
     const emailInput = form.querySelector('input[name="email"]').value;
     const workerUrl = "https://verifalia-handler.efebedelcigil.workers.dev/"; 
 
@@ -85,10 +63,8 @@ if (form) {
         body: JSON.stringify({ email: emailInput }),
         headers: { 'Content-Type': 'application/json' }
       });
-      
       const result = await response.json();
 
-      // Verifalia Sonuç Kontrolü
       if (result.entry?.classification === "Deliverable") {
         submitBtn.innerText = "Sending...";
         form.submit(); 
@@ -99,8 +75,8 @@ if (form) {
         if (window.turnstile) window.turnstile.reset(turnstileWidgetId);
       }
     } catch (error) {
-      // Fail-safe: Kredi biterse veya API çökerse formu direkt gönder
-      console.warn("Doğrulama servisi şu an kullanılamıyor, form gönderiliyor...");
+      // Fail-safe: Kredi biterse veya API çökerse mesajı doğrulamadan gönder
+      console.warn("Email verification bypassed.");
       form.submit();
     }
   });
