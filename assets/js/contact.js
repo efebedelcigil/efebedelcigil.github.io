@@ -5,26 +5,15 @@
   const turnstileContainer = document.getElementById("turnstile-widget");
 
   let turnstileWidgetId;
-  let isValidated = false; 
   const WORKER_URL = "https://verifalia-handler.efebedelcigil.workers.dev/";
-  const TURNSTILE_SITEKEY = "0x4AAAAAACULU4HpGNkW9SVM"; // Senin Site Key'in
+  const FORMSPREE_URL = "https://formspree.io/f/xlgjvlev"; // Formspree ID'n
+  const TURNSTILE_SITEKEY = "0x4AAAAAACULU4HpGNkW9SVM";
 
-  // --- Sayfa Önbellekten Yüklenirse (Geri Butonu vb.) Butonu Sıfırla ---
-  window.addEventListener('pageshow', function(event) {
-    if (submitBtn) {
-        submitBtn.disabled = false;
-        submitBtn.innerText = "Gönder";
-    }
-    isValidated = false;
-  });
-
-  // --- Turnstile Render Fonksiyonu ---
+  // --- Turnstile Render ---
   window.onloadTurnstileCallback = function () {
     const currentTheme = document.documentElement.classList.contains("dark-mode") ? "dark" : "light";
     
-    if (!turnstileContainer || turnstileContainer.innerHTML.trim() !== "") {
-        return;
-    }
+    if (!turnstileContainer || turnstileContainer.innerHTML.trim() !== "") return;
 
     try {
         turnstileWidgetId = turnstile.render(turnstileContainer, {
@@ -42,73 +31,90 @@
             }
         });
     } catch (e) {
-        console.warn("Turnstile render hatası:", e);
+        console.warn("Turnstile hatası:", e);
     }
   };
 
-  // --- Form Submit İşleyici ---
+  // --- Form Submit (AJAX) ---
   if (form) {
     form.addEventListener('submit', async (e) => {
-      // Eğer doğrulama bittiyse formun normal gönderilmesine izin ver
-      if (isValidated) return; 
-
-      e.preventDefault();
+      e.preventDefault(); // Sayfa yenilenmesini engelle
 
       const emailEl = form.querySelector('input[name="email"]');
       const emailInput = emailEl ? emailEl.value.trim() : "";
-
       if (!emailInput) return;
 
-      const originalText = "Gönder";
+      const originalText = submitBtn.innerText;
       submitBtn.disabled = true;
       submitBtn.innerText = "Email Kontrol Ediliyor...";
 
       try {
-        const response = await fetch(WORKER_URL, {
+        // 1. ADIM: E-posta Doğrulama (Worker)
+        const verifyRes = await fetch(WORKER_URL, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ email: emailInput })
         });
-
-        const data = await response.json();
-
-        if (data.status !== 200) {
-          throw new Error(data.error || "Sunucu hatası");
-        }
-
-        // Verifalia yanıtını güvenli şekilde çözümle
-        let entry = null;
-        if (data.body && data.body.entries) {
-            if (Array.isArray(data.body.entries)) {
-                entry = data.body.entries[0];
-            } else if (data.body.entries.data && Array.isArray(data.body.entries.data)) {
-                entry = data.body.entries.data[0];
+        
+        const verifyData = await verifyRes.json();
+        
+        // Verifalia Sonucunu Kontrol Et
+        let isDeliverable = false;
+        
+        // API yapısını güvenli çözümle
+        if (verifyData.status === 200 && verifyData.body && verifyData.body.entries) {
+            let entry = Array.isArray(verifyData.body.entries) 
+                ? verifyData.body.entries[0] 
+                : (verifyData.body.entries.data ? verifyData.body.entries.data[0] : null);
+            
+            if (entry && entry.classification === "Deliverable") {
+                isDeliverable = true;
             }
+        } else {
+             // API hatası varsa inisiyatif alıp kullanıcıyı mağdur etmeyelim
+             console.warn("Verifalia yanıt vermedi, bypass ediliyor.");
+             isDeliverable = true; 
         }
 
-        if (entry && entry.classification === "Deliverable") {
-            // BAŞARILI
-            isValidated = true; 
-            submitBtn.innerText = "Yönlendiriliyor...";
-            form.requestSubmit(); 
-        } else {
-            // BAŞARISIZ
-            const statusMsg = entry ? entry.classification : "Bilinmiyor";
-            alert("Girdiğiniz e-posta adresi geçerli görünmüyor (" + statusMsg + "). Lütfen kontrol ediniz.");
+        if (!isDeliverable) {
+            alert("Girdiğiniz e-posta adresi geçerli görünmüyor. Lütfen kontrol ediniz.");
             submitBtn.disabled = false;
             submitBtn.innerText = originalText;
+            return; // İşlemi durdur
+        }
+
+        // 2. ADIM: Formspree'ye Gönderim (AJAX)
+        submitBtn.innerText = "Gönderiliyor...";
+        
+        const formData = new FormData(form);
+        
+        const formspreeRes = await fetch(FORMSPREE_URL, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'Accept': 'application/json'
+            }
+        });
+
+        if (formspreeRes.ok) {
+            // BAŞARILI: Formu temizle ve teşekkür mesajı göster
+            form.innerHTML = `
+                <div style="text-align:center; padding: 2rem; background: #e8f5e9; border-radius: 8px; color: #2e7d32;">
+                    <h3>Mesajınız Alındı! 🚀</h3>
+                    <p>En kısa sürede size dönüş yapacağım.</p>
+                </div>
+            `;
+        } else {
+            // Formspree hatası
+            const errorData = await formspreeRes.json();
+            throw new Error(errorData.error || "Form gönderilemedi.");
         }
 
       } catch (err) {
-        console.error("Worker Hatası:", err);
-        // Hata olsa bile kullanıcıyı mağdur etmemek için onayla gönder
-        if(confirm("E-posta kontrolü sırasında bağlantı sorunu oluştu. Yine de göndermek ister misiniz?")) {
-          isValidated = true;
-          form.requestSubmit();
-        } else {
-          submitBtn.disabled = false;
-          submitBtn.innerText = originalText;
-        }
+        console.error("Form Hatası:", err);
+        alert("Bir hata oluştu: " + err.message);
+        submitBtn.disabled = false;
+        submitBtn.innerText = originalText;
       }
     });
   }
